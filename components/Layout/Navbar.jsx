@@ -54,21 +54,23 @@ const Navbar = () => {
 
   const newLinks = session?.user ? navLinks : navLinks2;
   return (
-    <div className='relative flex w-full p-5 px-1  shadow-lg h-[90px] '>
+    <div className='relative  flex w-full p-5 px-1  shadow-lg h-[90px] '>
       <div className='flex justify-between items-center w-full md:px-4 text-[#333333]'>
         <Link href='/'>
-          <div className='flex  items-center gap-5 border border-black pr-16 shadow-xl pl-2 py-1 justify-start'>
+          <div className='flex md:w-full items-center gap-5 border border-black pr-2 mx-2 md:pr-16 shadow-xl md:pl-2 py-1 justify-start'>
             <div className='h-8 w-8'>
               <Image
                 src='/logo_pic2.png'
                 alt='logo'
-                className='cursor-pointer h-8 w-8 shadow-2xl scale-150 ml-2'
+                className='cursor-pointer h-8 w-8 shadow-2xl md:scale-150 ml-2'
                 width={80}
                 height={80}
               />
             </div>
             <div className='flex font-extrabold flex-col tracking-wider text-sm'>
-              <span className='text-3xl  text-indigo-900'>First Monie</span>
+              <span className=' text-base md:text-3xl  text-indigo-900'>
+                First Monie
+              </span>
               <span className='font-bold italic text-center'>
                 Online Banking
               </span>

@@ -14,7 +14,7 @@ const Button = ({ title, px = 5, py = 2, onClick }) => {
       <span class='absolute bottom-0 right-0 w-4 h-full bg-gradient-to-l from-white to-transparent opacity-5'></span>
       <span class='absolute inset-0 w-full h-full border border-white rounded-md opacity-10'></span>
       <span class='absolute w-0 h-0 transition-all duration-300 ease-out bg-white rounded-full group-hover:w-56 group-hover:h-40 opacity-5'></span>
-      <span class='relative text-black hover:text-white'>Sign In</span>
+      <span class='relative text-black hover:text-white'>{title}</span>
     </button>
   );
 };

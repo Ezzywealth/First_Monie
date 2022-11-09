@@ -5,6 +5,10 @@ import { MdOutlineAttachMoney } from "react-icons/md";
 import { AiOutlineHome } from "react-icons/ai";
 import { FiPackage } from "react-icons/fi";
 import { FiFacebook, FiTwitter, FiInstagram, FiLinkedin } from "react-icons/fi";
+import { TbShieldCheck } from "react-icons/tb";
+import { BsCreditCard2Back } from "react-icons/bs";
+import { MdOutlineSavings } from "react-icons/md";
+import { AiOutlineBank } from "react-icons/ai";
 
 export const navLinks = [
   {
@@ -134,5 +138,59 @@ export const icons = [
   {
     id: 4,
     icon: <FiLinkedin />,
+  },
+];
+
+export const services = [
+  {
+    id: 1,
+    title: "Credit Cards",
+    link: "cards",
+    icon: <BsCreditCard2Back />,
+  },
+  {
+    id: 2,
+    title: "Savings",
+    link: "savings",
+    icon: <MdOutlineSavings />,
+  },
+  {
+    id: 3,
+    title: "Checking",
+    link: "checking",
+    icon: <AiOutlineBank />,
+  },
+  {
+    id: 4,
+    title: "Safe and Secure",
+    link: "safe",
+    icon: <TbShieldCheck />,
+  },
+];
+
+export const invest = [
+  {
+    id: 1,
+    title: "Retirement",
+  },
+  {
+    id: 2,
+    title: "International Payment",
+  },
+  {
+    id: 3,
+    title: "Funding and Education",
+  },
+  {
+    id: 4,
+    title: "Major Purchases",
+  },
+  {
+    id: 5,
+    title: "Premium Support",
+  },
+  {
+    id: 6,
+    title: "Direct Debit",
   },
 ];

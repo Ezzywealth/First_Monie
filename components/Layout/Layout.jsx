@@ -20,11 +20,11 @@ const Layout = ({ children, title, priceList = true }) => {
         <title>{title}</title>
         <link rel='icon' href='/favicon.ico' />
       </Head>
-      <div className='fixed  z-40 bg-white top-0 w-full'>
+      <div className='fixed bg-white  z-40  top-0 w-full'>
         <Navbar />
       </div>
-      <main className='mt-52 lg:mt-20 relative'>{children}</main>
-      <div className='absolute bottom-0 w-full '>
+      <main className=' lg:mt-20 relative'>{children}</main>
+      <div className=' bottom-0 w-full '>
         <Footer />
       </div>
     </div>
