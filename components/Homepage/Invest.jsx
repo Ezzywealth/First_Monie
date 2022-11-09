@@ -21,7 +21,7 @@ const Invest = () => {
             {invest.map((item) => (
               <li
                 key={item.id}
-                className='flex gap-4  items-center bg-white p-2 rounded-lg hover:bg-indigo-800 hover:text-white'
+                className='flex gap-4  items-center bg-white p-2 rounded-lg hover:bg-indigo-800'
               >
                 <FiCheck className='text-green-600 animate-bounce' />
                 <span>{item.title}</span>

@@ -3,6 +3,7 @@ import Layout from "../components/Layout/Layout";
 import LandingPage from "../components/Homepage/LandingPage";
 import Invest from "../components/Homepage/Invest";
 import Bank from "../components/Homepage/Bank";
+import Contact from "../components/Homepage/Contact";
 
 const Home = () => {
   // useEffect(() => {
@@ -14,6 +15,7 @@ const Home = () => {
         <LandingPage />
         <Invest />
         <Bank />
+        <Contact />
       </main>
     </Layout>
   );
