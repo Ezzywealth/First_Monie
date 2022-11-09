@@ -1,0 +1,130 @@
+import React, { useState } from "react";
+
+import Link from "next/link";
+import { BsPersonCheckFill } from "react-icons/bs";
+import { HiOutlineMenuAlt1 } from "react-icons/hi";
+import { useDispatch, useSelector } from "react-redux";
+import { FiLogOut } from "react-icons/fi";
+import Button from "./Button";
+import { useRouter } from "next/router";
+import { useSession } from "next-auth/react";
+import { signOut } from "next-auth/react";
+import { navLinks, navLinks2 } from "../../utils/constants";
+
+import Logo from "../logo";
+import Image from "next/image";
+
+const Navbar = () => {
+  const router = useRouter();
+  const { data: session } = useSession();
+  const [activeLink, setActiveLink] = useState("");
+  const [loading, setLoading] = useState(false);
+  // const dispatch = useDispatch();
+  const handleSignIn = () => {
+    router.push("/login");
+  };
+
+  const handleNavLink = (name) => {
+    setActiveLink(name);
+    // dispatch(startLoading());
+  };
+
+  const handleSignOut = async () => {
+    const data = await signOut({ redirect: false, callbackUrl: "/" });
+    router.push(data.url);
+    Cookies.remove("transactions");
+    Cookies.remove("withdrawals");
+    Cookies.remove("deposits");
+  };
+  // const loadingState = useSelector((state) => state.generalSlice.loadingState);
+
+  if (loading) {
+    return (
+      <div className='flex justify-center bg-indigo-50 items-center h-screen w-full'>
+        <BeatLoader
+          color='indigo'
+          loading={loadingState}
+          size={10}
+          aria-label='Loading Spinner'
+          data-testid='loader'
+        />
+      </div>
+    );
+  }
+
+  const newLinks = session?.user ? navLinks : navLinks2;
+  return (
+    <div className='relative flex w-full p-5 px-1  shadow-lg h-[90px] '>
+      <div className='flex justify-between items-center w-full md:px-4 text-[#333333]'>
+        <Link href='/'>
+          <div className='flex  items-center gap-5 border border-black pr-16 shadow-xl pl-2 py-1 justify-start'>
+            <div className='h-8 w-8'>
+              <Image
+                src='/logo_pic2.png'
+                alt='logo'
+                className='cursor-pointer h-8 w-8 shadow-2xl scale-150 ml-2'
+                width={80}
+                height={80}
+              />
+            </div>
+            <div className='flex font-extrabold flex-col tracking-wider text-sm'>
+              <span className='text-3xl  text-indigo-900'>First Monie</span>
+              <span className='font-bold italic text-center'>
+                Online Banking
+              </span>
+            </div>
+          </div>
+        </Link>
+        <button
+          onClick={() => dispatch(openSidebar())}
+          className='absolute right-0 mr-8 text-4xl flex items-center md:hidden'
+        >
+          <HiOutlineMenuAlt1 className='w-10 h-10 text-indigo-600 font-extrabold' />
+        </button>
+
+        <ul className='hidden md:flex gap-2 lg:gap-4 mt-2'>
+          {newLinks.map((link) => (
+            <li
+              key={link.id}
+              className={`hover:text-indigo-500 focus:text-indigo-500 cursor-pointer tracking-widest hover:scale-105 font-semibold  ${
+                activeLink === link.name && "text-indigo-500"
+              }`}
+              onClick={() => handleNavLink(link.name)}
+            >
+              <Link href={link.link} legacyBehavior>
+                <a className={`cursor-pointer text-sm lg:text-lg`}>
+                  {link.name}
+                </a>
+              </Link>
+            </li>
+          ))}
+        </ul>
+        <div className='hidden md:contents'>
+          {session?.user ? (
+            <div className='flex items-center gap-1'>
+              <span className='bg-indigo-400 p-2 rounded-full cursor-pointer'>
+                <BsPersonCheckFill className='w-6 h-6 text-white' />
+              </span>
+
+              <h5 className='text-sm font-semibold italic'>
+                {session.user.name}
+              </h5>
+              <span className=' ml-4 text-2xl ' onClick={() => handleSignOut()}>
+                <FiLogOut className='text-indigo-600 cursor-pointer hover:scale-105 customTransition font-extrabold' />
+              </span>
+            </div>
+          ) : (
+            <Button
+              title='Sign In'
+              py={1}
+              px={7}
+              onClick={() => handleSignIn()}
+            />
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Navbar;
