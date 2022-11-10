@@ -6,7 +6,7 @@ import { AiOutlineHome } from "react-icons/ai";
 import { FiPackage } from "react-icons/fi";
 import { FiFacebook, FiTwitter, FiInstagram, FiLinkedin } from "react-icons/fi";
 import { TbShieldCheck } from "react-icons/tb";
-import { BsCreditCard2Back } from "react-icons/bs";
+import { BsCreditCard2Back, BsQuestionDiamond } from "react-icons/bs";
 import { MdOutlineSavings } from "react-icons/md";
 import { AiOutlineBank } from "react-icons/ai";
 
@@ -80,6 +80,12 @@ export const navLinks2 = [
     name: "Cards",
     link: "cards",
     icon: <GrMoney />,
+  },
+  {
+    id: 6,
+    name: "FAQs",
+    link: "faqs",
+    icon: <BsQuestionDiamond />,
   },
 ];
 
@@ -390,5 +396,52 @@ export const currentAccount = [
     title: "Platinum Checking",
     description: "Top-tier checking with competitive rates and all the perks",
     price: "$24.95",
+  },
+];
+
+export const faqs = [
+  {
+    id: 1,
+    question:
+      "How can I avoid incurring the monthly service fees on a checking or savings account?",
+    answer:
+      "If you maintain minimum or average balance requirements and don’t exceed account transaction limits, it is possible to avoid paying certain fees on some of our business checking and savings accounts. Please see individual product pages for more information.",
+  },
+  {
+    id: 2,
+    question: "How do I replace a lost ATM card?.",
+    answer:
+      "To replace an ATM card, please sign on to Online® to request your new replacement card online. You can also visit a branch or call our National Business Banking Center at 1-440-941-4254.",
+  },
+  {
+    id: 3,
+    question: "How do I send or receive a wire?.",
+    answer:
+      "Send domestic and international wires to personal or business accounts quickly and securely with Online® Wires.",
+  },
+  {
+    id: 4,
+    question: "How do I reactivate my inactive account?.",
+    answer:
+      "go to Account Summary, and select the option to reactivate your account that is displayed next to the inactive account.",
+  },
+  {
+    id: 5,
+    question:
+      "How do I change my name on my business checking or savings account",
+    answer:
+      "In order to change a name on your account, you need to complete a new signature card",
+  },
+  {
+    id: 6,
+    question: "How do I make a change of address",
+    answer:
+      "To make a change of address and order new checks you may log into a secured Online session and submit a request.",
+  },
+  {
+    id: 7,
+    question: "Can I stop receiving paper statements in the mail?.",
+    answer:
+      "Absolutely. You can choose Online Statements1 through Online. We'll even send you email notifications when your statements are available.",
   },
 ];
