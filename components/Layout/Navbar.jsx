@@ -54,7 +54,7 @@ const Navbar = () => {
 
   const newLinks = session?.user ? navLinks : navLinks2;
   return (
-    <div className='relative  flex w-full p-5 px-1  shadow-lg h-[90px] '>
+    <div className='relative  flex w-full p-5 px-1  h-[90px] '>
       <div className='flex justify-between items-center w-full md:px-4 text-[#333333]'>
         <Link href='/'>
           <div className='flex md:w-full items-center gap-5 border border-black pr-2 mx-2 md:pr-16 shadow-xl md:pl-2 py-1 justify-start'>

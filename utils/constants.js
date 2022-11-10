@@ -58,13 +58,26 @@ export const navLinks2 = [
   },
   {
     id: 2,
-    name: "About",
+    name: "Personal",
     link: "about",
     icon: <BsInfoCircleFill />,
   },
   {
     id: 3,
-    name: "Plans",
+    name: "About",
+    link: "about",
+    icon: <GrMoney />,
+  },
+
+  {
+    id: 4,
+    name: "Contact",
+    link: "contact",
+    icon: <BsInfoCircleFill />,
+  },
+  {
+    id: 5,
+    name: "Cards",
     link: "plans",
     icon: <GrMoney />,
   },

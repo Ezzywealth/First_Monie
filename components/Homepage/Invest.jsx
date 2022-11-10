@@ -6,10 +6,10 @@ import { invest } from "../../utils/constants";
 
 const Invest = () => {
   return (
-    <div className='bg-gray-50 pt-40 px-16'>
+    <div className='bg-gray-50 pt-20 md:pt-40 px-4 md:px-16'>
       <div className='grid grid-cols-1 md:grid-cols-2'>
-        <div className='space-y-8 px-8 py-8'>
-          <h2 className='text-4xl text-[#333333] font-bold mb-12'>
+        <div className='md:space-y-8 space-y-4 text-center md:px-4 py-8'>
+          <h2 className='text-4xl text-[#333333] font-bold md:mb-12'>
             Invest in your future.
           </h2>
           <p>
@@ -21,7 +21,7 @@ const Invest = () => {
             {invest.map((item) => (
               <li
                 key={item.id}
-                className='flex gap-4  items-center bg-white p-2 rounded-lg hover:bg-indigo-800'
+                className='flex gap-2  items-center bg-white p-2 rounded-lg hover:bg-indigo-800'
               >
                 <FiCheck className='text-green-600 animate-bounce' />
                 <span>{item.title}</span>
@@ -33,7 +33,8 @@ const Invest = () => {
           <Image
             src={People}
             alt='people'
-            className='h-[450px] w-full shadow-2xl'
+            layout='responsive'
+            className='md:h-[450px] h-[300px]  w-full shadow-2xl'
           />
         </div>
       </div>

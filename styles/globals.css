@@ -48,6 +48,9 @@ html {
     height: 100%;
     background-size: cover;
   }
+  .customTransition {
+    @apply transition-all duration-500 ease-in-out;
+  }
 
   .bgFaq {
     background-image: url("../public/faq.jpg");
@@ -61,13 +64,20 @@ html {
     background-repeat: no-repeat;
     background-size: contain;
   }
+  .bgContact {
+    background-image: url("../public/world.jpg");
+    background-color: rgb(13, 16, 23);
+
+    background-size: cover;
+  }
 
   .packagesRoi {
     @apply flex flex-col gap-1 items-start;
   }
 
-  input {
-    @apply rounded-lg;
+  input,
+  textarea {
+    @apply rounded-lg bg-white border border-gray-200 px-3 py-3 w-full focus:outline-none;
   }
 
   .transaction_box {

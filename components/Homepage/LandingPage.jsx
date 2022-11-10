@@ -5,30 +5,30 @@ import Button2 from "../Layout/Button2";
 const LandingPage = () => {
   return (
     <div className='bgLanding w-full h-[650px] relative'>
-      <div className='absolute w-1/2 top-[25%] space-y-4 bottom-[50%] left-8 h-full'>
-        <h2 className='text-5xl text-[#333333]  capitalize font-extrabold tracking-wider'>
+      <div className='absolute md:w-1/2 top-[25%] space-y-4 bottom-[50%] left-8 h-full'>
+        <h2 className='text-4xl md:text-5xl text-[#333333]  capitalize font-extrabold tracking-wider'>
           Smart-free banking for everybody
         </h2>
-        <p className='font-bold text-indigo-900'>
+        <p className='font-bold text-purple-900 text-lg'>
           Bank smarter with us now and browse <br /> personal and consumer
           banking services
         </p>
         <Button2 title='Get Started' />
       </div>
-      <div className='absolute left-0 right-0 -bottom-16 flex justify-center'>
-        <div className='flex  w-full  md:w-[60%]  -bottom-16'>
+      <div className='hidden absolute  left-0 right-0 md:-bottom-16 md:flex justify-center'>
+        <div className='flex flex-col md:flex-row mx-8   w-full md:w-[80%]  -bottom-16'>
           {services.map((item) => (
             <div
               key={item.id}
-              className='bg-white px-5 flex justify-center items-center flex-1 h-36 py-3 border border-solid border-gray'
+              className='bg-white px-2 md:px-5 flex justify-center items-center flex-1 h-36 py-3 border border-solid border-gray'
             >
               <div className='flex items-center gap-4 flex-col'>
                 <span
-                  className={`text-5xl ${
-                    item.link === "cards" && "text-green-600"
-                  } ${item.link === "savings" && "text-pink-600"} ${
-                    item.link === "checking" && "text-amber-600"
-                  } ${item.link === "safe" && "text-purple-600"}`}
+                  className={`text-5xl animate-bounce ${
+                    item.link === "cards" && "text-green-600 delay-75"
+                  } ${item.link === "savings" && "text-pink-600 delay-100"} ${
+                    item.link === "checking" && "text-amber-600 delay-150"
+                  } ${item.link === "safe" && "text-purple-600 delay-200"}`}
                 >
                   {item.icon}
                 </span>

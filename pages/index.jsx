@@ -4,6 +4,7 @@ import LandingPage from "../components/Homepage/LandingPage";
 import Invest from "../components/Homepage/Invest";
 import Bank from "../components/Homepage/Bank";
 import Contact from "../components/Homepage/Contact";
+import Expectation from "../components/Homepage/Expectation";
 
 const Home = () => {
   // useEffect(() => {
@@ -15,6 +16,7 @@ const Home = () => {
         <LandingPage />
         <Invest />
         <Bank />
+        <Expectation />
         <Contact />
       </main>
     </Layout>
