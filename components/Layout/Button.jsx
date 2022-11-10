@@ -2,7 +2,10 @@ import React from "react";
 
 const Button = ({ title, px = 5, py = 2, onClick }) => {
   return (
-    <button class='relative inline-flex items-center justify-center px-5 py-2  overflow-hidden font-bold text-white rounded-md shadow-2xl group border-black border'>
+    <button
+      class='relative inline-flex items-center justify-center px-5 py-2  overflow-hidden font-bold text-white rounded-md shadow-2xl group border-black border'
+      onClick={onClick}
+    >
       <span class='absolute inset-0 w-full h-full transition duration-300 ease-out opacity-0 bg-gradient-to-br from-pink-600 via-purple-700 to-blue-400 group-hover:opacity-100'></span>
 
       <span class='absolute top-0 left-0 w-full bg-gradient-to-b from-white to-transparent opacity-5'></span>

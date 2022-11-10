@@ -10,8 +10,6 @@ import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 import { signOut } from "next-auth/react";
 import { navLinks, navLinks2 } from "../../utils/constants";
-
-import Logo from "../logo";
 import Image from "next/image";
 
 const Navbar = () => {
@@ -21,7 +19,7 @@ const Navbar = () => {
   const [loading, setLoading] = useState(false);
   // const dispatch = useDispatch();
   const handleSignIn = () => {
-    router.push("/login");
+    router.push("/register");
   };
 
   const handleNavLink = (name) => {
@@ -117,7 +115,7 @@ const Navbar = () => {
             </div>
           ) : (
             <Button
-              title='Sign In'
+              title='Online Banking'
               py={1}
               px={7}
               onClick={() => handleSignIn()}

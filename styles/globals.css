@@ -70,15 +70,21 @@ html {
 
     background-size: cover;
   }
+  .bgRegister {
+    background-image: url("../public/hero3.jpg");
+    background-color: rgb(13, 16, 23);
+
+    background-size: cover;
+  }
 
   .packagesRoi {
     @apply flex flex-col gap-1 items-start;
   }
 
-  input,
+  /* input,
   textarea {
     @apply rounded-lg bg-white border border-gray-200 px-3 py-3 w-full focus:outline-none;
-  }
+  } */
 
   .transaction_box {
     @apply flex justify-between items-center px-3 bg-white shadow-xl py-3 rounded-lg;

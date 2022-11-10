@@ -20,7 +20,7 @@ const LandingPage = () => {
           {services.map((item) => (
             <div
               key={item.id}
-              className='bg-white px-2 md:px-5 flex justify-center items-center flex-1 h-36 py-3 border border-solid border-gray'
+              className='relative bg-white px-2 md:px-5 flex justify-center items-center flex-1 h-36 py-3 border border-solid border-gray'
             >
               <div className='flex items-center gap-4 flex-col'>
                 <span
@@ -35,7 +35,11 @@ const LandingPage = () => {
                 <span className='text-base font-semibold tracking-wider'>
                   {item.title}
                 </span>
-                <p>Read More</p>
+                <p
+                  className={`absolute -bottom-5 opacity-0 hover:bottom-0 hover:opacity-100`}
+                >
+                  Read More
+                </p>
               </div>
             </div>
           ))}

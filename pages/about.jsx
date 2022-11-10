@@ -31,9 +31,12 @@ const Aboutscreen = () => {
               expedited charitable contributions for our communities.
             </p>
             <p>
-              We also recognize that this past year has fundamentally changed
-              banking by accelerating the shift to digital products and
-              services.
+              At First Monie, we believe that the New World of Fast, Smart,
+              Personal, and Borderless banking relationship is here. We are
+              therefore inspired by our Future Forward Banking ethos to make
+              life (at work and leisure) more exciting for our partners with the
+              use of cutting-edge technology that delivers best-in-class
+              customer satisfaction.
             </p>
           </div>
         </div>
