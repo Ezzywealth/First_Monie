@@ -11,13 +11,15 @@ import { useSession } from "next-auth/react";
 import { signOut } from "next-auth/react";
 import { navLinks, navLinks2 } from "../../utils/constants";
 import Image from "next/image";
+import { MdArrowDropDown } from "react-icons/md";
+import AccountType from "../../components/Layout/AccountType";
 
 const Navbar = () => {
   const router = useRouter();
   const { data: session } = useSession();
   const [activeLink, setActiveLink] = useState("");
   const [loading, setLoading] = useState(false);
-  // const dispatch = useDispatch();
+  const [accountType, setAccountType] = useState(false);
   const handleSignIn = () => {
     router.push("/register");
   };
@@ -34,7 +36,6 @@ const Navbar = () => {
     Cookies.remove("withdrawals");
     Cookies.remove("deposits");
   };
-  // const loadingState = useSelector((state) => state.generalSlice.loadingState);
 
   if (loading) {
     return (
@@ -82,7 +83,7 @@ const Navbar = () => {
           <HiOutlineMenuAlt1 className='w-10 h-10 text-indigo-600 font-extrabold' />
         </button>
 
-        <ul className='hidden md:flex gap-2 lg:gap-4 mt-2'>
+        <ul className='relative hidden md:flex gap-2 lg:gap-4 mt-2'>
           {newLinks.map((link) => (
             <li
               key={link.id}
@@ -93,12 +94,34 @@ const Navbar = () => {
             >
               <Link href={link.link} legacyBehavior>
                 <a className={`cursor-pointer text-sm lg:text-lg`}>
-                  {link.name}
+                  {link.name === "Personal" ? (
+                    <span
+                      className='flex items-center'
+                      onMouseOver={() => setAccountType(true)}
+                      onMouseLeave={() => setAccountType(false)}
+                    >
+                      {link.name}
+                      <MdArrowDropDown />
+
+                      <div
+                        className={`customTransition  w-[200px]  bg-white ${
+                          accountType
+                            ? "absolute -bottom-20 customTransition "
+                            : "hidden customTransition "
+                        }`}
+                      >
+                        <AccountType />
+                      </div>
+                    </span>
+                  ) : (
+                    link.name
+                  )}
                 </a>
               </Link>
             </li>
           ))}
         </ul>
+
         <div className='hidden md:contents'>
           {session?.user ? (
             <div className='flex items-center gap-1'>

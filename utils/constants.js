@@ -59,7 +59,7 @@ export const navLinks2 = [
   {
     id: 2,
     name: "Personal",
-    link: "about",
+    link: "",
     icon: <BsInfoCircleFill />,
   },
   {
@@ -291,5 +291,104 @@ export const thirdCard = [
   {
     id: 6,
     details: "APR",
+  },
+];
+export const firstSaving = [
+  {
+    id: 1,
+    details: "A low hassle savings account good for starting out",
+  },
+  {
+    id: 2,
+    details: "Opening deposit",
+  },
+  {
+    id: 3,
+    details: "1 Business Mastercards",
+  },
+  {
+    id: 4,
+    details: "Premium Support",
+  },
+  {
+    id: 5,
+    details: "International payments",
+  },
+  {
+    id: 6,
+    details: "Competitive interest rates and great benefits",
+  },
+];
+export const secondSaving = [
+  {
+    id: 1,
+    details: "A low hassle savings account good for starting out",
+  },
+  {
+    id: 2,
+    details: "Opening deposit",
+  },
+  {
+    id: 3,
+    details: "1 Business Mastercards",
+  },
+  {
+    id: 4,
+    details: "Premium Support",
+  },
+  {
+    id: 5,
+    details: "International payments",
+  },
+  {
+    id: 6,
+    details: "Competitive interest rates and great benefits",
+  },
+];
+export const thirdSaving = [
+  {
+    id: 1,
+    details: "A low hassle savings account good for starting out",
+  },
+  {
+    id: 2,
+    details: "Opening deposit",
+  },
+  {
+    id: 3,
+    details: "2 Business Mastercards",
+  },
+  {
+    id: 4,
+    details: "Premium Support",
+  },
+  {
+    id: 5,
+    details: "International payments",
+  },
+  {
+    id: 6,
+    details: "Competitive interest rates and great benefits",
+  },
+];
+
+export const currentAccount = [
+  {
+    id: 1,
+    title: "Easy Checking",
+    description: "Personal checking with basic banking must-haves",
+    price: "$6.95",
+  },
+  {
+    id: 2,
+    title: "Gold Checking",
+    description: "Extra benefits for U.S. Bank credit card and loan customers",
+    price: "$14.95",
+  },
+  {
+    id: 3,
+    title: "Platinum Checking",
+    description: "Top-tier checking with competitive rates and all the perks",
+    price: "$24.95",
   },
 ];

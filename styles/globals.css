@@ -81,10 +81,10 @@ html {
     @apply flex flex-col gap-1 items-start;
   }
 
-  /* input,
+  input:not(.checkbox),
   textarea {
     @apply rounded-lg bg-white border border-gray-200 px-3 py-3 w-full focus:outline-none;
-  } */
+  }
 
   .transaction_box {
     @apply flex justify-between items-center px-3 bg-white shadow-xl py-3 rounded-lg;

@@ -120,7 +120,7 @@ const LoginScreen = () => {
                 <input
                   type='checkbox'
                   id='remember'
-                  className=' focus:outline-none border '
+                  className='checkbox focus:outline-none border '
                   {...register("remember", {
                     required: "Please enter your remember",
                   })}
