@@ -78,7 +78,7 @@ export const navLinks2 = [
   {
     id: 5,
     name: "Cards",
-    link: "plans",
+    link: "cards",
     icon: <GrMoney />,
   },
 ];
@@ -205,5 +205,91 @@ export const invest = [
   {
     id: 6,
     title: "Direct Debit",
+  },
+];
+
+export const firstCard = [
+  {
+    id: 1,
+    details: "4X points on dining, takeout and restaurant delivery",
+  },
+  {
+    id: 2,
+    details:
+      "2X points at grocery stores, grocery delivery, streaming services, gas stations and EV charging stations",
+  },
+  {
+    id: 3,
+    details: "1X point on all other eligible purchases",
+  },
+  {
+    id: 4,
+    details:
+      "Plus, a $15 credit for annual streaming service purchases such as Netflix and Spotify",
+  },
+  {
+    id: 5,
+    details:
+      "Enjoy a on purchases and balance transfers for the first 12 billing cycles. After that the APR is variable, currently",
+  },
+  {
+    id: 6,
+    details: "APR",
+  },
+];
+export const secondCard = [
+  {
+    id: 1,
+    details:
+      "5X points on prepaid hotels and car rentals booked directly in the Altitude Rewards Center",
+  },
+  {
+    id: 2,
+    details: "4X points on travel, gas stations and EV charging station",
+  },
+  {
+    id: 3,
+    details:
+      "2X points at grocery stores, grocery delivery, dining and streaming services",
+  },
+  {
+    id: 4,
+    details: "1X point on all other eligible purchases",
+  },
+  {
+    id: 5,
+    details:
+      "Plus, a $30 credit for annual streaming service purchases such as Netflix and Spotify",
+  },
+  {
+    id: 6,
+    details: "APR",
+  },
+];
+export const thirdCard = [
+  {
+    id: 1,
+    details:
+      "5X points on prepaid hotels and car rentals booked directly in the Altitude Rewards Center",
+  },
+  {
+    id: 2,
+    details: "3X points on travel and mobile wallet purchase",
+  },
+  {
+    id: 3,
+    details: "1X point on all other eligible purchases",
+  },
+  {
+    id: 4,
+    details: "Annual fee: $60",
+  },
+  {
+    id: 5,
+    details: "$300 intro for the first year, 50/year thereafter",
+  },
+  {
+    id: 6,
+    details: "APR",
   },
 ];
