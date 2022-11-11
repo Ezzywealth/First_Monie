@@ -6,16 +6,22 @@ import { useDispatch } from "react-redux";
 import Button from "./Button";
 import { useRouter } from "next/router";
 import { signOut, useSession } from "next-auth/react";
+import { navLinks, navLinks2 } from "../../utils/constants";
+import { closeSidebar } from "../../Redux/generalSlice";
+import Image from "next/image";
+import { MdArrowDropDown } from "react-icons/md";
+import AccountType from "./AccountType";
 
 const Sidebar = () => {
   const { data: session } = useSession();
+  const [accountType, setAccountType] = useState(false);
   const [activeLink, setActiveLink] = useState("");
   const dispatch = useDispatch();
   const router = useRouter();
   const handleLinkClicked = (e, link) => {
     const el = e.target.textContent;
     setActiveLink(link);
-    dispatch(startLoading());
+    // dispatch(startLoading());
     dispatch(closeSidebar());
   };
 
@@ -25,27 +31,37 @@ const Sidebar = () => {
   };
   const newLinks = session?.user ? navLinks : navLinks2;
   return (
-    <div className=' bg-[rgba(0,0,0,0.5)] '>
-      <div className='bg-[rgba(0,0,0,0.85)] w-[70%] h-screen p-8'>
+    <div className='bg-[rgba(0,0,0,0.2)]'>
+      <div className='bg-gray-200 w-[70%] h-screen p-8 pr-2'>
         <div>
           <span
             onClick={() => dispatch(closeSidebar())}
             className='flex justify-end '
           >
-            <AiOutlineArrowLeft className='h-5 w-5 text-white' />
+            <AiOutlineArrowLeft className='h-8 w-8 mb-4 text-black' />
           </span>
           <div className='flex flex-col gap-8'>
             <div>
               <Link href='/'>
-                <h2 className='text-center flex flex-col gap-0 cursor-pointer'>
-                  <span className='logoGradient'>azTrades</span>
-                  <span className='flex text-center justify-center gap-1'>
-                    <span className=' logoGradient3 skew-y-12'>crypto </span>
-                    <span className=' logoGradient2 -skew-y-12'>
-                      investments
+                <div className='flex md:w-full items-center gap-5 border border-black pr-2 mx-2 md:pr-16 shadow-xl md:pl-2 py-1 justify-start'>
+                  <div className='h-8 w-8'>
+                    <Image
+                      src='/logo_pic2.png'
+                      alt='logo'
+                      className='cursor-pointer h-8 w-8 shadow-2xl md:scale-150 ml-2'
+                      width={80}
+                      height={80}
+                    />
+                  </div>
+                  <div className='flex font-extrabold flex-col tracking-wider text-sm'>
+                    <span className=' text-base md:text-3xl  text-indigo-900'>
+                      First Monie
                     </span>
-                  </span>
-                </h2>
+                    <span className='font-bold italic text-center'>
+                      Online Banking
+                    </span>
+                  </div>
+                </div>
               </Link>
             </div>
             <div className='flex flex-col gap-16'>
@@ -53,15 +69,40 @@ const Sidebar = () => {
                 {newLinks.map((link) => (
                   <li
                     key={link.id}
-                    className={`text-white cursor-pointer hover:scale-105 customTransition ${
-                      activeLink === link.name && "text-pink-300 p-1 px-2 "
+                    className={` cursor-pointer hover:scale-105 customTransition text-black font-semibold ${
+                      activeLink === link.name && "text-pink-300 p-1 px-2  "
                     }`}
-                    onClick={(e) => handleLinkClicked(e, link.name)}
                   >
-                    <Link href={link.link}>
+                    <Link href={link.link} legacyBehavior>
                       <a className='flex gap-3 text-xl items-center '>
-                        <span className=' text-white'> {link.icon}</span>
-                        <span> {link.name}</span>
+                        {link.name === "Personal" ? (
+                          <span
+                            className='flex items-center gap-2'
+                            onClick={() => setAccountType(!accountType)}
+                          >
+                            {link.icon}
+                            {link.name}
+                            <MdArrowDropDown />
+
+                            <div
+                              className={`customTransition  w-[200px]  bg-white ${
+                                accountType
+                                  ? "absolute -bottom-20 customTransition "
+                                  : "hidden customTransition "
+                              }`}
+                            >
+                              <AccountType />
+                            </div>
+                          </span>
+                        ) : (
+                          <span
+                            onClick={(e) => handleLinkClicked(e, link.name)}
+                            className='flex gap-2 items-center'
+                          >
+                            {link.icon}
+                            {link.name}
+                          </span>
+                        )}
                       </a>
                     </Link>
                   </li>
@@ -79,7 +120,7 @@ const Sidebar = () => {
                 </div>
               ) : (
                 <Button
-                  title='Sign In'
+                  title='Online Banking'
                   onClick={() => {
                     router.push("/login");
                     dispatch(closeSidebar());

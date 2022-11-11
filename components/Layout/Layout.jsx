@@ -2,18 +2,18 @@ import React, { useState, useEffect } from "react";
 import Footer from "./Footer";
 import Navbar from "./Navbar";
 import Head from "next/head";
+import { useSelector } from "react-redux";
+import Sidebar from "./Sidebar";
 
 const Layout = ({ children, title, priceList = true }) => {
   const [height, setHeight] = useState(0);
+  const isSidebarOpen = useSelector(
+    (state) => state.generalSlice.isSidebarOpen
+  );
 
-  // useEffect(() => {
-  //   setHeight(window.scrollY);
-
-  //   console.log(window.innerHeight);
-  // }, [height]);
   return (
     <div className='relative h-screen w-full'>
-      {/* <div
+      <div
         className={`fixed  w-full transition-all duration-500 ease-linear md:hidden h-screen bottom-0 left-0 z-50  ${
           isSidebarOpen
             ? "left-[0vh] top-[0vh] right-0 transition-all duration-500 ease-linear"
@@ -21,7 +21,7 @@ const Layout = ({ children, title, priceList = true }) => {
         }`}
       >
         <Sidebar />
-      </div> */}
+      </div>
 
       <Head>
         <title>{title}</title>

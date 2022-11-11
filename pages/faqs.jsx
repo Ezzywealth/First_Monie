@@ -25,16 +25,16 @@ const Faqs = () => {
     <Layout title='layout'>
       <div className='mt-[90px] bgContact py-12'>
         <div className='grid grid-cols-1 px-4 md:px-12 lg:px-16 md:grid-cols-2 gap-6'>
-          <div>
+          <div className='flex flex-col items-center'>
             <h2 className='font-bold text-4xl mb-3 text-[#333333]'>
               Frequently Asked Questions
             </h2>
-            <p className='text-gray-500 text-sm mb-8'>
+            <p className='text-gray-500 text-sm text-center '>
               Find answers to questions about your credit card account, billing
               statements, payments, managing your account online, and contacting
               us.
             </p>
-            <div>
+            <div className='flex justify-center'>
               <Image
                 src={FaqsPic}
                 alt='faqs'
@@ -53,16 +53,16 @@ const Faqs = () => {
                   className='flex items-center gap-2 border-b border-solid customTransition border-indigo-400'
                   onClick={() => handleQuestion(faq.id)}
                 >
-                  <span className='bg-indigo-500 flex items-center justify-center h-12 w-4 mr-4'>
+                  <span className='bg-indigo-500 flex items-center justify-center h-20 md:h-12 w-4 mr-4'>
                     {disableAnswer && activeQuestion === faq.id ? (
                       <span onClick={() => handleQuestionClose(faq.id)}>
                         <AiOutlineMinus className='cursor-pointer' />
                       </span>
                     ) : (
-                      <BsPlus />
+                      <BsPlus className='cursor-pointer' />
                     )}
                   </span>
-                  <span>{faq.question}</span>
+                  <span className='font-semibold'>{faq.question}</span>
                 </div>
 
                 {disableAnswer && (

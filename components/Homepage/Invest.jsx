@@ -34,7 +34,7 @@ const Invest = () => {
             src={People}
             alt='people'
             layout='responsive'
-            className='md:h-[450px] h-[300px]  w-full shadow-2xl'
+            className='md:h-[450px] h-[300px] scale-75 w-full shadow-2xl'
           />
         </div>
       </div>

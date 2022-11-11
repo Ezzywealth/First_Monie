@@ -1,6 +1,7 @@
 import "../styles/globals.css";
 import { SessionProvider } from "next-auth/react";
-
+import store from "../Redux/store";
+import { Provider, useSelector } from "react-redux";
 function MyApp({ Component, pageProps: { session, ...pageProps } }) {
   return (
     <SessionProvider session={session}>
@@ -21,15 +22,15 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
         }}
       />
       ; */}
-      {/* <Provider store={store}> */}
-      {Component.auth ? (
-        <Auth adminOnly={Component.auth.adminOnly}>
+      <Provider store={store}>
+        {Component.auth ? (
+          <Auth adminOnly={Component.auth.adminOnly}>
+            <Component {...pageProps} />
+          </Auth>
+        ) : (
           <Component {...pageProps} />
-        </Auth>
-      ) : (
-        <Component {...pageProps} />
-      )}
-      {/* </Provider> */}
+        )}
+      </Provider>
     </SessionProvider>
   );
 }

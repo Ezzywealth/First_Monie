@@ -1,5 +1,5 @@
 import { MdSpaceDashboard } from "react-icons/md";
-import { BsInfoCircleFill } from "react-icons/bs";
+import { BsInfoCircleFill, BsPersonCheck } from "react-icons/bs";
 import { GrMoney } from "react-icons/gr";
 import { MdOutlineAttachMoney } from "react-icons/md";
 import { AiOutlineHome } from "react-icons/ai";
@@ -7,7 +7,7 @@ import { FiPackage } from "react-icons/fi";
 import { FiFacebook, FiTwitter, FiInstagram, FiLinkedin } from "react-icons/fi";
 import { TbShieldCheck } from "react-icons/tb";
 import { BsCreditCard2Back, BsQuestionDiamond } from "react-icons/bs";
-import { MdOutlineSavings } from "react-icons/md";
+import { MdOutlineSavings, MdOutlineContactSupport } from "react-icons/md";
 import { AiOutlineBank } from "react-icons/ai";
 
 export const navLinks = [
@@ -19,33 +19,40 @@ export const navLinks = [
   },
   {
     id: 2,
+    name: "Personal",
+    link: "",
+    icon: <BsPersonCheck />,
+  },
+  {
+    id: 3,
     name: "Dashboard",
     link: "dashboard",
     icon: <MdSpaceDashboard />,
   },
   {
-    id: 3,
+    id: 4,
     name: "About",
     link: "about",
-    icon: <BsInfoCircleFill />,
+    icon: <GrMoney />,
   },
-  {
-    id: 4,
-    name: "Deposits",
-    link: "transactions",
-    icon: <MdOutlineAttachMoney />,
-  },
+
   {
     id: 5,
-    name: "Withdrawals",
-    link: "transactions",
-    icon: <MdOutlineAttachMoney />,
+    name: "Contact",
+    link: "contact",
+    icon: <MdOutlineContactSupport />,
   },
   {
     id: 6,
-    name: "Plans",
-    link: "plans",
-    icon: <FiPackage />,
+    name: "Cards",
+    link: "cards",
+    icon: <GrMoney />,
+  },
+  {
+    id: 7,
+    name: "FAQs",
+    link: "faqs",
+    icon: <BsQuestionDiamond />,
   },
 ];
 
@@ -60,7 +67,7 @@ export const navLinks2 = [
     id: 2,
     name: "Personal",
     link: "",
-    icon: <BsInfoCircleFill />,
+    icon: <BsPersonCheck />,
   },
   {
     id: 3,
@@ -73,7 +80,7 @@ export const navLinks2 = [
     id: 4,
     name: "Contact",
     link: "contact",
-    icon: <BsInfoCircleFill />,
+    icon: <MdOutlineContactSupport />,
   },
   {
     id: 5,
@@ -133,7 +140,7 @@ export const address = [
   },
   {
     id: 2,
-    title: "Phone: Contact_Support",
+    title: "Phone: +1(616) 666-3409",
   },
   {
     id: 3,

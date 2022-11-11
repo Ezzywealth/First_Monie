@@ -64,7 +64,7 @@ const Contact = () => {
               </span>
               <span className='flex flex-col'>
                 <h2 className='font-semibold'>Phone:</h2>
-                <p>+112456722999</p>
+                <p>+1(616) 666-3409</p>
               </span>
             </div>
           </div>

@@ -13,9 +13,11 @@ import { navLinks, navLinks2 } from "../../utils/constants";
 import Image from "next/image";
 import { MdArrowDropDown } from "react-icons/md";
 import AccountType from "../../components/Layout/AccountType";
+import { openSidebar } from "../../Redux/generalSlice";
 
 const Navbar = () => {
   const router = useRouter();
+  const dispatch = useDispatch();
   const { data: session } = useSession();
   const [activeLink, setActiveLink] = useState("");
   const [loading, setLoading] = useState(false);
