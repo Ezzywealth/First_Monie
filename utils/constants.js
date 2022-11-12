@@ -1,14 +1,23 @@
 import { MdSpaceDashboard } from "react-icons/md";
-import { BsInfoCircleFill, BsPersonCheck } from "react-icons/bs";
+import {
+  BsPersonCheck,
+  BsCurrencyDollar,
+  BsArrowLeftRight,
+  BsBank,
+} from "react-icons/bs";
 import { GrMoney } from "react-icons/gr";
 import { MdOutlineAttachMoney } from "react-icons/md";
 import { AiOutlineHome } from "react-icons/ai";
-import { FiPackage } from "react-icons/fi";
 import { FiFacebook, FiTwitter, FiInstagram, FiLinkedin } from "react-icons/fi";
 import { TbShieldCheck } from "react-icons/tb";
 import { BsCreditCard2Back, BsQuestionDiamond } from "react-icons/bs";
-import { MdOutlineSavings, MdOutlineContactSupport } from "react-icons/md";
+import {
+  MdOutlineSavings,
+  MdOutlineContactSupport,
+  MdOutlineLibraryBooks,
+} from "react-icons/md";
 import { AiOutlineBank } from "react-icons/ai";
+import { BiTransferAlt } from "react-icons/bi";
 
 export const navLinks = [
   {
@@ -614,5 +623,48 @@ exclude any of our or your liabilities that may not be excluded under applicable
 4. The limitations and prohibitions of liability set in this Section and elsewhere in this disclaimer: (a) are subject to the preceding paragraph; and (b) govern all liabilities arising under the disclaimer, including liabilities arising in contract, in tort and for breach of statutory duty.
 
 5. As long as the website and the information and services on the website are provided free of charge, we will not be liable for any loss or damage of any nature.`,
+  },
+];
+
+export const servicesData = [
+  {
+    id: 1,
+    title: "Money Transfer",
+    description: "Paragraph of text beneath the heading to explain the heading",
+    icons: <BiTransferAlt />,
+  },
+  {
+    id: 2,
+    title: "Multi Currency",
+    description: "Paragraph of text beneath the heading to explain the heading",
+    icons: <BsCurrencyDollar />,
+  },
+  {
+    id: 3,
+    title: "Exchange Currency",
+    description:
+      "Paragraph of text beneath the heading to explain the heading.",
+    icons: <BsArrowLeftRight />,
+  },
+  {
+    id: 4,
+    title: "Fixed Deposits",
+    description:
+      "Paragraph of text beneath the heading to explain the heading.",
+    icons: <BsBank />,
+  },
+  {
+    id: 5,
+    title: "Apply Loan",
+    description:
+      "Paragraph of text beneath the heading to explain the heading.",
+    icons: <MdOutlineLibraryBooks />,
+  },
+  {
+    id: 6,
+    title: "Payment Request",
+    description:
+      "Paragraph of text beneath the heading to explain the heading.",
+    icons: <BsCreditCard2Back />,
   },
 ];
