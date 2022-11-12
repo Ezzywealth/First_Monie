@@ -14,6 +14,7 @@ import Image from "next/image";
 import { MdArrowDropDown } from "react-icons/md";
 import AccountType from "../../components/Layout/AccountType";
 import { openSidebar } from "../../Redux/generalSlice";
+import Button2 from "./Button2";
 
 const Navbar = () => {
   const router = useRouter();
@@ -139,7 +140,7 @@ const Navbar = () => {
               </span>
             </div>
           ) : (
-            <Button
+            <Button2
               title='Online Banking'
               py={1}
               px={7}

@@ -1,27 +1,30 @@
+import { useState, useEffect } from "react";
 import "../styles/globals.css";
 import { SessionProvider } from "next-auth/react";
 import store from "../Redux/store";
-import { Provider, useSelector } from "react-redux";
+import { BsArrowUpShort } from "react-icons/bs";
+import { Provider } from "react-redux";
 function MyApp({ Component, pageProps: { session, ...pageProps } }) {
+  const [showTopBtn, setShowTopBtn] = useState(false);
+
+  const handleTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", () => {
+      if (window.scrollY > 400) {
+        setShowTopBtn(true);
+      } else {
+        setShowTopBtn(false);
+      }
+    });
+  }, []);
   return (
     <SessionProvider session={session}>
-      {/* <Script
-        id='crisp-widget'
-        strategy='afterInteractive'
-        dangerouslySetInnerHTML={{
-          __html: `
-      window.$crisp=[];
-      window.CRISP_WEBSITE_ID=${process.env.NEXT_CRISP_ID};
-      (function(){
-        const d = document;
-        const s = d.createElement("script");
-        s.src = "https://client.crisp.chat/l.js";
-        s.async = 1;
-        d.getElementsByTagName("head")[0].appendChild(s);
-      })();`,
-        }}
-      />
-      ; */}
       <Provider store={store}>
         {Component.auth ? (
           <Auth adminOnly={Component.auth.adminOnly}>
@@ -31,6 +34,14 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
           <Component {...pageProps} />
         )}
       </Provider>
+      {showTopBtn && (
+        <div
+          onClick={() => handleTop()}
+          className='fixed  bottom-12 right-8 bg-indigo-600 rounded-full p-3 cursor-pointer'
+        >
+          <BsArrowUpShort className='text-white text-3xl' />
+        </div>
+      )}
     </SessionProvider>
   );
 }

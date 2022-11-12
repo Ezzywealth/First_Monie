@@ -630,41 +630,40 @@ export const servicesData = [
   {
     id: 1,
     title: "Money Transfer",
-    description: "Paragraph of text beneath the heading to explain the heading",
+    description:
+      "We can transfer money to any location around the world without stress",
     icons: <BiTransferAlt />,
   },
   {
     id: 2,
     title: "Multi Currency",
-    description: "Paragraph of text beneath the heading to explain the heading",
+    description: "We accept payment from various currencies around the world",
     icons: <BsCurrencyDollar />,
   },
   {
     id: 3,
     title: "Exchange Currency",
-    description:
-      "Paragraph of text beneath the heading to explain the heading.",
+    description: "Updated currency rate across all currencies.",
     icons: <BsArrowLeftRight />,
   },
   {
     id: 4,
-    title: "Fixed Deposits",
-    description:
-      "Paragraph of text beneath the heading to explain the heading.",
+    title: "COST EFFICIENCY",
+    description: "Reasonable trading fees for takers and all market makers",
     icons: <BsBank />,
   },
   {
     id: 5,
-    title: "Apply Loan",
+    title: "PAYMENT OPTIONS",
     description:
-      "Paragraph of text beneath the heading to explain the heading.",
+      "Popular methods: Visa, MasterCard, bank transfer, cryptocurrency",
     icons: <MdOutlineLibraryBooks />,
   },
   {
     id: 6,
-    title: "Payment Request",
+    title: "HIGH LIQUIDITY",
     description:
-      "Paragraph of text beneath the heading to explain the heading.",
+      "Fast access to high liquidity orderbook for top currency pairs.",
     icons: <BsCreditCard2Back />,
   },
 ];

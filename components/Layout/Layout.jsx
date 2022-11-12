@@ -7,9 +7,20 @@ import Sidebar from "./Sidebar";
 
 const Layout = ({ children, title, priceList = true }) => {
   const [height, setHeight] = useState(0);
+  const [navbarColor, setNavbarColor] = useState(false);
   const isSidebarOpen = useSelector(
     (state) => state.generalSlice.isSidebarOpen
   );
+
+  useEffect(() => {
+    window.addEventListener("scroll", () => {
+      if (window.scrollY > 400) {
+        setNavbarColor(true);
+      } else {
+        setNavbarColor(false);
+      }
+    });
+  }, []);
 
   return (
     <div className='relative h-screen w-full'>
@@ -28,9 +39,9 @@ const Layout = ({ children, title, priceList = true }) => {
         <link rel='icon' href='/favicon.ico' />
       </Head>
       <div
-        className={`fixed bg-[rgba(0,0,0,0.2)] ${
-          height === 200 && "bg-[rgba(0,0,0,0.9)]"
-        }   z-40  top-0 w-full`}
+        className={`fixed bg-[rgba(0,0,0,0.5)] ${
+          navbarColor && "bg-indigo-300"
+        } ${height === 200 && "bg-[rgba(0,0,0,0.9)]"}   z-40  top-0 w-full`}
       >
         <Navbar />
       </div>
