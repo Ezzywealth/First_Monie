@@ -354,7 +354,7 @@ const RegisterScreen = () => {
           <p>
             Already have an account?{" "}
             <Link href='/login' legacyBehavior>
-              <span className='font-semibold text-indigo-600 cursor-pointer'>
+              <span className='font-bold text-indigo-600 cursor-pointer'>
                 {" "}
                 Login
               </span>

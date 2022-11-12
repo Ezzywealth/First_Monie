@@ -24,7 +24,7 @@ const Navbar = () => {
   const [loading, setLoading] = useState(false);
   const [accountType, setAccountType] = useState(false);
   const handleSignIn = () => {
-    router.push("/register");
+    router.push("/login");
   };
 
   const handleNavLink = (name) => {

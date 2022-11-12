@@ -5,12 +5,13 @@ import Button2 from "../Layout/Button2";
 const LandingPage = () => {
   return (
     <div className='bgLanding w-full h-[650px] relative'>
-      <div className='absolute top-0 left-0 w-full h-full bg-[rgba(58,58,60,0.5)]'>
-        <div className='absolute md:w-1/2 top-[25%] space-y-4 bottom-[50%] left-8 h-full'>
-          <h2 className='text-4xl md:text-5xl text-indigo-900  capitalize font-extrabold tracking-wider'>
-            Smart-free banking for everybody
+      <div className='absolute top-0 left-0 w-full  h-full bg-[rgba(0,0,0,0.4)] '>
+        <div className='absolute md:w-1/2 top-[25%] space-y-8 bottom-[50%] left-4 w-[90%] md:left-16 h-full'>
+          <h2 className='text-4xl md:text-5xl text-white capitalize font-extrabold tracking-wider'>
+            Smart-free{" "}
+            <span className='text-indigo-500'>banking for everybody</span>
           </h2>
-          <p className='font-bold text-gray-200 text-lg'>
+          <p className='font-bold text-gray-100 text-lg'>
             Bank smarter with us now and browse <br /> personal and consumer
             banking services
           </p>

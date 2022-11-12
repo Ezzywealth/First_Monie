@@ -9,6 +9,11 @@ const userSchema = new mongoose.Schema(
     isAdmin: { type: Boolean, required: true, default: false },
     userName: { type: String, required: true },
     country: { type: String, required: true },
+    birthday: { type: String, required: true },
+    sex: { type: String, required: true },
+    marital_status: { type: String, required: true },
+    occupation: { type: String, required: true },
+    account_number: { type: Number, required: true },
   },
   {
     timestamps: true,

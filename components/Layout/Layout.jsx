@@ -39,9 +39,9 @@ const Layout = ({ children, title, priceList = true }) => {
         <link rel='icon' href='/favicon.ico' />
       </Head>
       <div
-        className={`fixed bg-[rgba(0,0,0,0.5)] ${
+        className={`fixed bg-[rgba(0,0,0,0.1)] ${
           navbarColor && "bg-indigo-300"
-        } ${height === 200 && "bg-[rgba(0,0,0,0.9)]"}   z-40  top-0 w-full`}
+        } ${height === 200 && "bg-[rgba(0,0,0,0.9)]"}   z-50  top-0 w-full`}
       >
         <Navbar />
       </div>

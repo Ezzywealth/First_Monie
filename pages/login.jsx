@@ -43,36 +43,37 @@ const LoginScreen = () => {
   };
 
   return (
-    <div className='bgRegister h-screen shadow-2xl'>
-      <div className='flex justify-center items-center flex-col-reverse mx-auto w-full p-4 md:p-10'>
+    <div className='bgRegister h-screen flex items-center shadow-2xl'>
+      <div className='flex justify-center flex-col items-center mx-auto w-full px-4 '>
+        <div className='flex justify-center w-full'>
+          <Link href='/'>
+            <div className='flex items-center w-full  gap-5 border bg-white border-indigo-200 pr-2 mx-2 md:pr-16 shadow-xl md:pl-2 py-1 justify-start'>
+              <div className='h-8 w-8'>
+                <Image
+                  src='/logo_pic2.png'
+                  alt='logo'
+                  className='cursor-pointer h-8 w-8 shadow-2xl md:scale-150 ml-2'
+                  width={80}
+                  height={80}
+                />
+              </div>
+              <div className='flex font-extrabold flex-col tracking-wider text-sm'>
+                <span className=' text-base md:text-3xl  text-indigo-900'>
+                  First Monie
+                </span>
+                <span className='font-bold italic text-center'>
+                  Online Banking
+                </span>
+              </div>
+            </div>
+          </Link>
+        </div>
         <form
-          className='w-[400px] h-[500px] my-4 bg-white overflow-auto py-8 pt-8 rounded-lg px-4 '
+          className='w-full md:w-[400px]  my-4 bg-white overflow-auto py-8 pt-3 rounded-lg px-4 '
           onSubmit={handleSubmit(formHandler)}
         >
-          <div className='mb-8 flex justify-center '>
-            <Link href='/'>
-              <div className='flex  items-center gap-5 border border-black pr-2 mx-2 md:pr-16 shadow-xl md:pl-2 py-1 justify-start'>
-                <div className='h-8 w-8'>
-                  <Image
-                    src='/logo_pic2.png'
-                    alt='logo'
-                    className='cursor-pointer h-8 w-8 shadow-2xl md:scale-150 ml-2'
-                    width={80}
-                    height={80}
-                  />
-                </div>
-                <div className='flex font-extrabold flex-col tracking-wider text-sm'>
-                  <span className=' text-base md:text-3xl  text-indigo-900'>
-                    First Monie
-                  </span>
-                  <span className='font-bold italic text-center'>
-                    Online Banking
-                  </span>
-                </div>
-              </div>
-            </Link>
-          </div>
           <div className='grid grid-cols-1 mb-8  gap-4'>
+            <h2 className='text-center'>Account Login</h2>
             <div>
               <label htmlFor='firstName' className='text-[#333333] '>
                 Account Number
@@ -80,7 +81,7 @@ const LoginScreen = () => {
               <input
                 type='text'
                 id='account_number'
-                className='w-full p-2 focus:outline-none border '
+                className='w-full  focus:outline-none border '
                 {...register("account_number", {
                   required: "Please enter your Account Number",
                 })}
