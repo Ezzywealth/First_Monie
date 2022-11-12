@@ -50,7 +50,7 @@ const Footer = () => {
           <ul className='flex flex-col gap-2 mt-4'>
             {company.map((item) => (
               <li key={item.id} className='text-sm tracking-wider'>
-                {item.title}
+                <Link href={item.link}>{item.title}</Link>
               </li>
             ))}
           </ul>
@@ -60,7 +60,7 @@ const Footer = () => {
           <ul className='flex flex-col gap-2 mt-2'>
             {support.map((item) => (
               <li key={item.id} className='text-sm tracking-wider'>
-                {item.title}
+                <Link href={item.link}>{item.title}</Link>
               </li>
             ))}
           </ul>

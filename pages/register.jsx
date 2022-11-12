@@ -324,7 +324,32 @@ const RegisterScreen = () => {
               )}
             </div>
 
-            <ButtonBack type='submit' title='Register' />
+            <div className='mb-4'>
+              <ButtonBack type='submit' title='Register' />
+            </div>
+          </div>
+          <div>
+            <label
+              htmlFor='passowrd'
+              className='text-[#333333] flex items-center gap-1 text-sm'
+            >
+              <input
+                type='checkbox'
+                id='remember'
+                className='checkbox focus:outline-none border '
+                {...register("remember", {
+                  required: "Please enter your remember",
+                })}
+              />
+              I agree with
+              <Link href={"/privacy"} legacyBehavior>
+                <a className='text-blue-600'>Privacy Policy</a>
+              </Link>
+              &
+              <Link href='/terms' legacyBehavior>
+                <a className='text-blue-600'>Terms & Condition</a>
+              </Link>
+            </label>
           </div>
           <p>
             Already have an account?{" "}
