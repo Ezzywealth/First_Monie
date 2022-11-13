@@ -1,7 +1,7 @@
 import React from "react";
 import { AiOutlineMenuFold } from "react-icons/ai";
 import { MdOutlineNotificationsActive } from "react-icons/md";
-import profilePic from "../../public/bitcoin3.jpg";
+import profilePic from "/public/image11.avif";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
 import { useDispatch, useSelector } from "react-redux";

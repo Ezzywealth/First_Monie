@@ -10,6 +10,7 @@ import { useRef } from "react";
 import { BeatLoader } from "react-spinners";
 import Image from "next/image";
 import Link from "next/link";
+import ButtonBack from "../../components/Layout/ButtonBack";
 export default function Component() {
   const { data: session, status } = useSession();
   const inputRef = useRef(null);
@@ -25,19 +26,19 @@ export default function Component() {
 
   useEffect(() => {
     if (session?.user && session?.user.isAdmin) {
-      router.push("/admin/aztrades-admin");
+      router.push("/admin/firstmonie");
     }
   }, [session?.user.email]);
 
-  const formHandler = async ({ email, password }) => {
+  const formHandler = async ({ account_number, password }) => {
     try {
       setLoading(true);
       const result = await signIn("credentials", {
         redirect: false,
-        email,
+        accountNumber: account_number,
         password,
       });
-      router.push("/admin/firstmonie");
+      // router.push("/admin/firstmonie");
 
       if (result.error) {
         router.push("/admin/adminLogin");
@@ -46,7 +47,9 @@ export default function Component() {
       }
     } catch (error) {
       toast.error(getError(error));
+      setLoading(false);
     }
+    console.log(account_number, password);
   };
 
   if (loading) {
@@ -64,15 +67,15 @@ export default function Component() {
   }
 
   return (
-    <div className='bg-indigo-50'>
+    <div className='bgRegister'>
       <ToastContainer position='top-center' limit={1} />
       <div className='flex justify-center items-center flex-col-reverse h-screen mx-auto w-full md:w-[450px] p-4 md:p-10'>
         <form
-          className='w-full my-4 bg-white h-[80%] md:h-screen py-8 pt-4 rounded-lg px-4 space-y-8'
+          className='w-full my-4 bg-white md:h-screen mt-32 pt-4 rounded-lg px-4 space-y-8'
           onSubmit={handleSubmit(formHandler)}
         >
           <Link href='/'>
-            <div className='flex md:w-full items-center gap-5 border border-black pr-2 mx-2 md:pr-16 shadow-xl md:pl-2 py-1 justify-start'>
+            <div className='flex md:w-full  items-center gap-5 border border-black pr-2 mx-2 md:pr-16 shadow-xl md:pl-2 py-1 justify-start'>
               <div className='h-8 w-8'>
                 <Image
                   src='/logo_pic2.png'
@@ -132,7 +135,7 @@ export default function Component() {
               )}
             </div>
             <div className='mt-8 mb-4'>
-              <Button title='Sign in' />
+              <ButtonBack title='Sign in' />
             </div>
           </div>
         </form>

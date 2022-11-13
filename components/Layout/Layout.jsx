@@ -25,7 +25,7 @@ const Layout = ({ children, title, priceList = true }) => {
   return (
     <div className='relative h-screen w-full'>
       <div
-        className={`fixed  w-full transition-all duration-500 ease-linear md:hidden h-screen bottom-0 left-0 z-50  ${
+        className={`fixed w-full transition-all duration-500 ease-linear lg:hidden h-screen bottom-0 left-0 z-50  ${
           isSidebarOpen
             ? "left-[0vh] top-[0vh] right-0 transition-all duration-500 ease-linear"
             : "-left-[900px] "
@@ -38,11 +38,7 @@ const Layout = ({ children, title, priceList = true }) => {
         <title>{title}</title>
         <link rel='icon' href='/favicon.ico' />
       </Head>
-      <div
-        className={`fixed bg-[rgba(0,0,0,0.1)] ${
-          navbarColor && "bg-indigo-300"
-        } ${height === 200 && "bg-[rgba(0,0,0,0.9)]"}   z-50  top-0 w-full`}
-      >
+      <div className={`fixed bg-gray-200   z-40  top-0 w-full`}>
         <Navbar />
       </div>
       <main className=' lg:mt-[90px] relative'>{children}</main>

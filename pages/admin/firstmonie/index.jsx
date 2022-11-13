@@ -2,14 +2,14 @@ import React, { useState } from "react";
 import { useSession } from "next-auth/react";
 import axios from "axios";
 import db from "../../../utils/db";
-import Transaction from "../../../components/Models/Transactions";
-import User from "../../../components/Models/User";
+// import Transaction from "../../../components/Models/Transactions";
+// import User from "../../../components/Models/User";
 import AdminSidebar from "../../../components/AdminPanel/AdminSidebar";
 import Navbar from "../../../components/AdminPanel/Navbar";
 import { adminPanelData } from "../../../utils/constants";
 import TransactionTable from "../../../components/AdminPanel/TransactionTable";
 import { BeatLoader } from "react-spinners";
-
+import { useSelector } from "react-redux";
 const FirstmonieAdmin = ({ transactions, users }) => {
   const [newUsers, setNewUsers] = useState(users);
   const { data: session, status } = useSession();
@@ -71,7 +71,7 @@ const FirstmonieAdmin = ({ transactions, users }) => {
             <Navbar />
           </div>
 
-          <section className='grid grid-cols-1 mb-8 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-8 px-8 xl:px-16 mt-8'>
+          {/* <section className='grid grid-cols-1 mb-8 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-8 px-8 xl:px-16 mt-8'>
             {adminPanelData.map((panel) => (
               <div
                 key={panel.id}
@@ -105,33 +105,32 @@ const FirstmonieAdmin = ({ transactions, users }) => {
                 </div>
               </div>
             ))}
-          </section>
+          </section> */}
 
-          {transactions.length >= 1 && (
+          {/* {transactions.length >= 1 && (
             <section className='overflow-auto' id='transactions'>
               <TransactionTable transactions={transactions} />
             </section>
-          )}
+          )} */}
         </main>
       </div>
     </div>
   );
 };
-AztradesAdmin.auth = { adminOnly: true };
 
 export default FirstmonieAdmin;
 
-export async function getServerSideProps(context) {
-  await db.connect();
-  const data = await Transaction.find().lean();
-  const users = await User.find().lean();
+// export async function getServerSideProps(context) {
+//   await db.connect();
+//   const data = await Transaction.find().lean();
+//   const users = await User.find().lean();
 
-  await db.disconnect();
+//   await db.disconnect();
 
-  return {
-    props: {
-      transactions: data.map(db.convertDocToObj),
-      users: users.map(db.convertUsersDocToObj),
-    },
-  };
-}
+//   return {
+//     props: {
+//       transactions: data.map(db.convertDocToObj),
+//       users: users.map(db.convertUsersDocToObj),
+//     },
+//   };
+// }

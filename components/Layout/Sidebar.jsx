@@ -11,11 +11,13 @@ import { closeSidebar } from "../../Redux/generalSlice";
 import Image from "next/image";
 import { MdArrowDropDown } from "react-icons/md";
 import AccountType from "./AccountType";
+import MoreLists from "./MoreLists";
 
 const Sidebar = () => {
   const { data: session } = useSession();
   const [accountType, setAccountType] = useState(false);
   const [activeLink, setActiveLink] = useState("");
+  const [more, setMore] = useState(false);
   const dispatch = useDispatch();
   const router = useRouter();
   const handleLinkClicked = (e, link) => {
@@ -32,7 +34,7 @@ const Sidebar = () => {
   const newLinks = session?.user ? navLinks : navLinks2;
   return (
     <div className='bg-[rgba(0,0,0,0.2)]'>
-      <div className='bg-gray-200 w-[70%] h-screen p-8 pr-2'>
+      <div className='bg-gray-200 w-[80%] md:w-[60%]  lg:w-[50%] h-screen p-8 pr-2'>
         <div>
           <span
             onClick={() => dispatch(closeSidebar())}
@@ -43,7 +45,7 @@ const Sidebar = () => {
           <div className='flex flex-col gap-8'>
             <div>
               <Link href='/'>
-                <div className='flex md:w-full items-center gap-5 border border-black pr-2 mx-2 md:pr-16 shadow-xl md:pl-2 py-1 justify-start'>
+                <div className='flex w-[50%] items-center gap-5 border border-black pr-2 mx-2 shadow-xl md:pl-2 py-1 justify-start'>
                   <div className='h-8 w-8'>
                     <Image
                       src='/logo_pic2.png'
@@ -74,13 +76,17 @@ const Sidebar = () => {
                     }`}
                   >
                     <Link href={link.link} legacyBehavior>
-                      <a className='flex gap-3 text-xl items-center '>
-                        {link.name === "Personal" ? (
+                      <a className={`cursor-pointer text-sm `}>
+                        {link.name === "Personal" && (
                           <span
-                            className='flex items-center gap-2'
-                            onClick={() => setAccountType(!accountType)}
+                            className='flex items-center'
+                            onMouseOver={() =>
+                              link.name === "Personal" && setAccountType(true)
+                            }
+                            onMouseLeave={() =>
+                              link.name === "Personal" && setAccountType(false)
+                            }
                           >
-                            {link.icon}
                             {link.name}
                             <MdArrowDropDown />
 
@@ -94,13 +100,32 @@ const Sidebar = () => {
                               <AccountType />
                             </div>
                           </span>
-                        ) : (
+                        )}
+                        {link.name !== "Personal" &&
+                          link.name !== "More" &&
+                          link.name}
+                        {link.name === "More" && (
                           <span
-                            onClick={(e) => handleLinkClicked(e, link.name)}
-                            className='flex gap-2 items-center'
+                            className='flex items-center'
+                            onMouseOver={() =>
+                              link.name === "More" && setMore(true)
+                            }
+                            onMouseLeave={() =>
+                              link.name === "More" && setMore(false)
+                            }
                           >
-                            {link.icon}
                             {link.name}
+                            <MdArrowDropDown />
+
+                            <div
+                              className={`customTransition  w-[200px]  bg-white ${
+                                more
+                                  ? "absolute bottom-[1.5rem] customTransition "
+                                  : "hidden customTransition "
+                              }`}
+                            >
+                              <MoreLists />
+                            </div>
                           </span>
                         )}
                       </a>

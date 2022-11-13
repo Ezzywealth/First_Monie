@@ -40,28 +40,35 @@ export const navLinks = [
   },
   {
     id: 4,
-    name: "About",
-    link: "about",
+    name: "Loans",
+    link: "loans",
     icon: <GrMoney />,
   },
 
   {
     id: 5,
-    name: "Contact",
+    name: "Transfers",
     link: "contact",
     icon: <MdOutlineContactSupport />,
   },
   {
-    id: 6,
-    name: "Cards",
-    link: "cards",
+    id: 4,
+    name: "Deposits",
+    link: "deposits",
     icon: <GrMoney />,
   },
+
   {
-    id: 7,
-    name: "FAQs",
-    link: "faqs",
-    icon: <BsQuestionDiamond />,
+    id: 5,
+    name: "Withdrawal",
+    link: "withdrawals",
+    icon: <MdOutlineContactSupport />,
+  },
+  {
+    id: 6,
+    name: "More",
+    link: "",
+    icon: <GrMoney />,
   },
 ];
 

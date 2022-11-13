@@ -13,6 +13,7 @@ import { navLinks, navLinks2 } from "../../utils/constants";
 import Image from "next/image";
 import { MdArrowDropDown } from "react-icons/md";
 import AccountType from "../../components/Layout/AccountType";
+import MoreLists from "../../components/Layout/MoreLists";
 import { openSidebar } from "../../Redux/generalSlice";
 import Button2 from "./Button2";
 
@@ -23,6 +24,7 @@ const Navbar = () => {
   const [activeLink, setActiveLink] = useState("");
   const [loading, setLoading] = useState(false);
   const [accountType, setAccountType] = useState(false);
+  const [more, setMore] = useState(false);
   const handleSignIn = () => {
     router.push("/login");
   };
@@ -59,7 +61,7 @@ const Navbar = () => {
     <div className='relative  flex w-full p-5 px-1  h-[90px] '>
       <div className='flex justify-between items-center w-full md:px-4 text-[#333333]'>
         <Link href='/'>
-          <div className='flex md:w-full items-center gap-5 border border-black pr-2 mx-2 md:pr-16 shadow-xl md:pl-2 py-1 justify-start'>
+          <div className='flex md:w-full items-center gap-5 border border-black pr-1 mx-2 md:pr-4 shadow-xl md:pl-2 py-1 justify-start'>
             <div className='h-8 w-8'>
               <Image
                 src='/logo_pic2.png'
@@ -70,7 +72,7 @@ const Navbar = () => {
               />
             </div>
             <div className='flex font-extrabold flex-col tracking-wider text-sm'>
-              <span className=' text-base md:text-3xl  text-indigo-900'>
+              <span className=' text-base md:text-2xl  text-indigo-900'>
                 First Monie
               </span>
               <span className='font-bold italic text-center'>
@@ -81,27 +83,31 @@ const Navbar = () => {
         </Link>
         <button
           onClick={() => dispatch(openSidebar())}
-          className='absolute right-0 mr-8 text-4xl flex items-center md:hidden'
+          className='absolute right-0 mr-8 text-4xl flex items-center lg:hidden'
         >
           <HiOutlineMenuAlt1 className='w-10 h-10 text-indigo-600 font-extrabold' />
         </button>
 
-        <ul className='relative hidden md:flex gap-2 lg:gap-4 mt-2'>
+        <ul className='relative hidden items-center lg:flex gap-2 lg:gap-2 mt-2'>
           {newLinks.map((link) => (
             <li
               key={link.id}
-              className={`hover:text-indigo-500 focus:text-indigo-500 cursor-pointer tracking-widest hover:scale-105 font-semibold  ${
+              className={`hover:text-indigo-500 focus:text-indigo-500  cursor-pointer tracking-widest hover:scale-105 font-semibold  ${
                 activeLink === link.name && "text-indigo-500"
               }`}
               onClick={() => handleNavLink(link.name)}
             >
               <Link href={link.link} legacyBehavior>
-                <a className={`cursor-pointer text-sm lg:text-lg`}>
-                  {link.name === "Personal" ? (
+                <a className={`cursor-pointer text-sm `}>
+                  {link.name === "Personal" && (
                     <span
                       className='flex items-center'
-                      onMouseOver={() => setAccountType(true)}
-                      onMouseLeave={() => setAccountType(false)}
+                      onMouseOver={() =>
+                        link.name === "Personal" && setAccountType(true)
+                      }
+                      onMouseLeave={() =>
+                        link.name === "Personal" && setAccountType(false)
+                      }
                     >
                       {link.name}
                       <MdArrowDropDown />
@@ -109,15 +115,38 @@ const Navbar = () => {
                       <div
                         className={`customTransition  w-[200px]  bg-white ${
                           accountType
-                            ? "absolute -bottom-20 customTransition "
+                            ? "absolute -bottom-[5rem] customTransition "
                             : "hidden customTransition "
                         }`}
                       >
                         <AccountType />
                       </div>
                     </span>
-                  ) : (
-                    link.name
+                  )}
+                  {link.name !== "Personal" &&
+                    link.name !== "More" &&
+                    link.name}
+                  {link.name === "More" && (
+                    <span
+                      className='flex items-center'
+                      onMouseOver={() => link.name === "More" && setMore(true)}
+                      onMouseLeave={() =>
+                        link.name === "More" && setMore(false)
+                      }
+                    >
+                      {link.name}
+                      <MdArrowDropDown />
+
+                      <div
+                        className={`customTransition flex items-center w-[200px] mt-4  bg-white ${
+                          more
+                            ? "absolute -bottom-[11rem]  customTransition "
+                            : "hidden customTransition "
+                        }`}
+                      >
+                        <MoreLists />
+                      </div>
+                    </span>
                   )}
                 </a>
               </Link>
@@ -125,7 +154,7 @@ const Navbar = () => {
           ))}
         </ul>
 
-        <div className='hidden md:contents'>
+        <div className='hidden lg:contents'>
           {session?.user ? (
             <div className='flex items-center gap-1'>
               <span className='bg-indigo-400 p-2 rounded-full cursor-pointer'>
@@ -135,9 +164,9 @@ const Navbar = () => {
               <h5 className='text-sm font-semibold italic'>
                 {session.user.name}
               </h5>
-              <span className=' ml-4 text-2xl ' onClick={() => handleSignOut()}>
+              {/* <span className=' ml-4 text-2xl ' onClick={() => handleSignOut()}>
                 <FiLogOut className='text-indigo-600 cursor-pointer hover:scale-105 customTransition font-extrabold' />
-              </span>
+              </span> */}
             </div>
           ) : (
             <Button2

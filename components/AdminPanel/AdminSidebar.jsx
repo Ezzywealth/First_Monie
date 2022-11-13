@@ -12,6 +12,7 @@ import { BsArrowLeftCircle } from "react-icons/bs";
 import { AiOutlineSetting } from "react-icons/ai";
 import { closeAdminSidebar } from "../../Redux/generalSlice";
 import { useDispatch } from "react-redux";
+import Image from "next/image";
 
 const links = [
   {
@@ -69,7 +70,7 @@ const AdminSidebar = () => {
     router.push(data.url);
   };
   return (
-    <div className='relative w-full h-screen bg-amber-900 z-50 p-5 pt-4 pb-8 pr-1'>
+    <div className='relative w-full h-screen bg-amber-900 z-50 p-5 pt-4 pb-8 pr-2'>
       <span className='visible flex justify-end cursor-pointer md:invisible'>
         <BsArrowLeftCircle
           className='text-indigo-500 w-8 h-8 pr-2'
@@ -79,15 +80,27 @@ const AdminSidebar = () => {
         />
       </span>
       <div className=''>
-        <h2 className=' flex flex-col  py-4 items-center rounded-full justify-center mb-10'>
-          <span className='logoGradient text-4xl'>AZTrades</span>
-          <span className='flex text-center justify-center gap-1'>
-            <span className=' logoGradient3  text-lg skew-y-12'>crypto </span>
-            <span className=' logoGradient2 -skew-y-12  text-lg'>
-              investments
-            </span>
-          </span>
-        </h2>
+        <Link href='/admin/firstmonie'>
+          <div className='flex md:w-full bg-white items-center gap-5 border border-black pr-2 hover:scale-x-105 customTransition  shadow-xl md:pl-2 py-1 justify-start'>
+            <div className='h-8 w-8'>
+              <Image
+                src='/logo_pic2.png'
+                alt='logo'
+                className='cursor-pointer h-8 w-8 shadow-2xl md:scale-150 ml-2'
+                width={80}
+                height={80}
+              />
+            </div>
+            <div className='flex font-extrabold flex-col tracking-wider text-sm'>
+              <span className=' text-base md:text-3xl  text-indigo-900'>
+                First Monie
+              </span>
+              <span className='font-bold italic text-center'>
+                Online Banking
+              </span>
+            </div>
+          </div>
+        </Link>
         <br />
         <div>
           <ul className='flex flex-col gap-4 '>
@@ -101,7 +114,7 @@ const AdminSidebar = () => {
                 }`}
                 onClick={() => handleLink(item.title)}
               >
-                <Link href={item.link}>
+                <Link href={item.link} legacyBehavior>
                   <a className='flex gap-4 items-center'>
                     <span>{item.icon}</span>
                     <h2> {item.title}</h2>
