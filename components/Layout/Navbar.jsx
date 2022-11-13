@@ -35,9 +35,9 @@ const Navbar = () => {
   const handleSignOut = async () => {
     const data = await signOut({ redirect: false, callbackUrl: "/" });
     router.push(data.url);
-    Cookies.remove("transactions");
-    Cookies.remove("withdrawals");
-    Cookies.remove("deposits");
+    // Cookies.remove("transactions");
+    // Cookies.remove("withdrawals");
+    // Cookies.remove("deposits");
   };
 
   if (loading) {

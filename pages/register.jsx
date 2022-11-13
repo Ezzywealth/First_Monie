@@ -39,20 +39,24 @@ const RegisterScreen = () => {
       toast.success(`${session?.user.name} welcome to Aztrades`);
     }
   }, [session]);
-  const formHandler = async ({
-    email,
-    password,
-    firstName,
-    lastName,
-    middleName,
-    userName,
-    phone,
-    birthday,
-    sex,
-    marital_status,
-    occupation,
-    address,
-  }) => {
+  const formHandler = async (
+    e,
+    {
+      email,
+      password,
+      firstName,
+      lastName,
+      middleName,
+      userName,
+      phone,
+      birthday,
+      sex,
+      marital_status,
+      occupation,
+      address,
+    }
+  ) => {
+    e.preventDefault();
     console.log(
       email,
       password,
@@ -73,8 +77,8 @@ const RegisterScreen = () => {
     <div className='bgRegister h-full'>
       <div className='flex justify-center items-center flex-col-reverse mx-auto w-full p-4 md:p-10'>
         <form
-          className='w-full my-4 bg-white overflow-auto py-8 pt-8 rounded-lg px-4 '
-          onSubmit={handleSubmit(formHandler)}
+          className='w-full my-4 bgContact overflow-auto py-8 pt-8 rounded-lg px-4 '
+          onSubmit={() => handleSubmit(formHandler)}
         >
           <div className='mb-8 flex justify-center'>
             <Link href='/'>

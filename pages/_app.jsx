@@ -3,6 +3,8 @@ import "../styles/globals.css";
 import { SessionProvider } from "next-auth/react";
 import store from "../Redux/store";
 import { BsArrowUpShort } from "react-icons/bs";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { Provider } from "react-redux";
 function MyApp({ Component, pageProps: { session, ...pageProps } }) {
   const [showTopBtn, setShowTopBtn] = useState(false);
@@ -25,6 +27,7 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
   }, []);
   return (
     <SessionProvider session={session}>
+      <ToastContainer position='top-center' />
       <Provider store={store}>
         {Component.auth ? (
           <Auth adminOnly={Component.auth.adminOnly}>

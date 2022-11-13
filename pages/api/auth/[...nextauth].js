@@ -14,7 +14,7 @@ export default NextAuth({
     async jwt({ token, user }) {
       if (user?._id) token._id = user._id;
       if (user?.isAdmin) token.isAdmin = user.isAdmin;
-      if (user?.fullName) token.fullName = user.fullName;
+      if (user?.name) token.name = user.name;
       if (user?.userName) token.userName = user.userName;
       return token;
     },
@@ -31,7 +31,7 @@ export default NextAuth({
       async authorize(credentials, req) {
         await db.connect();
         const user = await User.findOne({
-          email: req.body.email,
+          account_number: req.body.accountNumber,
         });
         await db.disconnect();
         if (user && bcryptjs.compareSync(credentials.password, user.password)) {
@@ -44,7 +44,7 @@ export default NextAuth({
             userName: user.userName,
           };
         }
-        throw new Error("Invalid email or password");
+        throw new Error("Invalid account number or password");
       },
     }),
   ],

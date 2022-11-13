@@ -3,12 +3,12 @@ import { hashSync } from "bcryptjs";
 const userData = {
   users: [
     {
-      name: "Aztrades Admin",
+      name: "First Monie",
       email: "testemail@gmail.com",
       password: hashSync("1234567"),
       isAdmin: true,
       telephone: "08034567862",
-      userName: "aztrades",
+      userName: "stanley",
       country: "France",
       sex: "male",
       occupation: "Business man",
