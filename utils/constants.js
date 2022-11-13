@@ -4,6 +4,8 @@ import {
   BsCurrencyDollar,
   BsArrowLeftRight,
   BsBank,
+  BsWallet,
+  BsWallet2,
 } from "react-icons/bs";
 import { GrMoney } from "react-icons/gr";
 import { MdOutlineAttachMoney } from "react-icons/md";
@@ -17,7 +19,11 @@ import {
   MdOutlineLibraryBooks,
 } from "react-icons/md";
 import { AiOutlineBank } from "react-icons/ai";
-import { BiTransferAlt } from "react-icons/bi";
+import { BiTransferAlt, BiDollar } from "react-icons/bi";
+import { CiWallet } from "react-icons/ci";
+import { CgArrowsExchange } from "react-icons/cg";
+import { FaMoneyBillWave } from "react-icons/fa";
+import { GiPayMoney } from "react-icons/gi";
 
 export const navLinks = [
   {
@@ -672,5 +678,48 @@ export const servicesData = [
     description:
       "Fast access to high liquidity orderbook for top currency pairs.",
     icons: <BsCreditCard2Back />,
+  },
+];
+
+export const dashboardData = [
+  {
+    id: 1,
+    title: "ACCOUNT NUMBER",
+    icons: <BsWallet />,
+  },
+  {
+    id: 2,
+    title: "AVAILABLE BALANCE",
+    icons: <FaMoneyBillWave />,
+  },
+  {
+    id: 3,
+    title: "Deposits",
+    icons: <CiWallet />,
+  },
+  {
+    id: 4,
+    title: "Withdraws",
+    icons: <BiDollar />,
+  },
+  {
+    id: 5,
+    title: "Transactions",
+    icons: <CgArrowsExchange />,
+  },
+  {
+    id: 6,
+    title: "Loan",
+    icons: <GiPayMoney />,
+  },
+  {
+    id: 7,
+    title: "DPS",
+    icons: <BsWallet />,
+  },
+  {
+    id: 8,
+    title: "FDR",
+    icons: <BsWallet2 />,
   },
 ];
