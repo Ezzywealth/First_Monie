@@ -58,20 +58,20 @@ export const navLinks = [
     icon: <MdOutlineContactSupport />,
   },
   {
-    id: 4,
+    id: 6,
     name: "Deposits",
     link: "deposits",
     icon: <GrMoney />,
   },
 
   {
-    id: 5,
+    id: 7,
     name: "Withdrawal",
     link: "withdrawals",
     icon: <MdOutlineContactSupport />,
   },
   {
-    id: 6,
+    id: 8,
     name: "More",
     link: "",
     icon: <GrMoney />,

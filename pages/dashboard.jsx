@@ -4,8 +4,13 @@ import { dashboardData } from "../utils/constants";
 import { useSession } from "next-auth/react";
 import { MdContentCopy } from "react-icons/md";
 import { toast } from "react-toastify";
+import Transaction from "../components/Models/Transactions";
+import { decodeBase64 } from "bcryptjs";
+import db from "../utils/db";
+import { data } from "autoprefixer";
 
-const Dashboard = () => {
+const Dashboard = ({ transactions }) => {
+  console.log(transactions);
   const { data: session } = useSession();
   const handleDashboardData = (name) => {
     if (name === "AVAILABLE BALANCE") {
@@ -37,12 +42,12 @@ const Dashboard = () => {
   };
   return (
     <Layout title='dashboard'>
-      <div className='pt-16'>
-        <div className='grid grid-cols-3 gap-3 px-16'>
+      <div className='mt-20 py-16'>
+        <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 px-4 md:px-10 lg:px-16'>
           {dashboardData.map((data) => (
             <div
               key={data.id}
-              className={`bg-white shadow-xl justify-start px-6 border border-indigo-200 py-8 flex gap-4 items-center ${
+              className={`bg-white shadow-xl hover:scale-105 customTransition justify-start px-6 border border-indigo-200 py-8 flex gap-4 items-center ${
                 data.title === "ACCOUNT NUMBER" && "col-[1.5_/_span_1.5]"
               } ${
                 data.title === "AVAILABLE BALANCE" && "col-[1.5_/_span_1.5]"
@@ -94,18 +99,19 @@ const Dashboard = () => {
         </div>
 
         <section>
-          <div className='mx-16 border shadow-2xl p-4 my-8'>
-            <h2>Your Referral Link</h2>
+          <div className='mx-2 md:mx-10 lg:mx-16 border shadow-2xl p-4 my-8'>
+            <h2 className='font-semibold'>Your Referral Link</h2>
 
             <div className='relative'>
               <input
                 type='text'
                 id='myLink'
                 value={`https://firstmonie.com/${session?.user.name}`}
+                readOnly
                 className='relative dashboard w-full p-3 rounded-lg focus:outline-none tracking-widest border border-indigo-500 border-solid'
               />
               <span
-                className='absolute rounded-2xl p-2 top-[10%] mr-4 bg-indigo-400 right-0'
+                className='absolute rounded-2xl p-2 top-[10%] mr-2 md:mr-4 bg-indigo-400 right-0'
                 onClick={() => copyContent()}
               >
                 <MdContentCopy className='h-6 w-6 text-white hover:scale-105 customTransition cursor-pointer' />
@@ -114,20 +120,43 @@ const Dashboard = () => {
           </div>
         </section>
 
-        <section>
-          <h2>Recent Transactions</h2>
-          <div>
-            <table className='table-auto'>
+        <section className='flex flex-col mx-2 md:mx-10  lg:mx-16 border border-gray-300 border-solid'>
+          <h2 className='p-4 font-semibold tracking-wide'>
+            Recent Transactions
+          </h2>
+          <div className='flex justify-center px-auto overflow-auto'>
+            <table className='table-fixed min-w-full px-8 '>
               <thead>
-                <tr>
-                  <td>No</td>
+                <tr className='bg-gray-100 font-semibold text-[12px]'>
+                  <td className='p-2'>No</td>
                   <td>TYPE</td>
                   <td>TXNID</td>
                   <td>AMOUNT</td>
                   <td> DATE</td>
                 </tr>
               </thead>
-              <tbody></tbody>
+              <tbody>
+                {transactions.map((data, index) => (
+                  <tr
+                    key={data._id}
+                    className='border-b border-solid border-gray-200 text-[11px] gap-4'
+                  >
+                    <td className='p-2'>{index + 1}</td>
+                    <td>{data.type}</td>
+                    <td>{data.TXNID}</td>
+                    <td
+                      className={`${
+                        data.type === "Deposit"
+                          ? "text-green-500"
+                          : "text-red-500"
+                      }`}
+                    >
+                      {data.amount}
+                    </td>
+                    <td>{data.date}</td>
+                  </tr>
+                ))}
+              </tbody>
             </table>
           </div>
         </section>
@@ -137,3 +166,14 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
+export async function getServerSideProps() {
+  await db.connect();
+  const data = await Transaction.find().lean();
+  await db.disconnect();
+
+  return {
+    props: {
+      transactions: data.map(db.convertDocToObj),
+    },
+  };
+}

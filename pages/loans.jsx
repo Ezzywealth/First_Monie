@@ -1,8 +1,8 @@
 import React from "react";
 import Layout from "../components/Layout/Layout";
 
-const Dashboard = () => {
+const LoanScreen = () => {
   return <Layout title='loans'>Loans</Layout>;
 };
 
-export default Dashboard;
+export default LoanScreen;

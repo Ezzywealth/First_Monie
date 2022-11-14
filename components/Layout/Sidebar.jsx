@@ -45,7 +45,7 @@ const Sidebar = () => {
           <div className='flex flex-col gap-8'>
             <div>
               <Link href='/'>
-                <div className='flex w-[50%] items-center gap-5 border border-black pr-2 mx-2 shadow-xl md:pl-2 py-1 justify-start'>
+                <div className='flex w-[80%] sm:w-[70%] md:w-[50%] items-center gap-5 border border-black pr-2 mx-2 shadow-xl md:pl-2 py-1 justify-start'>
                   <div className='h-8 w-8'>
                     <Image
                       src='/logo_pic2.png'
