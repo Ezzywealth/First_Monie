@@ -100,6 +100,7 @@ const LoginScreen = () => {
         <form
           className='w-full md:w-[400px]  my-4 bg-white overflow-auto py-8 pt-3 rounded-lg px-4 '
           onSubmit={handleSubmit(onSubmit)}
+          mailto=''
         >
           <div className='grid grid-cols-1 mb-8 gap-4'>
             <h2 className='text-center'>Account Login</h2>

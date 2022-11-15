@@ -6,7 +6,7 @@ const userData = {
       name: "First Monie",
       email: "testemail@gmail.com",
       password: hashSync("1234567"),
-      isAdmin: true,
+      isAdmin: "true",
       telephone: "08034567862",
       userName: "stanley",
       country: "France",
@@ -15,6 +15,8 @@ const userData = {
       marital_status: "single",
       account_number: "0144389034",
       birthday: "12/10/1989",
+      secret_code: "9874356",
+      account_balance: "0",
     },
     {
       name: "Ose Chris",
@@ -29,6 +31,8 @@ const userData = {
       marital_status: "single",
       account_number: "0144389034",
       birthday: "12/10/1989",
+      secret_code: "3345560",
+      account_balance: "0",
     },
   ],
   transactions: [

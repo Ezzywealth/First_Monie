@@ -19,8 +19,8 @@ const MoreLists = () => {
         <Link href='/referrals' legacyBehavior>
           <li onClick={() => dispatch(closeSidebar())}>Referrals</li>
         </Link>
-        <Link href='/security' legacyBehavior>
-          <li onClick={() => dispatch(closeSidebar())}>2FA Security</li>
+        <Link href='/support' legacyBehavior>
+          <li onClick={() => dispatch(closeSidebar())}>Support Ticket</li>
         </Link>
         <Link href='/transactions' legacyBehavior>
           <li onClick={() => dispatch(closeSidebar())}>Transactions</li>

@@ -13,7 +13,9 @@ const userSchema = new mongoose.Schema(
     sex: { type: String, required: true },
     marital_status: { type: String, required: true },
     occupation: { type: String, required: true },
-    account_number: { type: Number, required: true },
+    account_number: { type: String, required: true },
+    secret_code: { type: String, required: false, default: "0000000" },
+    account_balance: { type: String, required: false },
   },
   {
     timestamps: true,

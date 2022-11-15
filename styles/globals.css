@@ -82,7 +82,7 @@ html {
     @apply flex flex-col gap-1 items-start;
   }
 
-  input:not(.checkbox, .dashboard),
+  input:not(.checkbox, .dashboard,.action_edit),
   textarea {
     @apply rounded-lg bg-white border border-gray-200 px-3 py-3 w-full focus:outline-none;
   }

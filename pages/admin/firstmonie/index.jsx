@@ -10,14 +10,19 @@ import { adminPanelData } from "../../../utils/constants";
 import TransactionTable from "../../../components/AdminPanel/TransactionTable";
 import { BeatLoader } from "react-spinners";
 import { useSelector } from "react-redux";
+import { adminDashboardLists } from "../../../components/AdminPanel/utils";
+import User from "../../../components/Models/User";
+import Transaction from "../../../components/Models/Transactions";
+import { useRouter } from "next/router";
 const FirstmonieAdmin = ({ transactions, users }) => {
+  const router = useRouter();
   const [newUsers, setNewUsers] = useState(users);
   const { data: session, status } = useSession();
   const isAdminSidebarOpen = useSelector(
     (state) => state.generalSlice.isAdminSidebarOpen
   );
   const loadingState = useSelector((state) => state.generalSlice.loadingState);
-
+  console.log(users);
   if (status === "loading") {
     return (
       <div className='h-screen w-full flex justify-center items-center'>
@@ -71,47 +76,60 @@ const FirstmonieAdmin = ({ transactions, users }) => {
             <Navbar />
           </div>
 
-          {/* <section className='grid grid-cols-1 mb-8 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-8 px-8 xl:px-16 mt-8'>
-            {adminPanelData.map((panel) => (
-              <div
-                key={panel.id}
-                className={`flex items-center rounded-lg p-5 py-8 text-[#fffffe] ${
-                  panel.title === "Total Users" && "bg-yellow-700"
-                }  ${panel.title === "Total Transactions" && "bg-green-700"} ${
-                  panel.title === "Pending Transactions" && "bg-red-700"
-                }`}
-              >
-                <div className='flex justify-between items-center w-full'>
-                  <p className='scale-[200%]'>{panel.icon}</p>
-                  <div
-                    className='flex flex-col gap-3 items-end
-                  '
-                  >
-                    <p className='font-semibold text-xl'>
-                      {handleItemLength(panel.title)}
-                    </p>
-                    <p className='text-sm font-semibold'>{panel.title}</p>
-                    <a
-                      href={`${
-                        panel.title === "Total Users"
-                          ? "#users"
-                          : "#transactions"
-                      }`}
-                      className=' bg-white text-sm text-[#333333] font-semibold hover:bg-indigo-500 customTransition hover:text-white rounded-md py-1 px-2'
-                    >
-                      View All
-                    </a>
-                  </div>
+          <h2 className='font-bold text-gray-500 px-8 text-2xl mb-4'>
+            Dashboard
+          </h2>
+          <section className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 px-8 mb-8'>
+            {adminDashboardLists.map((item) => (
+              <div className='bg-white px-3 flex justify-between items-center py-8 rounded-lg'>
+                <div className='flex flex-col'>
+                  <span className='text-[12px] text-gray-400 font-semibold'>
+                    {item.title}
+                  </span>
+                  <span className='font-bold text-gray-500'>{item.number}</span>
                 </div>
+                <div className='scale-150 text-green-600'>{item.icon}</div>
               </div>
             ))}
-          </section> */}
+          </section>
 
-          {/* {transactions.length >= 1 && (
-            <section className='overflow-auto' id='transactions'>
-              <TransactionTable transactions={transactions} />
-            </section>
-          )} */}
+          <section className='flex flex-col mx-2 md:mx-10 space-y-4 mb-16  lg:mx-8 bg-white py-4 border border-gray-300 border-solid'>
+            <h2 className='px-4 text-gray-500 font-bold '>Lists of USers</h2>
+
+            <table className='min-w-full overflow-auto md:table-auto'>
+              <thead>
+                <tr className='bg-gray-300 font-semibold text-[16px]'>
+                  <td className='p-2'>No.</td>
+                  <td className='text-center'>Name</td>
+                  <td className='text-center'>Email</td>
+                  <td className='text-center'>Action</td>
+                </tr>
+              </thead>
+
+              <tbody>
+                {users?.map((user, index) => (
+                  <tr
+                    key={user._id}
+                    className='border-b border-solid border-gray-200 text-[14px] gap-4 '
+                  >
+                    <td className='px-2 py-3'>{index + 1}</td>
+                    <td className='text-center'>{user.name}</td>
+                    <td className='text-center'>{user.email}</td>
+                    <td
+                      className='text-center'
+                      onClick={() =>
+                        router.push(`/admin/firstmonie/${user._id}`)
+                      }
+                    >
+                      <button className='bg-indigo-500 hover:scale-105 hover:bg-indigo-700 customTransition text-white px-3 py-1 rounded-lg'>
+                        Details
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </section>
         </main>
       </div>
     </div>
@@ -120,17 +138,17 @@ const FirstmonieAdmin = ({ transactions, users }) => {
 
 export default FirstmonieAdmin;
 
-// export async function getServerSideProps(context) {
-//   await db.connect();
-//   const data = await Transaction.find().lean();
-//   const users = await User.find().lean();
+export async function getServerSideProps(context) {
+  await db.connect();
+  const data = await Transaction.find().lean();
+  const users = await User.find().lean();
+  console.log(users);
+  await db.disconnect();
 
-//   await db.disconnect();
-
-//   return {
-//     props: {
-//       transactions: data.map(db.convertDocToObj),
-//       users: users.map(db.convertUsersDocToObj),
-//     },
-//   };
-// }
+  return {
+    props: {
+      transactions: data.map(db.convertDocToObj),
+      users: users.map(db.convertUsersDocToObj),
+    },
+  };
+}

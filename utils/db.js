@@ -33,7 +33,7 @@ async function disconnect() {
 
 function convertDocToObj(doc) {
   doc._id = doc._id.toString();
-  doc.amount = doc.amount.toString();
+  doc.amount = doc.amount?.toString();
   doc.createdAt = doc.createdAt.toString();
   doc.updatedAt = doc.updatedAt.toString();
   return doc;
