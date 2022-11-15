@@ -3,9 +3,11 @@ import React from "react";
 import { closeSidebar } from "../../Redux/generalSlice";
 import { useDispatch } from "react-redux";
 import { signOut } from "next-auth/react";
+import { Router, useRouter } from "next/router";
 
 const MoreLists = () => {
   const dispatch = useDispatch();
+  const router = useRouter();
   return (
     <div className='rounded-2xl'>
       <ul className='p-4 flex flex-col w-full text-base text-gray-500 rounded-lg '>
@@ -29,7 +31,8 @@ const MoreLists = () => {
         <li
           onClick={async () => {
             dispatch(closeSidebar());
-            await signOut();
+            const data = await signOut({ redirect: false, callbackUrl: "/" });
+            router.push(data.url);
           }}
         >
           Logout

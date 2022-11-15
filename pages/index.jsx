@@ -8,9 +8,6 @@ import Expectation from "../components/Homepage/Expectation";
 import Services from "../components/Services";
 
 const Home = () => {
-  // useEffect(() => {
-  //   dispatch(stopLoading());
-  // }, []);
   return (
     <Layout title='Home'>
       <main className='flex flex-col '>

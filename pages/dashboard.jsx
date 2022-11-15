@@ -5,9 +5,7 @@ import { useSession } from "next-auth/react";
 import { MdContentCopy } from "react-icons/md";
 import { toast } from "react-toastify";
 import Transaction from "../components/Models/Transactions";
-import { decodeBase64 } from "bcryptjs";
 import db from "../utils/db";
-import { data } from "autoprefixer";
 
 const Dashboard = ({ transactions }) => {
   console.log(transactions);

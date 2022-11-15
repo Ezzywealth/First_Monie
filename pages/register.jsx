@@ -1,16 +1,19 @@
 import { useEffect, useState } from "react";
-import { useSession, signIn, signOut } from "next-auth/react";
+import { useSession, signIn } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import Link from "next/link";
+import { CountryDropdown } from "react-country-region-selector";
 import Button2 from "../components/Layout/Button2";
 import { useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Image from "next/image";
 import ButtonBack from "../components/Layout/ButtonBack";
+import axios from "axios";
+import { getError } from "../utils/error";
 // import { fetchTransactions } from "../Redux/transactionSlice";
 // import { BeatLoader } from "react-spinners";
 
@@ -18,7 +21,9 @@ const RegisterScreen = () => {
   const [selectedCountry, setSelectedCountry] = useState("");
   const [calledRouter, setCalledRouter] = useState(false);
   const [loading, setLoading] = useState(false);
-
+  const [accountNumber, setAccountNumber] = useState(0);
+  const [otp, setOtp] = useState(0);
+  const dispatch = useDispatch();
   const { data: session } = useSession();
   const inputRef = useRef(null);
   const router = useRouter();
@@ -29,48 +34,68 @@ const RegisterScreen = () => {
     getValues,
     formState: { errors },
   } = useForm();
-  const [secretPin, setSecretPin] = useState(0);
 
+  // useEffect(() => {
+  //   if (session?.user && !calledRouter) {
+  //     setCalledRouter(true);
+  //     dispatch(fetchTransactions(session?.user.email));
+  //     router.push("/dashboard");
+  //     toast.success(`${session?.user.name} welcome to Aztrades`);
+  //   }
+  // }, [session]);
+
+  const generateSecretPin = () => {
+    const min = 13569935629;
+    const max = 99999999999;
+    const randomNumb = Math.floor(Math.random() * (max - min) + min);
+
+    setAccountNumber(randomNumb);
+  };
+  const generateOtp = () => {
+    const min = 135699;
+    const max = 999999;
+    const randomNumb = Math.floor(Math.random() * (max - min) + min);
+
+    setOtp(randomNumb);
+  };
   useEffect(() => {
-    if (session?.user && !calledRouter) {
-      setCalledRouter(true);
-      dispatch(fetchTransactions(session?.user.email));
-      router.push("/dashboard");
-      toast.success(`${session?.user.name} welcome to Aztrades`);
+    generateSecretPin();
+    generateOtp();
+  }, []);
+
+  const formHandler = async ({
+    email,
+    password,
+    firstName,
+    userName,
+    telephone,
+    birthday,
+    sex,
+    marital_status,
+    occupation,
+  }) => {
+    try {
+      const { data } = await axios.post(`/api/auth/signUp`, {
+        email,
+        password,
+        firstName,
+        country: selectedCountry,
+        userName,
+        telephone,
+        birthday,
+        sex,
+        marital_status,
+        occupation,
+        account_number: accountNumber,
+        secret_code: otp,
+      });
+
+      toast.success("Your requestr has been submitted and been reviewed");
+
+      if (data.error) throw new Error(data.error);
+    } catch (error) {
+      toast.error(getError(error));
     }
-  }, [session]);
-  const formHandler = async (
-    e,
-    {
-      email,
-      password,
-      firstName,
-      lastName,
-      middleName,
-      userName,
-      phone,
-      birthday,
-      sex,
-      marital_status,
-      occupation,
-      address,
-    }
-  ) => {
-    e.preventDefault();
-    console.log(
-      email,
-      password,
-      firstName,
-      lastName,
-      middleName,
-      userName,
-      phone,
-      birthday,
-      sex,
-      marital_status,
-      occupation,
-      address
-    );
   };
 
   return (
@@ -78,7 +103,7 @@ const RegisterScreen = () => {
       <div className='flex justify-center items-center flex-col-reverse mx-auto w-full p-4 md:p-10'>
         <form
           className='w-full my-4 bgContact overflow-auto py-8 pt-8 rounded-lg px-4 '
-          onSubmit={() => handleSubmit(formHandler)}
+          onSubmit={handleSubmit(formHandler)}
         >
           <div className='mb-8 flex justify-center'>
             <Link href='/'>
@@ -106,36 +131,21 @@ const RegisterScreen = () => {
           <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'>
             <div>
               <label htmlFor='firstName' className='text-[#333333] '>
-                Full Name
+                First Name
               </label>
               <input
                 type='text'
-                id='firstName'
+                id='first Name'
                 className='w-full p-2 focus:outline-none border '
-                {...register("fullName", {
+                {...register("first Name", {
                   required: "Please enter your First Name",
                 })}
               />
-              {errors.fullName && (
-                <span className='text-red-500'>{errors.fullName.message}</span>
+              {errors.firstName && (
+                <span className='text-red-500'>{errors.firstName.message}</span>
               )}
             </div>
-            <div>
-              <label htmlFor='middleName' className='text-[#333333] '>
-                Middle Name
-              </label>
-              <input
-                type='text'
-                id='middleName'
-                className='w-full p-2 focus:outline-none border '
-                {...register("middleName", {
-                  required: "Please enter your middleName",
-                })}
-              />
-              {errors.middleName && (
-                <span className='text-red-500'>{middleName.message}</span>
-              )}
-            </div>
+
             <div>
               <label htmlFor='lastName' className='text-[#333333] '>
                 Last Name
@@ -209,23 +219,22 @@ const RegisterScreen = () => {
 
             <div>
               <label htmlFor='country' className='text-[#333333] '>
-                Birthday
+                Country
               </label>
-              <input
-                type='text'
-                id='userName'
-                className='w-full p-2 focus:outline-none border '
-                {...register("birthday", {
-                  required: "Please enter your birthday",
-                })}
+              <CountryDropdown
+                value={selectedCountry}
+                onChange={(val) => setSelectedCountry(val)}
+                className='w-full p-2 focus:outline-none border rounded-lg'
               />
-              {errors.birthday && (
-                <span className='text-red-500'>{errors.birthday.message}</span>
+              {errors.selectedCountry && (
+                <span className='text-red-500'>
+                  {errors.selectedCountry.message}
+                </span>
               )}
             </div>
 
             <div>
-              <label htmlFor='country' className='text-[#333333] '>
+              <label htmlFor='sex' className='text-[#333333] '>
                 Sex
               </label>
               <select
@@ -243,13 +252,29 @@ const RegisterScreen = () => {
               )}
             </div>
             <div>
+              <label htmlFor='birthday' className='text-[#333333] '>
+                Birthday
+              </label>
+              <input
+                type='date'
+                id='birthday'
+                className='w-full  focus:outline-none border '
+                {...register("birthday", {
+                  required: "Please enter your birthday",
+                })}
+              />
+              {errors.birthday && (
+                <span className='text-red-500'>{birthday.message}</span>
+              )}
+            </div>
+            <div>
               <label htmlFor='address' className='text-[#333333] '>
                 Marital Status
               </label>
               <select
                 id='marital_status'
                 className='w-full p-2 focus:outline-none border rounded-lg '
-                {...register("Marital Status", {
+                {...register("marital_status", {
                   required: "Please select your Marital Status",
                 })}
               >
@@ -345,6 +370,9 @@ const RegisterScreen = () => {
                   required: "Please enter your remember",
                 })}
               />
+              {errors.remember && (
+                <span className='text-red-500'>{errors.remember.message}</span>
+              )}
               I agree with
               <Link href={"/privacy"} legacyBehavior>
                 <a className='text-blue-600'>Privacy Policy</a>
