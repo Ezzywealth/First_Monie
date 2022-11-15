@@ -54,7 +54,7 @@ export const navLinks = [
   {
     id: 5,
     name: "Transfers",
-    link: "contact",
+    link: "/transfer",
     icon: <MdOutlineContactSupport />,
   },
   {
@@ -67,7 +67,7 @@ export const navLinks = [
   {
     id: 7,
     name: "Withdrawal",
-    link: "withdrawals",
+    link: "/withdrawals",
     icon: <MdOutlineContactSupport />,
   },
   {

@@ -10,13 +10,13 @@ const LoanScreen = ({ withdraw }) => {
   const item = withdraw[0];
   return (
     <Layout title='details'>
-      <div className='bg-indigo-200 py-16 h-screen px-4'>
+      <div className='bg-indigo-200 space-y-4  py-16 h-screen px-32'>
         <div>
-          <h2>Withdrawal Details</h2>
+          <h2 className='font-semibold text-2xl'>Withdrawal Details</h2>
         </div>
-        <div className='bg-white py-16 flex flex-col gap-4 px-8'>
+        <div className='bg-white rounded-lg py-16 flex flex-col gap-4 px-8'>
           <span className='grid grid-cols-2 border-b border-solid  border-gray-200'>
-            <h2>WithDraw Method</h2>{" "}
+            <h2 className='font-semibold'>WithDraw Method</h2>{" "}
             <p className='flex gap-16'>
               {" "}
               <span> :</span>
@@ -24,7 +24,7 @@ const LoanScreen = ({ withdraw }) => {
             </p>
           </span>
           <span className='grid grid-cols-2 border-b border-solid  border-gray-200'>
-            <h2>TXID</h2>{" "}
+            <h2 className='font-semibold'>TXID</h2>{" "}
             <p className='flex gap-16'>
               {" "}
               <span> :</span>
@@ -32,7 +32,7 @@ const LoanScreen = ({ withdraw }) => {
             </p>
           </span>
           <span className='grid grid-cols-2 border-b border-solid  border-gray-200'>
-            <h2>Amount</h2>{" "}
+            <h2 className='font-semibold'>Amount</h2>{" "}
             <p className='flex gap-16'>
               {" "}
               <span> :</span>
@@ -40,18 +40,20 @@ const LoanScreen = ({ withdraw }) => {
             </p>
           </span>
           <span className='grid grid-cols-2 border-b border-solid  border-gray-200'>
-            <h2>Fees</h2>{" "}
+            <h2 className='font-semibold'>Fees</h2>{" "}
             <p className='flex gap-16'>
               {" "}
               <span>:</span> {(parseInt(item.amount) * 0.003).toFixed(2)}$
             </p>
           </span>
           <span className='grid grid-cols-2 border-b border-solid  border-gray-200'>
-            <h2>Status</h2>{" "}
-            <p className='flex gap-16'>
+            <h2 className='font-semibold'>Status</h2>{" "}
+            <p className='flex gap-16 items-center h-full'>
               {" "}
               <span> :</span>
-              {item.status}
+              <span className='bg-orange-500 px-2 py-1 rounded-xl'>
+                {item.status}
+              </span>
             </p>
           </span>
         </div>

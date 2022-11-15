@@ -1,26 +1,28 @@
 import React from "react";
-import Layout from "../components/Layout/Layout";
+import Layout from "../../components/Layout/Layout";
 import { BsPlus } from "react-icons/bs";
-import Withdrawals from "../components/Models/Withdrawals";
-import db from "../utils/db";
+import { useSession } from "next-auth/react";
+import db from "../../utils/db";
 import { useRouter } from "next/router";
+import Deposits from "../../components/Models/Deposits";
 
-const WithdrawalScreen = ({ withdraws }) => {
+const DepositScreen = ({ deposits }) => {
+  const { data: session } = useSession();
   const router = useRouter();
   const { query } = router.query;
   return (
-    <Layout title='withdrawals'>
+    <Layout title='deposits'>
       <div className='py-20 px-16'>
         <div className='flex justify-between mb-4 items-center h-[2.5rem]'>
           <h2 className='font-semibold text-xl flex flex-col'>
             <span className='text-[#333333] text-[12px]'>Overview</span>{" "}
-            Withdrawals
+            Deposits
           </h2>
           <button
-            onClick={() => router.push("/withdrawal/createTransaction")}
+            onClick={() => router.push("/deposits/createDeposits")}
             className='bg-indigo-800 rounded-lg items-center px-3 py-2 flex gap-3 text-gray-200'
           >
-            <BsPlus /> Create new Withdrawal
+            <BsPlus /> Create new Deposits
           </button>
         </div>
         <div className='flex justify-center  overflow-auto'>
@@ -29,29 +31,22 @@ const WithdrawalScreen = ({ withdraws }) => {
               <tr className='bg-gray-100 font-semibold text-[16px]'>
                 <td className='p-4'>Date</td>
                 <td>Method</td>
+                <td>Account</td>
                 <td>Amount</td>
                 <td>Status</td>
-                <td>Details</td>
               </tr>
             </thead>
             <tbody>
-              {withdraws?.map((item) => (
+              {deposits?.map((item) => (
                 <tr
                   key={item._id}
                   className='border-b border-solid border-gray-200 text-[13px] gap-4'
                 >
                   <td className='p-4'>{item.date}</td>
                   <td>{item.method}</td>
+                  <td>{session?.user.email}</td>
                   <td>{item.amount}</td>
                   <td>{item.status}</td>
-                  <td>
-                    <button
-                      className='bg-indigo-500 rounded-md px-4 py-2 text-white'
-                      onClick={() => router.push(`/withdrawal/${item._id}`)}
-                    >
-                      Details
-                    </button>
-                  </td>
                 </tr>
               ))}
             </tbody>
@@ -62,16 +57,16 @@ const WithdrawalScreen = ({ withdraws }) => {
   );
 };
 
-export default WithdrawalScreen;
+export default DepositScreen;
 
 export async function getServerSideProps() {
   await db.connect();
-  const data = await Withdrawals.find().lean();
+  const data = await Deposits.find().lean();
   await db.disconnect();
 
   return {
     props: {
-      withdraws: data.map(db.convertDocToObj),
+      deposits: data.map(db.convertDocToObj),
     },
   };
 }

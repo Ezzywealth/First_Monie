@@ -357,7 +357,7 @@ const userData = {
       matured_amount: "792000$",
       total_installment: "36",
       next_installment: "",
-      status: "Running",
+      status: "Closed",
     },
     {
       plan: "Bronze",
@@ -397,7 +397,7 @@ const userData = {
       matured_amount: "792000$",
       total_installment: "36",
       next_installment: "",
-      status: "Running",
+      status: "Closed",
     },
     {
       plan: "Bronze",
@@ -429,7 +429,7 @@ const userData = {
       matured_amount: "1920$",
       total_installment: "20",
       next_installment: "",
-      status: "Running",
+      status: "Closed",
     },
     {
       plan: "Gold",
@@ -437,7 +437,7 @@ const userData = {
       matured_amount: "792000$",
       total_installment: "36",
       next_installment: "",
-      status: "Running",
+      status: "Closed",
     },
     {
       plan: "Premium",
@@ -453,7 +453,7 @@ const userData = {
       matured_amount: "1920$",
       total_installment: "20",
       next_installment: "",
-      status: "Running",
+      status: "Closed",
     },
     {
       plan: "Gold",
@@ -485,7 +485,7 @@ const userData = {
       matured_amount: "196200$",
       total_installment: "20",
       next_installment: "",
-      status: "Running",
+      status: "Closed",
     },
     {
       plan: "Gold",
@@ -501,7 +501,7 @@ const userData = {
       matured_amount: "392400$",
       total_installment: "36",
       next_installment: "",
-      status: "Running",
+      status: "Closed",
     },
     {
       plan: "Gold",
@@ -757,7 +757,7 @@ const userData = {
       amount: "100000$",
       profit_type: "FIXED",
       profit: "13000$",
-      status: "Running",
+      status: "Closed",
     },
     {
       plan: "Basic",
@@ -827,7 +827,7 @@ const userData = {
       amount: "100000$",
       profit_type: "FIXED",
       profit: "13000$",
-      status: "Running",
+      status: "Closed",
     },
     {
       plan: "Bronze",
@@ -841,7 +841,7 @@ const userData = {
       amount: "2000000$",
       profit_type: "FIXED",
       profit: "260000$",
-      status: "Running",
+      status: "Closed",
     },
     {
       plan: "Gold",
@@ -862,7 +862,7 @@ const userData = {
       amount: "100000$",
       profit_type: "FIXED",
       profit: "11000$",
-      status: "Running",
+      status: "Closed",
     },
     {
       plan: "Gold",
