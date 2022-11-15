@@ -10,18 +10,18 @@ const handler = async (req, res) => {
 
   try {
     await db.connect();
-    const user = User.find(
+    const user = await User.updateOne(
       { _id: id },
-      {
-        $set: {
-          account_balance: parseInt(account_balance) + parseInt(amount),
-        },
-      }
+      { $set: { account_balance: amount } }
     );
-    await db.disconnect();
 
-    res.status(201).send({ message: "Account Balance updated" });
+    await db.disconnect();
+    res.status(201).send({ message: "Account balance updated successfully" });
   } catch (error) {
-    res.status(401).send({ message: "Account balance not updated" });
+    res
+      .status(401)
+      .send({ message: "There was an error updating the account balance" });
   }
 };
+
+export default handler;

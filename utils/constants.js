@@ -46,8 +46,8 @@ export const navLinks = [
   },
   {
     id: 4,
-    name: "Loans",
-    link: "loans",
+    name: "Request Money",
+    link: "request",
     icon: <GrMoney />,
   },
 

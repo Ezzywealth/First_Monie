@@ -19,10 +19,11 @@ const CreateDepositsScreen = () => {
       setCardDetails(false);
     }
   };
+
   return (
     <Layout title='createTransaction'>
-      <div className='pt-16 px-2 md:px-8 lg:px-16 mt-32 md:mt-8 '>
-        <h2 className='px-8 font-semibold'>Withdraw Now</h2>
+      <div className='pt-16 px-2 md:px-8 lg:px-16 mt-32 md:mt-8 bgContact'>
+        <h2 className='px-8 font-semibold text-2xl'>Deposit Now</h2>
         <form className='px-4 md:px-8 lg:px-16 border border-solid border-gray-200 m-8 mt-2 py-8'>
           <div>
             <div className='flex flex-col font-semibold space-y-2 mb-4'>

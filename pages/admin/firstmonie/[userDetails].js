@@ -12,10 +12,14 @@ import { stopLoading } from "../../../Redux/generalSlice";
 import User from "../../../components/Models/User";
 import { userLists } from "../../../components/AdminPanel/utils";
 import { useEffect } from "react";
+import { toast } from "react-toastify";
 
 const UserDetails = ({ newUser }) => {
   const dispatch = useDispatch();
   const [ssr, setSsr] = useState(true);
+  const [accountBalance, setAccountBalance] = useState(
+    newUser[0].account_balance
+  );
   // dispatch(stopLoading());
 
   console.log(newUser);
@@ -67,16 +71,24 @@ const UserDetails = ({ newUser }) => {
     return;
   }
 
-  const formHandler = ({ amount, method }) => {
+  const formHandler = async ({ amount, method }) => {
+    document.getElementById("form3").reset();
+    console.log(amount, method);
     try {
-      const result = axios.post(`/api/transactions/changeBalance`, {
-        amount,
+      const { data } = await axios.post(`/api/transactions/changeBalance`, {
+        amount: parseInt(amount),
         method,
         id: newUser[0]._id,
       });
-      console.log(result);
+      console.log(data);
+      toast.success(data.message);
+      setAccountBalance(amount);
+      if (data.error) {
+        throw new Error(data.error);
+      }
     } catch (error) {
       console.log(error);
+      toast.error(error.message);
     }
   };
   return (
@@ -100,7 +112,7 @@ const UserDetails = ({ newUser }) => {
             </div>
           </section>
 
-          <section className='grid grid-cols-2 gap-10 bg-white rounded-lg p-16 px-4'>
+          <section className='grid ld:grid-cols-2 gap-10 bg-white rounded-lg p-16 px-4'>
             <div>
               {userLists?.map((item) => (
                 <li
@@ -120,10 +132,14 @@ const UserDetails = ({ newUser }) => {
                   Available Balance
                 </h2>
                 <h3 className='text-2xl text-gray-500 font-bold'>
-                  {`${newUser[0].account_balance} USD` || "20,000USD"}
+                  {`${accountBalance} USD` || "20,000USD"}
                 </h3>
               </div>
-              <form className='space-y-6' onSubmit={handleSubmit(formHandler)}>
+              <form
+                id='form3'
+                className='space-y-6'
+                onSubmit={handleSubmit(formHandler)}
+              >
                 <div className='flex flex-col w-full'>
                   <label
                     htmlFor='amount'

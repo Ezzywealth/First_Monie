@@ -16,7 +16,7 @@ const userData = {
       account_number: "0144389034",
       birthday: "12/10/1989",
       secret_code: "9874356",
-      account_balance: "0",
+      account_balance: 0,
     },
     {
       name: "Ose Chris",
@@ -32,7 +32,7 @@ const userData = {
       account_number: "0144389034",
       birthday: "12/10/1989",
       secret_code: "3345560",
-      account_balance: "0",
+      account_balance: 0,
     },
   ],
   transactions: [
