@@ -1,12 +1,13 @@
 import { useState, useEffect } from "react";
 import "../styles/globals.css";
-import { SessionProvider } from "next-auth/react";
+import { SessionProvider, useSession } from "next-auth/react";
 import store from "../Redux/store";
 import { BsArrowUpShort } from "react-icons/bs";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Provider } from "react-redux";
 import Drift from "react-driftjs";
+import { useRouter } from "next/router";
 function MyApp({ Component, pageProps: { session, ...pageProps } }) {
   const [showTopBtn, setShowTopBtn] = useState(false);
 
@@ -57,3 +58,31 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
 }
 
 export default MyApp;
+
+function Auth({ children, adminOnly }) {
+  const router = useRouter();
+  const [loading, setLoading] = useState(false);
+  const { status, data: session } = useSession({
+    required: true,
+    onUnauthenticated() {
+      setLoading(true);
+      router.push("/login?message=login required");
+    },
+  });
+
+  if (loading) {
+    return (
+      <div className='flex justify-center bg-indigo-50 items-center h-screen w-full'>
+        <BeatLoader
+          color='indigo'
+          loading={loading}
+          size={10}
+          aria-label='Loading Spinner'
+          data-testid='loader'
+        />
+      </div>
+    );
+  }
+
+  return children;
+}

@@ -9,8 +9,7 @@ async function handler(req, res) {
   const {
     email,
     password,
-    firstName,
-    lastName,
+    name,
     country,
     userName,
     telephone,
@@ -46,7 +45,7 @@ async function handler(req, res) {
   }
 
   const newUser = new User({
-    name: `${firstName} ${lastName}`,
+    name,
     country,
     telephone,
     userName,

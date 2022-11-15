@@ -4,18 +4,16 @@ import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
 import Link from "next/link";
-import { CountryDropdown } from "react-country-region-selector";
-import Button2 from "../components/Layout/Button2";
 import { useRef } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import Image from "next/image";
 import ButtonBack from "../components/Layout/ButtonBack";
 import axios from "axios";
 import { getError } from "../utils/error";
 // import { fetchTransactions } from "../Redux/transactionSlice";
-// import { BeatLoader } from "react-spinners";
+import { BeatLoader } from "react-spinners";
+import { CountryDropdown } from "react-country-region-selector";
 
 const RegisterScreen = () => {
   const [selectedCountry, setSelectedCountry] = useState("");
@@ -34,15 +32,6 @@ const RegisterScreen = () => {
     getValues,
     formState: { errors },
   } = useForm();
-
-  // useEffect(() => {
-  //   if (session?.user && !calledRouter) {
-  //     setCalledRouter(true);
-  //     dispatch(fetchTransactions(session?.user.email));
-  //     router.push("/dashboard");
-  //     toast.success(`${session?.user.name} welcome to Aztrades`);
-  //   }
-  // }, [session]);
 
   const generateSecretPin = () => {
     const min = 13569935629;
@@ -67,6 +56,7 @@ const RegisterScreen = () => {
     email,
     password,
     firstName,
+    lastName,
     userName,
     telephone,
     birthday,
@@ -74,11 +64,12 @@ const RegisterScreen = () => {
     marital_status,
     occupation,
   }) => {
+    setLoading(true);
     try {
       const { data } = await axios.post(`/api/auth/signUp`, {
         email,
         password,
-        firstName,
+        name: `${firstName} ${lastName}`,
         country: selectedCountry,
         userName,
         telephone,
@@ -91,12 +82,27 @@ const RegisterScreen = () => {
       });
 
       toast.success("Your requestr has been submitted and been reviewed");
-
+      router.push("/");
       if (data.error) throw new Error(data.error);
     } catch (error) {
+      setLoading(false);
       toast.error(getError(error));
     }
   };
+
+  if (loading) {
+    return (
+      <div className='flex justify-center bg-indigo-50 items-center h-screen w-full'>
+        <BeatLoader
+          color='indigo'
+          loading={loading}
+          size={10}
+          aria-label='Loading Spinner'
+          data-testid='loader'
+        />
+      </div>
+    );
+  }
 
   return (
     <div className='bgRegister h-full'>
@@ -135,9 +141,9 @@ const RegisterScreen = () => {
               </label>
               <input
                 type='text'
-                id='first Name'
+                id='firstName'
                 className='w-full p-2 focus:outline-none border '
-                {...register("first Name", {
+                {...register("firstName", {
                   required: "Please enter your First Name",
                 })}
               />
@@ -367,12 +373,9 @@ const RegisterScreen = () => {
                 id='remember'
                 className='checkbox focus:outline-none border '
                 {...register("remember", {
-                  required: "Please enter your remember",
+                  required: "Please check the box above",
                 })}
               />
-              {errors.remember && (
-                <span className='text-red-500'>{errors.remember.message}</span>
-              )}
               I agree with
               <Link href={"/privacy"} legacyBehavior>
                 <a className='text-blue-600'>Privacy Policy</a>
@@ -382,6 +385,9 @@ const RegisterScreen = () => {
                 <a className='text-blue-600'>Terms & Condition</a>
               </Link>
             </label>
+            {errors.remember && (
+              <span className='text-red-500'>{errors.remember.message}</span>
+            )}
           </div>
           <p>
             Already have an account?{" "}
