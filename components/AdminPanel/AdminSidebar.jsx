@@ -36,7 +36,7 @@ const links = [
   {
     id: 4,
     title: "Deposits",
-    link: "/firstmonie/#deposits",
+    link: "/admin/firstmonie/deposits",
     icon: <AiOutlineTransaction />,
   },
   {

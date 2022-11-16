@@ -41,13 +41,13 @@ export const navLinks = [
   {
     id: 3,
     name: "Dashboard",
-    link: "dashboard",
+    link: "/dashboard",
     icon: <MdSpaceDashboard />,
   },
   {
     id: 4,
     name: "Request Money",
-    link: "request",
+    link: "/request",
     icon: <GrMoney />,
   },
 
@@ -60,7 +60,7 @@ export const navLinks = [
   {
     id: 6,
     name: "Deposits",
-    link: "deposits",
+    link: "/deposits",
     icon: <GrMoney />,
   },
 
@@ -69,12 +69,6 @@ export const navLinks = [
     name: "Withdrawal",
     link: "/withdrawals",
     icon: <MdOutlineContactSupport />,
-  },
-  {
-    id: 8,
-    name: "More",
-    link: "",
-    icon: <GrMoney />,
   },
 ];
 
@@ -94,26 +88,26 @@ export const navLinks2 = [
   {
     id: 3,
     name: "About",
-    link: "about",
+    link: "/about",
     icon: <GrMoney />,
   },
 
   {
     id: 4,
     name: "Contact",
-    link: "contact",
+    link: "/contact",
     icon: <MdOutlineContactSupport />,
   },
   {
     id: 5,
     name: "Cards",
-    link: "cards",
+    link: "/cards",
     icon: <GrMoney />,
   },
   {
     id: 6,
     name: "FAQs",
-    link: "faqs",
+    link: "/faqs",
     icon: <BsQuestionDiamond />,
   },
 ];

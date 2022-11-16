@@ -1573,5 +1573,87 @@ flutterwave`,
       status: "completed",
     },
   ],
+  receiveRequest: [
+    {
+      date: "Nov 15, 2022",
+      from: "Luke Andrews",
+      amount: "1200",
+      status: "pending",
+    },
+    {
+      date: "Oct 23, 2022",
+      from: "Peter Mark",
+      amount: "10$",
+      status: "completed",
+    },
+    {
+      date: "Aug 2, 2022",
+      from: "Daniel Henz",
+      amount: "500",
+      status: "completed",
+    },
+    {
+      date: "Jun 2, 2022",
+      from: "Lucky Sanders",
+      amount: "90",
+      status: "completed",
+    },
+    {
+      date: "Apr 13, 2022",
+      from: "Winnas Manth",
+      amount: "100",
+      status: "completed",
+    },
+    {
+      date: "Mar 2, 2022",
+      from: "Peter Monks",
+      amount: "300",
+      status: "completed",
+    },
+    {
+      date: "Jan 19, 2022",
+      from: "Quenth Telvs",
+      amount: "230",
+      status: "completed",
+    },
+  ],
+
+  sendRequest: [
+    {
+      date: "Nov 2, 2022",
+      sender: "Me",
+      amount: "200",
+      receiver: "Gabriel Mukh",
+      status: "pending",
+    },
+    {
+      date: "Aug 15, 2022",
+      sender: "Me",
+      amount: "430",
+      receiver: "Labrin Tenn",
+      status: "completed",
+    },
+    {
+      date: "Apr 29, 2022",
+      sender: "Me",
+      amount: "100",
+      receiver: "Penter Labes",
+      status: "cancel",
+    },
+    {
+      date: "Mar 1, 2022",
+      sender: "Me",
+      amount: "310",
+      receiver: "West Booth",
+      status: "completed",
+    },
+    {
+      date: "Jan 18, 2022",
+      sender: "Me",
+      amount: "150",
+      receiver: "Wensth Manthy",
+      status: "completed",
+    },
+  ],
 };
 export default userData;

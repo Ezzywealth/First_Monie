@@ -14,6 +14,7 @@ import { adminDashboardLists } from "../../../components/AdminPanel/utils";
 import User from "../../../components/Models/User";
 import Transaction from "../../../components/Models/Transactions";
 import { useRouter } from "next/router";
+
 const FirstmonieAdmin = ({ transactions, users }) => {
   const router = useRouter();
   const [newUsers, setNewUsers] = useState(users);

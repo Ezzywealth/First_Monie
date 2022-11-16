@@ -1,18 +1,27 @@
 import React from "react";
 import Layout from "../components/Layout/Layout";
 import { dashboardData } from "../utils/constants";
-import { useSession } from "next-auth/react";
+import { useSession, getSession } from "next-auth/react";
 import { MdContentCopy } from "react-icons/md";
 import { toast } from "react-toastify";
 import Transaction from "../components/Models/Transactions";
 import db from "../utils/db";
+import User from "../components/Models/User";
+import CurrencyFormat from "react-currency-format";
 
-const Dashboard = ({ transactions }) => {
-  console.log(transactions);
+const Dashboard = ({ transactions, newUser }) => {
+  console.log(newUser);
   const { data: session } = useSession();
   const handleDashboardData = (name) => {
     if (name === "AVAILABLE BALANCE") {
-      return "20,000";
+      return (
+        <CurrencyFormat
+          value={newUser[0].account_balance}
+          displayType={"text"}
+          thousandSeparator={true}
+          prefix={"$"}
+        />
+      );
     } else if (name === "ACCOUNT NUMBER") {
       return "GS2217525904KbtCyv";
     } else if (name === "Withdraws") {
@@ -38,6 +47,8 @@ const Dashboard = ({ transactions }) => {
       toast.error("Failed to copy: ", err);
     }
   };
+
+  const reversed = transactions.reverse();
   return (
     <Layout title='dashboard'>
       <div className='mt-20 py-16'>
@@ -134,7 +145,7 @@ const Dashboard = ({ transactions }) => {
                 </tr>
               </thead>
               <tbody>
-                {transactions.map((data, index) => (
+                {reversed?.map((data, index) => (
                   <tr
                     key={data._id}
                     className='border-b border-solid border-gray-200 text-[11px] gap-4'
@@ -164,14 +175,38 @@ const Dashboard = ({ transactions }) => {
 };
 
 export default Dashboard;
-export async function getServerSideProps() {
+export async function getServerSideProps(ctx) {
   await db.connect();
-  const data = await Transaction.find().lean();
-  await db.disconnect();
+  const session = await getSession({ ctx });
 
+  const data = await Transaction.find().lean();
+  const user = await User.find({ email: session?.user.email });
+  await db.disconnect();
+  const newUser = [
+    {
+      _id: user[0]._id,
+      name: user[0].name,
+      email: user[0].email,
+      telephone: user[0].telephone,
+      password: user[0].password,
+      userName: user[0].userName,
+      country: user[0].country,
+      birthday: user[0].birthday,
+      sex: user[0].sex,
+      marital_status: user[0].marital_status,
+      occupation: user[0].occupation,
+      account_number: user[0].account_number,
+      createdAt: user[0].createdAt,
+      updatedAt: user[0].updatedAt,
+      account_balance: user[0].account_balance,
+      secret_code: user[0].secret_code,
+    },
+  ];
+  console.log(user);
   return {
     props: {
       transactions: data.map(db.convertDocToObj),
+      newUser: newUser.map(db.convertUsersDocToObj),
     },
   };
 }

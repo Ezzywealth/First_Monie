@@ -2,6 +2,7 @@ import React from "react";
 import Layout from "../../components/Layout/Layout";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 const CreateDepositsScreen = () => {
   const [cardDetails, setCardDetails] = useState(false);
@@ -20,11 +21,23 @@ const CreateDepositsScreen = () => {
     }
   };
 
+  const formHandler = ({ amount, method, account }) => {
+    document.getElementById("form4").reset();
+
+    toast.error(
+      `Deposit with ${method} is unavailable, contact @support for futher assistance `
+    );
+  };
+
   return (
     <Layout title='createTransaction'>
       <div className='pt-16 px-2 md:px-8 lg:px-16 mt-32 md:mt-8 bgContact'>
         <h2 className='px-8 font-semibold text-2xl'>Deposit Now</h2>
-        <form className='px-4 md:px-8 lg:px-16 border border-solid border-gray-200 m-8 mt-2 py-8'>
+        <form
+          className='px-4 md:px-8 lg:px-16 border border-solid border-gray-200 m-8 mt-2 py-8'
+          onSubmit={handleSubmit(formHandler)}
+          id='form4'
+        >
           <div>
             <div className='flex flex-col font-semibold space-y-2 mb-4'>
               <label htmlFor='method'>Payment Method</label>
@@ -45,6 +58,9 @@ const CreateDepositsScreen = () => {
                 <option value='Authorize.net'>Authorize.net</option>
                 <option value='Flutterwave'>Flutterwave</option>
               </select>
+              {errors.method && (
+                <span className='text-red-500'>{errors.method.message}</span>
+              )}
             </div>
 
             {cardDetails && (
@@ -73,15 +89,24 @@ const CreateDepositsScreen = () => {
                   required: "please enter your withdrawal amount",
                 })}
               />
+              {errors.amount && (
+                <span className='text-red-500'>{errors.amount.message}</span>
+              )}
             </div>
             <div className='flex flex-col font-semibold space-y-2 mb-4'>
               <label htmlFor=''>Description</label>
-              <textarea
+              <input
                 type='text'
-                rows={4}
                 placeholder='receiver account details'
                 className='font-normal text-sm'
+                id='amount'
+                {...register("account", {
+                  required: "please enter your withdrawal amount",
+                })}
               />
+              {errors.account && (
+                <span className='text-red-500'>{errors.account.message}</span>
+              )}
             </div>
             <div>
               <button className='bg-indigo-700 p-2 w-full text-white rounded-lg hover:scale-105 customTransition'>
