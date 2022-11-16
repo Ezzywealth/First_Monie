@@ -1,18 +1,17 @@
-import React, { useState } from "react";
+import React from "react";
 import { useForm } from "react-hook-form";
-import { BsWindowSidebar } from "react-icons/bs";
 import Layout from "../../components/Layout/Layout";
 import TransferResponse from "../../components/transactions/transferResponse";
 import { useDispatch, useSelector } from "react-redux";
 import {
   openOtpModal,
+  setTransactionDetails,
   startLoading,
   stopLoading,
 } from "../../Redux/generalSlice";
 import { BeatLoader } from "react-spinners";
 
-const TransferScreen = () => {
-  const [loading, setLoading] = useState(0);
+const CreateTransfer = () => {
   const {
     register,
     handleSubmit,
@@ -21,18 +20,15 @@ const TransferScreen = () => {
   const loadingState = useSelector((state) => state.generalSlice.loadingState);
   const dispatch = useDispatch();
   const otpModal = useSelector((state) => state.generalSlice.otpModal);
-  const userCode = useSelector((state) => state.generalSlice.userCode);
-
-  console.log(userCode);
 
   const formHandler = ({ account_name, amount, account_number }) => {
-    console.log(account_name, amount, account_number);
     dispatch(startLoading());
-
+    dispatch(setTransactionDetails({ account_name, account_number, amount }));
     setTimeout(() => {
       dispatch(stopLoading());
     }, 3000);
     dispatch(openOtpModal());
+    document.getElementById("form7").reset();
   };
 
   if (loadingState) {
@@ -49,18 +45,6 @@ const TransferScreen = () => {
     );
   }
 
-  const generateSecretPin = () => {
-    const min = 13569935629;
-    const max = 99999999999;
-    const randomNumb = Math.floor(Math.random() * (max - min) + min);
-
-    return `FM${randomNumb}`;
-  };
-
-  // setInterval(() => {
-  //   // console.log(generateSecretPin());
-  // }, 2000);
-
   return (
     <Layout title='createTransaction'>
       <div className='pt-16  px-16 mt-32 md:mt-8 bgContact'>
@@ -76,6 +60,7 @@ const TransferScreen = () => {
           Send Money
         </h2>
         <form
+          id='form7'
           className='px-4 md:px-8 lg:px-16 border border-solid border-gray-200 m-8 mt-2 py-8'
           onSubmit={handleSubmit(formHandler)}
         >
@@ -141,4 +126,4 @@ const TransferScreen = () => {
   );
 };
 
-export default TransferScreen;
+export default CreateTransfer;

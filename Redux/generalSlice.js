@@ -5,6 +5,7 @@ const initialState = {
   loadingState: false,
   userCode: 0,
   otpModal: false,
+  transactionDetails: {},
 };
 
 const generalSlice = createSlice({
@@ -32,6 +33,9 @@ const generalSlice = createSlice({
     setUserCode: (state, action) => {
       state.userCode = action.payload;
     },
+    setTransactionDetails: (state, action) => {
+      state.transactionDetails = action.payload;
+    },
   },
 });
 
@@ -44,4 +48,5 @@ export const {
   setUserCode,
   openOtpModal,
   closeOtpModal,
+  setTransactionDetails,
 } = generalSlice.actions;

@@ -18,24 +18,30 @@ const handler = async (req, res) => {
   await User.insertMany(userData.users);
 
   await Transaction.deleteMany();
-  await Transaction.insertMany(userData.transactions);
+  const reverseTransac = userData.transactions.reverse();
+  await Transaction.insertMany(reverseTransac);
 
   await Transfers.deleteMany();
-  await Transfers.insertMany(userData.transfers);
+  const reverseTrans = userData.transfers.reverse();
+  await Transfers.insertMany(reverseTrans);
 
   await Loan.deleteMany();
-  await Loan.insertMany(userData.loans);
+  const reverseLoans = userData.loans.reverse();
+  await Loan.insertMany(reverseLoans);
 
   await Dps.deleteMany();
-  await Dps.insertMany(userData.dps);
+  await Dps.insertMany(userData.dps.reverse());
   await Fdr.deleteMany();
-  await Fdr.insertMany(userData.fdr);
+  await Fdr.insertMany(userData.fdr.reverse());
   await Withdrawals.deleteMany();
-  await Withdrawals.insertMany(userData.withdrawals);
+  const reverseWith = userData.withdrawals.reverse();
+  await Withdrawals.insertMany(reverseWith);
   await Wire.deleteMany();
-  await Wire.insertMany(userData.wire);
+  const reverseWire = userData.wire.reverse();
+  await Wire.insertMany(reverseWire);
   await Deposits.deleteMany();
-  await Deposits.insertMany(userData.deposits);
+  const reverseDeps = userData.deposits.reverse();
+  await Deposits.insertMany(reverseDeps);
   await db.disconnect();
 
   res.send({ messgae: "seeded successfully", userData });

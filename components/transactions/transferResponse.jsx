@@ -1,5 +1,5 @@
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   closeOtpModal,
   setUserCode,
@@ -8,6 +8,7 @@ import {
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { toast } from "react-toastify";
+
 const TransferResponse = () => {
   const dispatch = useDispatch();
   dispatch(stopLoading());
@@ -18,21 +19,29 @@ const TransferResponse = () => {
     formState: { errors },
   } = useForm();
 
+  const transactionDetails = useSelector(
+    (state) => state.generalSlice.transactionDetails
+  );
+
   const handleForm = async ({ code }) => {
     if (code) {
       dispatch(setUserCode(code));
 
       try {
-        const { data } = await axios.post(`/api/transactions/otpCode`, {
-          code,
-        });
+        const { data } = await axios.post(`/api/transactions/otpCode`);
         console.log(data);
         if (data[0].secret_code !== code) {
-          toast.error("Invalid code, Try again");
+          toast.error("Incorrect code, Try again");
         } else {
           dispatch(closeOtpModal());
           document.querySelector("form").reset();
-          toast.success("success!, transfer request created");
+
+          const { data } = await axios.post(
+            `/api/transactions/createTransferRequest`,
+            { ...transactionDetails }
+          );
+          console.log(data);
+          toast.success(data.message);
         }
         if (data.error) throw new Error(data.error.message);
       } catch (error) {

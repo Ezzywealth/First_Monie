@@ -7,13 +7,13 @@ const handler = async (req, res) => {
     return res.status(401).send({ message: "Unauthorized method" });
   }
   const session = await getSession({ req });
-  const { code } = req.body;
+  const { _id, email } = session.user;
 
   try {
     await db.connect();
-    const user = await User.find({ _id: session.user._id });
-
+    const user = await User.find({ email });
     await db.disconnect();
+
     res.status(201).send(user);
   } catch (error) {
     res.status(401).send(error);

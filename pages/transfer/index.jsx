@@ -10,20 +10,22 @@ const TransferScreen = ({ transfers }) => {
   const { data: session } = useSession();
   const router = useRouter();
   const { query } = router.query;
-  console.log(transfers);
+
+  const reversed = transfers.reverse();
+
   return (
     <Layout title='deposits'>
       <div className='py-20 px-16'>
         <div className='flex justify-between mb-4 items-center h-[2.5rem]'>
-          <h2 className='font-semibold text-xl flex flex-col'>
-            <span className='text-[#333333] text-[12px]'>Overview</span>{" "}
+          <h2 className='font-semibold text-2xl flex flex-col mb-8'>
+            <span className='text-[#333333] text-[13px]'>Overview</span>{" "}
             Transfers
           </h2>
           <button
             onClick={() => router.push("/transfer/createTransfer")}
-            className='bg-indigo-800 rounded-lg items-center px-3 py-2 flex gap-3 text-gray-200'
+            className='bg-indigo-800 text-[12px] hover:scale-105 customTransition rounded-lg items-center px-3 py-2 flex gap-3 text-gray-200'
           >
-            <BsPlus />
+            <BsPlus className='text-2xl' />
             Transfer Money
           </button>
         </div>
@@ -41,7 +43,7 @@ const TransferScreen = ({ transfers }) => {
               </tr>
             </thead>
             <tbody>
-              {transfers?.map((item) => (
+              {reversed?.map((item) => (
                 <tr
                   key={item._id}
                   className='border-b border-solid border-gray-200 text-[13px] gap-4'
