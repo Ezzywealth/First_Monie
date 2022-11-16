@@ -3,6 +3,7 @@ import Dps from "../../components/Models/Dps";
 import Fdr from "../../components/Models/Fdr";
 import Loan from "../../components/Models/Loans";
 import Transaction from "../../components/Models/Transactions";
+import Transfers from "../../components/Models/Transfers";
 import User from "../../components/Models/User";
 import Wire from "../../components/Models/Wire";
 import Withdrawals from "../../components/Models/Withdrawals";
@@ -18,6 +19,9 @@ const handler = async (req, res) => {
 
   await Transaction.deleteMany();
   await Transaction.insertMany(userData.transactions);
+
+  await Transfers.deleteMany();
+  await Transfers.insertMany(userData.transfers);
 
   await Loan.deleteMany();
   await Loan.insertMany(userData.loans);

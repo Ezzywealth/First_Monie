@@ -8,6 +8,9 @@ import "react-toastify/dist/ReactToastify.css";
 import { Provider } from "react-redux";
 import Drift from "react-driftjs";
 import { useRouter } from "next/router";
+import { useSelector, useDispatch } from "react-redux";
+import { stopLoading } from "../Redux/generalSlice";
+
 function MyApp({ Component, pageProps: { session, ...pageProps } }) {
   const [showTopBtn, setShowTopBtn] = useState(false);
 
@@ -27,6 +30,7 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
       }
     });
   }, []);
+
   return (
     <SessionProvider session={session}>
       <ToastContainer position='top-center' />
@@ -60,6 +64,7 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
 export default MyApp;
 
 function Auth({ children, adminOnly }) {
+  const dispatch = useDispatch();
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const { status, data: session } = useSession({
@@ -69,8 +74,10 @@ function Auth({ children, adminOnly }) {
       router.push("/login?message=login required");
     },
   });
+  dispatch(stopLoading());
+  const loadingState = useSelector((state) => state.generalSlice.loadingState);
 
-  if (loading) {
+  if (loadingState) {
     return (
       <div className='flex justify-center bg-indigo-50 items-center h-screen w-full'>
         <BeatLoader

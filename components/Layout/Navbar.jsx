@@ -14,7 +14,7 @@ import Image from "next/image";
 import { MdArrowDropDown } from "react-icons/md";
 import AccountType from "../../components/Layout/AccountType";
 import MoreLists from "../../components/Layout/MoreLists";
-import { openSidebar } from "../../Redux/generalSlice";
+import { openSidebar, startLoading } from "../../Redux/generalSlice";
 import Button2 from "./Button2";
 
 const Navbar = () => {
@@ -26,10 +26,12 @@ const Navbar = () => {
   const [accountType, setAccountType] = useState(false);
   const [more, setMore] = useState(false);
   const handleSignIn = () => {
+    dispatch(startLoading());
     router.push("/login");
   };
 
   const handleNavLink = (name) => {
+    dispatch(startLoading());
     setActiveLink(name);
     // dispatch(startLoading());
   };
@@ -88,11 +90,11 @@ const Navbar = () => {
           <HiOutlineMenuAlt1 className='w-10 h-10 text-indigo-600 font-extrabold' />
         </button>
 
-        <ul className='relative hidden items-center lg:flex gap-2 lg:gap-2 mt-2'>
+        <ul className='relative hidden items-center lg:flex gap-2 lg:gap-4 mt-2'>
           {newLinks.map((link) => (
             <li
               key={link.id}
-              className={`hover:text-indigo-500 focus:text-indigo-500  cursor-pointer tracking-widest hover:scale-105 font-semibold  ${
+              className={`hover:text-indigo-500 focus:text-indigo-500 customTransition cursor-pointer tracking-widest hover:scale-105 font-semibold  ${
                 activeLink === link.name && "text-indigo-500"
               }`}
               onClick={() => handleNavLink(link.name)}
@@ -126,28 +128,6 @@ const Navbar = () => {
                   {link.name !== "Personal" &&
                     link.name !== "More" &&
                     link.name}
-                  {link.name === "More" && (
-                    <span
-                      className='flex items-center'
-                      onMouseOver={() => link.name === "More" && setMore(true)}
-                      onMouseLeave={() =>
-                        link.name === "More" && setMore(false)
-                      }
-                    >
-                      {link.name}
-                      <MdArrowDropDown />
-
-                      <div
-                        className={`customTransition flex items-center w-[200px] mt-4  bg-white ${
-                          more
-                            ? "absolute -bottom-[11rem]  customTransition "
-                            : "hidden customTransition "
-                        }`}
-                      >
-                        <MoreLists />
-                      </div>
-                    </span>
-                  )}
                 </a>
               </Link>
             </li>
@@ -161,12 +141,26 @@ const Navbar = () => {
                 <BsPersonCheckFill className='w-6 h-6 text-white' />
               </span>
 
-              <h5 className='text-sm font-semibold italic'>
+              <h5 className='flex gap-1 relative text-sm font-semibold italic'>
                 {session.user.name}
+                <span
+                  className='flex items-center'
+                  onClick={() => setMore(true)}
+                  onMouseLeave={() => setMore(false)}
+                >
+                  <MdArrowDropDown />
+
+                  <div
+                    className={`customTransition cursor-pointer flex items-center w-[200px] mt-4  bg-white ${
+                      more
+                        ? "absolute -bottom-[11rem] -left-32 customTransition "
+                        : "hidden customTransition "
+                    }`}
+                  >
+                    <MoreLists />
+                  </div>
+                </span>
               </h5>
-              {/* <span className=' ml-4 text-2xl ' onClick={() => handleSignOut()}>
-                <FiLogOut className='text-indigo-600 cursor-pointer hover:scale-105 customTransition font-extrabold' />
-              </span> */}
             </div>
           ) : (
             <Button2

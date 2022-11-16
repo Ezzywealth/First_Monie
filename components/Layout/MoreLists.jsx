@@ -10,22 +10,47 @@ const MoreLists = () => {
   const router = useRouter();
   return (
     <div className='rounded-2xl'>
-      <ul className='p-4 flex flex-col w-full text-base text-gray-500 rounded-lg '>
+      <ul className='p-4 flex flex-col w-full text-base cursor-pointer text-gray-500 rounded-lg '>
         <Link href='/dps' legacyBehavior>
-          <li onClick={() => dispatch(closeSidebar())}>DPS</li>
+          <li
+            onClick={() => dispatch(closeSidebar())}
+            className='hover:scale-105 customTransition '
+          >
+            DPS
+          </li>
         </Link>
         <Link href='/fdr' legacyBehavior>
-          <li onClick={() => dispatch(closeSidebar())}>FDR</li>
+          <li
+            onClick={() => dispatch(closeSidebar())}
+            className='hover:scale-105 customTransition '
+          >
+            FDR
+          </li>
         </Link>
 
         <Link href='/referrals' legacyBehavior>
-          <li onClick={() => dispatch(closeSidebar())}>Referrals</li>
+          <li
+            onClick={() => dispatch(closeSidebar())}
+            className='hover:scale-105 customTransition '
+          >
+            Referrals
+          </li>
         </Link>
         <Link href='/support' legacyBehavior>
-          <li onClick={() => dispatch(closeSidebar())}>Support Ticket</li>
+          <li
+            onClick={() => dispatch(closeSidebar())}
+            className='hover:scale-105 customTransition '
+          >
+            Support Ticket
+          </li>
         </Link>
         <Link href='/transactions' legacyBehavior>
-          <li onClick={() => dispatch(closeSidebar())}>Transactions</li>
+          <li
+            onClick={() => dispatch(closeSidebar())}
+            className='hover:scale-105 customTransition '
+          >
+            Transactions
+          </li>
         </Link>
 
         <li
@@ -34,6 +59,7 @@ const MoreLists = () => {
             const data = await signOut({ redirect: false, callbackUrl: "/" });
             router.push(data.url);
           }}
+          className='hover:scale-105 customTransition '
         >
           Logout
         </li>

@@ -10,11 +10,13 @@ import { BeatLoader } from "react-spinners";
 import { useDispatch, useSelector } from "react-redux";
 import Image from "next/image";
 import ButtonBack from "../components/Layout/ButtonBack";
+import { startLoading } from "../Redux/generalSlice";
 
 const LoginScreen = () => {
   const [loading, setLoading] = useState(false);
   const [accountNumber, setAccountNumber] = useState("");
   const [password, setPassword] = useState("");
+  const dispatch = useDispatch();
 
   const { data: session } = useSession();
 
@@ -33,12 +35,12 @@ const LoginScreen = () => {
       // dispatch(fetchTransactions(session?.user.email));
       router.push("/");
       toast.success(`${session?.user.name} welcome to First Monie`);
-      setLoading(false);
     }
   }, [session?.user]);
 
   const onSubmit = async () => {
     // document.querySelector("form").reset();
+    dispatch(startLoading());
     try {
       setLoading(true);
       const result = await signIn("credentials", {
