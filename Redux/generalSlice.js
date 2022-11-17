@@ -7,6 +7,7 @@ const initialState = {
   otpModal: false,
   transactionDetails: {},
   activeNavLink: "",
+  isAdminSidebarOpen: false,
 };
 
 const generalSlice = createSlice({
@@ -40,6 +41,12 @@ const generalSlice = createSlice({
     setActiveNavLink: (state, action) => {
       state.activeNavLink = action.payload;
     },
+    closeAdminSidebar: (state, action) => {
+      state.isAdminSidebarOpen = false;
+    },
+    openAdminSidebar: (state, action) => {
+      state.isAdminSidebarOpen = false;
+    },
   },
 });
 
@@ -54,4 +61,6 @@ export const {
   closeOtpModal,
   setTransactionDetails,
   setActiveNavLink,
+  closeAdminSidebar,
+  openAdminSidebar,
 } = generalSlice.actions;

@@ -65,29 +65,18 @@ const MoreLists = () => {
             FDR
           </li>
         </Link>
+        <Link href='/loans' legacyBehavior>
+          <li
+            onClick={() => {
+              setLoading(true);
+              dispatch(closeSidebar());
+            }}
+            className='hover:scale-105 customTransition '
+          >
+            Loans
+          </li>
+        </Link>
 
-        <Link href='/referrals' legacyBehavior>
-          <li
-            onClick={() => {
-              setLoading(true);
-              dispatch(closeSidebar());
-            }}
-            className='hover:scale-105 customTransition '
-          >
-            Referrals
-          </li>
-        </Link>
-        <Link href='/support' legacyBehavior>
-          <li
-            onClick={() => {
-              setLoading(true);
-              dispatch(closeSidebar());
-            }}
-            className='hover:scale-105 customTransition '
-          >
-            Support Ticket
-          </li>
-        </Link>
         <Link href='/transactions' legacyBehavior>
           <li
             onClick={() => {
@@ -108,6 +97,28 @@ const MoreLists = () => {
             className='hover:scale-105 customTransition '
           >
             Profile Update
+          </li>
+        </Link>
+        <Link href='/referrals' legacyBehavior>
+          <li
+            onClick={() => {
+              setLoading(true);
+              dispatch(closeSidebar());
+            }}
+            className='hover:scale-105 customTransition '
+          >
+            Referrals
+          </li>
+        </Link>
+        <Link href='/support' legacyBehavior>
+          <li
+            onClick={() => {
+              setLoading(true);
+              dispatch(closeSidebar());
+            }}
+            className='hover:scale-105 customTransition '
+          >
+            Support Ticket
           </li>
         </Link>
 

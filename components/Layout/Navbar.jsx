@@ -146,9 +146,9 @@ const Navbar = () => {
                   <MdArrowDropDown />
 
                   <div
-                    className={`customTransition cursor-pointer flex items-center w-[200px] mt-8 rounded-2xl  bg-white ${
+                    className={`customTransition cursor-pointer flex items-center w-[200px] mt-8 rounded-2xl border border-solid border-indigo-500 bg-white ${
                       more
-                        ? "absolute -bottom-[12.5rem] -left-32 customTransition "
+                        ? "absolute -bottom-[15.5rem] -left-32 customTransition "
                         : "hidden customTransition "
                     }`}
                   >
