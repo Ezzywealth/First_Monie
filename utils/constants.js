@@ -717,3 +717,42 @@ export const dashboardData = [
     icons: <BsWallet2 />,
   },
 ];
+
+export const loanData = [
+  {
+    id: 1,
+    type: "Student",
+    percent: "3%",
+    minimum: "10000$",
+    maximum: "100000$",
+    installment: "30 Days",
+    total: "35",
+  },
+  {
+    id: 2,
+    type: "House Repair",
+    percent: "10%",
+    minimum: "3000$",
+    maximum: "100000$",
+    installment: "",
+    total: "",
+  },
+  {
+    id: 3,
+    type: "Education",
+    percent: "2%",
+    minimum: "5000$",
+    maximum: "50000$",
+    installment: "30 Days",
+    total: "55",
+  },
+  {
+    id: 4,
+    type: "Agriculture",
+    percent: "2%",
+    minimum: "5000$",
+    maximum: "50000$",
+    installment: "30 Days",
+    total: "60",
+  },
+];

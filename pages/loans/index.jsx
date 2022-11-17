@@ -66,7 +66,7 @@ const LoanScreen = ({ loans }) => {
                   </td>
                   <td>{item.per_installment}</td>
                   <td>{item.total_installment}</td>
-                  <td>--</td>
+                  <td className='text-red-500 p-2'>--</td>
 
                   <td
                     className={` flex items-center justify-center h-full py-auto  `}

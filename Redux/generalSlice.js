@@ -8,6 +8,7 @@ const initialState = {
   transactionDetails: {},
   activeNavLink: "",
   isAdminSidebarOpen: false,
+  loanResponse: false,
 };
 
 const generalSlice = createSlice({
@@ -45,7 +46,13 @@ const generalSlice = createSlice({
       state.isAdminSidebarOpen = false;
     },
     openAdminSidebar: (state, action) => {
-      state.isAdminSidebarOpen = false;
+      state.isAdminSidebarOpen = true;
+    },
+    setLoanTrue: (state, action) => {
+      state.loanResponse = true;
+    },
+    setLoanFalse: (state, action) => {
+      state.loanResponse = false;
     },
   },
 });
@@ -63,4 +70,6 @@ export const {
   setActiveNavLink,
   closeAdminSidebar,
   openAdminSidebar,
+  setLoanFalse,
+  setLoanTrue,
 } = generalSlice.actions;

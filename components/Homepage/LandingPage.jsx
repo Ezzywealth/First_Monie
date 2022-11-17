@@ -2,8 +2,13 @@ import React from "react";
 import { services } from "../../utils/constants";
 import Button2 from "../Layout/Button2";
 import { useRouter } from "next/router";
+import { BeatLoader } from "react-spinners";
+import { useState } from "react";
+import { useSession } from "next-auth/react";
 const LandingPage = () => {
   const router = useRouter();
+  const [loading, setLoading] = useState(false);
+  const { data: session } = useSession();
 
   const handleReadMore = (link) => {
     if (link === "cards") {
@@ -16,6 +21,29 @@ const LandingPage = () => {
       router.push("/about");
     }
   };
+
+  const handleGetStarted = () => {
+    setLoading(true);
+    if (session?.user) {
+      router.push("/dashboard");
+    } else {
+      router.push("/login");
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className='flex justify-center bg-indigo-50 items-center h-screen w-full'>
+        <BeatLoader
+          color='indigo'
+          loading={loading}
+          size={10}
+          aria-label='Loading Spinner'
+          data-testid='loader'
+        />
+      </div>
+    );
+  }
   return (
     <div className='bgLanding w-full h-[650px] relative'>
       <div className='absolute top-0 left-0 w-full  h-full bg-[rgba(0,0,0,0.4)] '>
@@ -28,7 +56,11 @@ const LandingPage = () => {
             Bank smarter with us now and browse <br /> personal and consumer
             banking services
           </p>
-          <Button2 title='Get Started' px={5} />
+          <Button2
+            title='Get Started'
+            px={5}
+            onClick={() => handleGetStarted()}
+          />
         </div>
         <div className='hidden absolute  left-0 right-0 md:-bottom-16 md:flex justify-center'>
           <div className='flex flex-col md:flex-row mx-8   w-full md:w-[80%]  -bottom-16'>
