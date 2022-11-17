@@ -22,7 +22,7 @@ const LoanScreen = ({ loans }) => {
 
   return (
     <Layout title='transfers'>
-      <div className='py-20 px-16 bgContact'>
+      <div className='mt-[90px] py-20 px-4 md:px-8 lg:px-16 bgContact'>
         <div className='flex justify-between mb-4 items-center h-[2.5rem]'>
           <h2 className='font-semibold text-2xl flex flex-col mb-8'>
             <span className='text-[#333333] text-[13px]'>Overview</span> All
@@ -36,8 +36,8 @@ const LoanScreen = ({ loans }) => {
             Request Loan
           </button>
         </div>
-        <div className='flex justify-center  overflow-auto'>
-          <table className='table-fixed min-w-full px-8 border border-solid border-gray-500 '>
+        <div className='  overflow-auto'>
+          <table className='table-auto min-w-full w-[800px] px-8 border border-solid border-gray-500 '>
             <thead>
               <tr className='bg-gray-100 font-semibold text-[16px]'>
                 <td className='p-4'>Plan No</td>

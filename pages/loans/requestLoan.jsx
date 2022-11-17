@@ -5,16 +5,16 @@ import { useDispatch, useSelector } from "react-redux";
 import Layout from "../../components/Layout/Layout";
 
 import LoanResponse from "../../components/transactions/loanRequestResponse";
-import { setLoanTrue } from "../../Redux/generalSlice";
+import { setLoanDetails, setLoanTrue } from "../../Redux/generalSlice";
 import { loanData } from "../../utils/constants";
 
 const RequestLoan = () => {
   const dispatch = useDispatch();
   const loanResponse = useSelector((state) => state.generalSlice.loanResponse);
 
-  const handleApply = (type) => {
+  const handleApply = (item) => {
     dispatch(setLoanTrue());
-    console.log(type);
+    dispatch(setLoanDetails(item));
   };
   return (
     <Layout title='Request Loan'>
@@ -28,7 +28,7 @@ const RequestLoan = () => {
           Loan Plans
         </h2>
         <section>
-          <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 px-4 md:px-8 lg:px-16'>
+          <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 px-4 md:px-8 lg:px-16'>
             {loanData.map((item) => (
               <div
                 key={item.id}
@@ -99,7 +99,7 @@ const RequestLoan = () => {
                 </div>
                 <button
                   className='bg-green-500 w-full text-white rounded-lg px-3 py-2 hover:scale-105 customTransition'
-                  onClick={() => handleApply(item.type)}
+                  onClick={() => handleApply(item)}
                 >
                   Apply
                 </button>

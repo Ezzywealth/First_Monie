@@ -734,8 +734,8 @@ export const loanData = [
     percent: "10%",
     minimum: "3000$",
     maximum: "100000$",
-    installment: "",
-    total: "",
+    installment: "30 Days",
+    total: "15",
   },
   {
     id: 3,

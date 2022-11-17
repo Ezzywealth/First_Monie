@@ -9,6 +9,8 @@ const initialState = {
   activeNavLink: "",
   isAdminSidebarOpen: false,
   loanResponse: false,
+  loanDetails: {},
+  loanAmount: 0,
 };
 
 const generalSlice = createSlice({
@@ -54,6 +56,12 @@ const generalSlice = createSlice({
     setLoanFalse: (state, action) => {
       state.loanResponse = false;
     },
+    setLoanDetails: (state, action) => {
+      state.loanDetails = action.payload;
+    },
+    setLoanAmount: (state, action) => {
+      state.loanAmount = action.payload;
+    },
   },
 });
 
@@ -72,4 +80,6 @@ export const {
   openAdminSidebar,
   setLoanFalse,
   setLoanTrue,
+  setLoanDetails,
+  setLoanAmount,
 } = generalSlice.actions;

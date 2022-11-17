@@ -28,7 +28,7 @@ const Layout = ({ children, title, priceList = true }) => {
         className={`fixed w-full transition-all duration-500 ease-linear lg:hidden h-screen bottom-0 left-0 z-50  ${
           isSidebarOpen
             ? "left-[0vh] top-[0vh] right-0 transition-all duration-500 ease-linear"
-            : "-left-[900px] "
+            : "-left-[1000px] "
         }`}
       >
         <Sidebar />

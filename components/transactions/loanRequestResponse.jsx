@@ -1,8 +1,9 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import { useDispatch } from "react-redux";
-import { setLoanFalse } from "../../Redux/generalSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { setLoanAmount, setLoanFalse } from "../../Redux/generalSlice";
 import { useRouter } from "next/router";
+import { toast } from "react-toastify";
 
 const LoanResponse = () => {
   const router = useRouter();
@@ -10,9 +11,21 @@ const LoanResponse = () => {
   const {
     register,
     formState: { errors },
+    handleSubmit,
   } = useForm();
+  const loanDetails = useSelector((state) => state.generalSlice.loanDetails);
+  console.log(loanDetails);
 
-  const handleSubmit = () => {
+  const submitHandler = ({ amount }) => {
+    const { maximum, minimum, percentage, total } = loanDetails;
+
+    if (amount < parseInt(minimum) || amount > parseInt(maximum)) {
+      toast.error(
+        "amount is not within the loan limit, try a different amount"
+      );
+      return;
+    }
+    dispatch(setLoanAmount(amount));
     router.push("/loans/loanRequestConfirm");
   };
   return (
@@ -27,26 +40,25 @@ const LoanResponse = () => {
             X
           </span>
         </div>
-        <div className='bg-gray-100 py-6 px-2'>
-          <label htmlFor='amount'>Amount</label>
-          <input
-            type='number'
-            placeholder='enter amount'
-            id='amount'
-            {...register("amount", { required: "Please enter an amount" })}
-          />
-          {errors.amount && (
-            <span className='text-red-500'>{errors.amount.message}</span>
-          )}
-          <div className='flex justify-end mt-4'>
-            <button
-              className='bg-blue-800 px-4 py-2 rounded-lg text-white '
-              onClick={() => handleSubmit()}
-            >
-              Submit
-            </button>
+        <form onSubmit={handleSubmit(submitHandler)}>
+          <div className='bg-gray-100 py-6 px-2'>
+            <label htmlFor='amount'>Amount</label>
+            <input
+              type='number'
+              placeholder='enter amount'
+              id='amount'
+              {...register("amount", { required: "Please enter an amount" })}
+            />
+            {errors.amount && (
+              <span className='text-red-500'>{errors.amount.message}</span>
+            )}
+            <div className='flex justify-end mt-4'>
+              <button className='bg-blue-800 px-4 py-2 rounded-lg text-white '>
+                Submit
+              </button>
+            </div>
           </div>
-        </div>
+        </form>
       </div>
     </div>
   );
