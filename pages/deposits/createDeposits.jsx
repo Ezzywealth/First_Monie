@@ -30,7 +30,7 @@ const CreateDepositsScreen = () => {
   };
 
   return (
-    <Layout title='createTransaction'>
+    <Layout title='createDeposits'>
       <div className='pt-16 px-2 md:px-8 lg:px-16 mt-32 md:mt-8 bgContact'>
         <h2 className='px-8 font-semibold text-2xl'>Deposit Now</h2>
         <form
@@ -120,4 +120,5 @@ const CreateDepositsScreen = () => {
   );
 };
 
+CreateDepositsScreen.auth = true;
 export default CreateDepositsScreen;

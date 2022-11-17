@@ -4,15 +4,23 @@ import Layout from "../../components/Layout/Layout";
 import { useDispatch, useSelector } from "react-redux";
 import { startLoading, stopLoading } from "../../Redux/generalSlice";
 import { BeatLoader } from "react-spinners";
+import { CountryDropdown } from "react-country-region-selector";
+import { useEffect } from "react";
 
 const CreateWire = () => {
   const [error, setError] = useState(false);
+  const [selectedCountry, setSelectedCountry] = useState("");
+  const [loading, setLoading] = useState(false);
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const loadingState = useSelector((state) => state.generalSlice.loadingState);
+
+  useEffect(() => {
+    setLoading(false);
+  }, []);
+
   const dispatch = useDispatch();
 
   const formHandler = () => {
@@ -27,12 +35,12 @@ const CreateWire = () => {
     }, 4000);
   };
 
-  if (loadingState) {
+  if (loading) {
     return (
       <div className='flex justify-center shadow-2xl bg-indigo-50 items-center h-screen w-full'>
         <BeatLoader
           color='indigo'
-          loading={loadingState}
+          loading={loading}
           size={10}
           aria-label='Loading Spinner'
           data-testid='loader'
@@ -116,7 +124,7 @@ const CreateWire = () => {
                 <label htmlFor='routing'>Routing Number</label>
                 <input
                   id='routing'
-                  placeholder='receiver account details'
+                  placeholder='routing number'
                   className='font-normal text-sm'
                   {...register("routing", {
                     required: "please enter outing number",
@@ -127,23 +135,25 @@ const CreateWire = () => {
                   <span className='text-red-500'>{errors.routing.message}</span>
                 )}
               </div>
-              <div className='flex flex-col font-semibold space-y-2 mb-2'>
-                <label htmlFor='country'>Country</label>
-                <input
-                  className='font-normal text-sm'
-                  {...register("country", {
-                    required: "please enter an amount to send",
-                  })}
+              <div>
+                <label htmlFor='country' className='text-[#333333] '>
+                  Country
+                </label>
+                <CountryDropdown
+                  value={selectedCountry}
+                  onChange={(val) => setSelectedCountry(val)}
+                  className='w-full p-2 focus:outline-none border rounded-lg'
                 />
-
-                {errors.country && (
-                  <span className='text-red-500'>{errors.country.message}</span>
+                {errors.selectedCountry && (
+                  <span className='text-red-500'>
+                    {errors.selectedCountry.message}
+                  </span>
                 )}
               </div>
               <div className='flex flex-col font-semibold space-y-2 mb-2'>
                 <label htmlFor='account'>Account Number</label>
                 <input
-                  placeholder='Enter Account details'
+                  placeholder='Account Number'
                   className='font-normal text-sm'
                   {...register("account", {
                     required: "please enter account details",
@@ -158,7 +168,7 @@ const CreateWire = () => {
                 <label htmlFor='account_name'>Account Holder Name</label>
                 <input
                   id='account_name'
-                  placeholder='receiver account details'
+                  placeholder='Account Holder Name'
                   className='font-normal text-sm'
                   {...register("account_name", {
                     required: "please enter account name",
@@ -175,7 +185,7 @@ const CreateWire = () => {
             <div className='flex flex-col font-semibold space-y-2 mb-2'>
               <label htmlFor='amount'>Amount</label>
               <input
-                placeholder='receiver account details'
+                placeholder='Amount'
                 className='font-normal text-sm'
                 {...register("amount", {
                   required: "please enter an amount to send",
@@ -191,7 +201,7 @@ const CreateWire = () => {
               <textarea
                 rows={6}
                 id='note'
-                placeholder='receiver account details'
+                placeholder='Description Note'
                 className='font-normal text-sm'
                 {...register("note", {
                   required: "please enter a descriptive message",
@@ -214,4 +224,5 @@ const CreateWire = () => {
   );
 };
 
+CreateWire.auth = true;
 export default CreateWire;

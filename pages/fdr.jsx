@@ -81,6 +81,7 @@ const FdrScreen = ({ fdr }) => {
   );
 };
 
+Fdr.auth = true;
 export default FdrScreen;
 
 export async function getServerSideProps() {

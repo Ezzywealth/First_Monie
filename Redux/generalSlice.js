@@ -6,6 +6,7 @@ const initialState = {
   userCode: 0,
   otpModal: false,
   transactionDetails: {},
+  activeNavLink: "",
 };
 
 const generalSlice = createSlice({
@@ -36,6 +37,9 @@ const generalSlice = createSlice({
     setTransactionDetails: (state, action) => {
       state.transactionDetails = action.payload;
     },
+    setActiveNavLink: (state, action) => {
+      state.activeNavLink = action.payload;
+    },
   },
 });
 
@@ -49,4 +53,5 @@ export const {
   openOtpModal,
   closeOtpModal,
   setTransactionDetails,
+  setActiveNavLink,
 } = generalSlice.actions;

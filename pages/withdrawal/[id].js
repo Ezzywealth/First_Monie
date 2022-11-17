@@ -3,7 +3,7 @@ import Layout from "../../components/Layout/Layout";
 import { useRouter } from "next/router";
 import db from "../../utils/db";
 import Withdrawals from "../../components/Models/Withdrawals";
-const LoanScreen = ({ withdraw }) => {
+const WithdrawalDetailsScreen = ({ withdraw }) => {
   const router = useRouter();
   const { id } = router.query;
   console.log(withdraw[0]);
@@ -62,7 +62,8 @@ const LoanScreen = ({ withdraw }) => {
   );
 };
 
-export default LoanScreen;
+WithdrawalDetailsScreen.auth = true;
+export default WithdrawalDetailsScreen;
 
 export async function getServerSideProps(ctx) {
   const { query } = ctx;

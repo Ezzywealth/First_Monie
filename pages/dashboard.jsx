@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Layout from "../components/Layout/Layout";
 import { dashboardData } from "../utils/constants";
 import { useSession, getSession } from "next-auth/react";
@@ -12,6 +12,14 @@ import CurrencyFormat from "react-currency-format";
 const Dashboard = ({ transactions, newUser }) => {
   console.log(newUser);
   const { data: session } = useSession();
+
+  const [activeNumb, setActiveNumb] = useState(1);
+  const [curPage, setCurPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(7);
+  const numOfPage = Math.ceil(transactions.length / itemsPerPage);
+  const indexOfLastItem = curPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+
   const handleDashboardData = (name) => {
     if (name === "AVAILABLE BALANCE") {
       return (
@@ -130,13 +138,13 @@ const Dashboard = ({ transactions, newUser }) => {
         </section>
 
         <section className='flex flex-col mx-2 md:mx-10  lg:mx-16 border border-gray-300 border-solid'>
-          <h2 className='p-4 font-semibold tracking-wide'>
+          <h2 className='p-4 font-semibold tracking-wide text-gray-500 text-xl'>
             Recent Transactions
           </h2>
           <div className='flex justify-center px-auto overflow-auto'>
             <table className='table-fixed min-w-full px-8 '>
               <thead>
-                <tr className='bg-gray-100 font-semibold text-[12px]'>
+                <tr className='bg-gray-100 font-semibold text-[16px]'>
                   <td className='p-2'>No</td>
                   <td>TYPE</td>
                   <td>TXNID</td>
@@ -145,26 +153,33 @@ const Dashboard = ({ transactions, newUser }) => {
                 </tr>
               </thead>
               <tbody>
-                {reversed?.map((data, index) => (
-                  <tr
-                    key={data._id}
-                    className='border-b border-solid border-gray-200 text-[11px] gap-4'
-                  >
-                    <td className='p-2'>{index + 1}</td>
-                    <td>{data.type}</td>
-                    <td>{data.TXNID}</td>
-                    <td
-                      className={`${
-                        data.type === "Deposit"
-                          ? "text-green-500"
-                          : "text-red-500"
-                      }`}
+                {reversed
+                  ?.slice(indexOfFirstItem, indexOfLastItem)
+                  .map((data, index) => (
+                    <tr
+                      key={data._id}
+                      className='border-b border-solid border-gray-200 text-[13px] gap-4'
                     >
-                      {data.amount}
-                    </td>
-                    <td>{data.date}</td>
-                  </tr>
-                ))}
+                      <td className='p-2'>{index + 1}</td>
+                      <td>{data.type}</td>
+                      <td>{data._id}</td>
+                      <td
+                        className={` tracking-wider font-semibold ${
+                          data.type === "Deposit" || data.type === "deposit"
+                            ? "text-green-500"
+                            : "text-red-500"
+                        }`}
+                      >
+                        <CurrencyFormat
+                          value={parseInt(data.amount)}
+                          displayType={"text"}
+                          thousandSeparator={true}
+                          prefix={"$"}
+                        />
+                      </td>
+                      <td>{data.date}</td>
+                    </tr>
+                  ))}
               </tbody>
             </table>
           </div>
@@ -174,7 +189,9 @@ const Dashboard = ({ transactions, newUser }) => {
   );
 };
 
+Dashboard.auth = true;
 export default Dashboard;
+
 export async function getServerSideProps(ctx) {
   await db.connect();
   const session = await getSession({ ctx });
@@ -202,7 +219,7 @@ export async function getServerSideProps(ctx) {
       secret_code: user[0].secret_code,
     },
   ];
-  console.log(user);
+
   return {
     props: {
       transactions: data.map(db.convertDocToObj),

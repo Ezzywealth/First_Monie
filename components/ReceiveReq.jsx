@@ -1,5 +1,6 @@
 import React from "react";
 import { useRouter } from "next/router";
+import CurrencyFormat from "react-currency-format";
 
 const ReceiveRequestScreen = ({ receive_req }) => {
   const reversed = receive_req.reverse();
@@ -34,7 +35,14 @@ const ReceiveRequestScreen = ({ receive_req }) => {
                 <td className='p-4'>{item.date}</td>
 
                 <td>{item.from}</td>
-                <td>{item.amount}</td>
+                <td>
+                  <CurrencyFormat
+                    value={parseInt(item.amount)}
+                    displayType={"text"}
+                    thousandSeparator={true}
+                    prefix={"$"}
+                  />
+                </td>
 
                 <td className={` flex items-center  h-full py-auto  `}>
                   <span

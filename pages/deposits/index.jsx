@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Layout from "../../components/Layout/Layout";
 import { BsPlus } from "react-icons/bs";
 import { useSession } from "next-auth/react";
@@ -9,7 +9,15 @@ import Deposits from "../../components/Models/Deposits";
 const DepositScreen = ({ deposits }) => {
   const { data: session } = useSession();
   const router = useRouter();
-  const { query } = router.query;
+  const [activeNumb, setActiveNumb] = useState(1);
+  const [curPage, setCurPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(7);
+  const numOfPage = Math.ceil(deposits.length / itemsPerPage);
+  const indexOfLastItem = curPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+
+  const reversed = deposits.reverse().slice(indexOfFirstItem, indexOfLastItem);
+
   return (
     <Layout title='deposits'>
       <div className='py-20 px-16'>
@@ -37,7 +45,7 @@ const DepositScreen = ({ deposits }) => {
               </tr>
             </thead>
             <tbody>
-              {deposits?.map((item) => (
+              {reversed?.map((item) => (
                 <tr
                   key={item._id}
                   className='border-b border-solid border-gray-200 text-[13px] gap-4'
@@ -45,18 +53,42 @@ const DepositScreen = ({ deposits }) => {
                   <td className='p-4'>{item.date}</td>
                   <td>{item.method}</td>
                   <td>{session?.user.email}</td>
-                  <td>{item.amount}</td>
+                  <td>
+                    <CurrencyFormat
+                      value={item.amount}
+                      displayType={"text"}
+                      thousandSeparator={true}
+                      prefix={"$"}
+                    />
+                  </td>
                   <td>{item.status}</td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
+        <ul className='flex justify-start gap-4 items-center py-3 px-4 border border-solid border-gray-300 border-t-0'>
+          {[...new Array(numOfPage).keys()].map((item) => (
+            <li
+              key={item}
+              className={`h-5 flex justify-center items-center cursor-pointer text-white w-5 rounded-md  ${
+                activeNumb === item + 1 ? "bg-green-500" : "bg-blue-500"
+              }`}
+              onClick={() => {
+                setActiveNumb(item + 1);
+                setCurPage(item + 1);
+              }}
+            >
+              {item + 1}
+            </li>
+          ))}
+        </ul>
       </div>
     </Layout>
   );
 };
 
+DepositScreen.auth = true;
 export default DepositScreen;
 
 export async function getServerSideProps() {

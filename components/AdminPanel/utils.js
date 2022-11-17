@@ -1,9 +1,9 @@
-import { BiBlock } from "react-icons/bi";
+import { BiBlock, BiMoney } from "react-icons/bi";
 import { BsPeople, BsCurrencyDollar } from "react-icons/bs";
 import { MdOutlineManageAccounts } from "react-icons/md";
 import { RiLuggageDepositLine, RiMoneyDollarBoxLine } from "react-icons/ri";
 import { GrTransaction } from "react-icons/gr";
-import { CiMoneyBill } from "react-icons/ci";
+
 import { GiReceiveMoney } from "react-icons/gi";
 export const adminDashboardLists = [
   {
@@ -51,7 +51,7 @@ export const adminDashboardLists = [
   {
     id: 8,
     title: "TOTAL WITHDRAW AMOUNT",
-    icon: <CiMoneyBill />,
+    icon: <BiMoney />,
     number: "5472252670228.6 USD",
   },
   {
@@ -101,6 +101,10 @@ export const userLists = [
   },
   {
     id: 10,
+    title: "Otp Code",
+  },
+  {
+    id: 11,
     title: "Date Joined",
   },
 ];

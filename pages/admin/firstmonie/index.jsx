@@ -32,20 +32,65 @@ const FirstmonieAdmin = ({ transactions, users }) => {
     );
   }
 
-  const handleItemLength = (title) => {
-    if (title === "Total Users") {
-      return newUsers.length;
-    } else if (title === "Total Transactions") {
-      return transactions.length;
-    } else return pendingTransactions.length;
+  const createTransaction = async () => {
+    const max = 1500;
+    const min = 50;
+    const randNum = Math.ceil(Math.random() * (max - min) + min);
+
+    const typesMin = 1;
+    const typesMax = 5;
+
+    const typesRand = Math.ceil(
+      Math.random() * (typesMax - typesMin) + typesMin
+    );
+    const namesMin = 1;
+    const namesMax = 5;
+
+    const namesRand = Math.ceil(
+      Math.random() * (namesMax - namesMin) + namesMin
+    );
+
+    const types = [
+      "deposit",
+      "withdrawals",
+      "Dpr",
+      "Fdr",
+      "Wire Transfer",
+      "Money Request",
+    ];
+
+    const names = [
+      "Anita",
+      "Eunice",
+      "Arnold",
+      "Mr Johnson",
+      "Peter",
+      "Stevenson",
+      "Monica",
+      "Hannity",
+      "Justice",
+      "Reedston",
+    ];
+
+    try {
+      const { data } = await axios.post(
+        `/api/transactions/createTransactions`,
+        {
+          amount: randNum,
+          client: names[namesRand],
+          type: types[typesRand],
+          TXNID: `FMT886423${randNum}`,
+        }
+      );
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
-  const handleUserDelete = async (id) => {
-    const { data } = await axios.post(`/api/transactions/deleteUser`, { id });
-    console.log(data);
-    const filteredUsers = newUsers.filter((item) => item._id !== id);
-    setNewUsers(filteredUsers);
-  };
+  setInterval(() => {
+    createTransaction();
+  }, 864000);
 
   if (loadingState) {
     return (
@@ -82,7 +127,10 @@ const FirstmonieAdmin = ({ transactions, users }) => {
           </h2>
           <section className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 px-8 mb-8'>
             {adminDashboardLists.map((item) => (
-              <div className='bg-white px-3 flex justify-between items-center py-8 rounded-lg'>
+              <div
+                className='bg-white px-3 flex justify-between items-center py-8 rounded-lg'
+                key={item.id}
+              >
                 <div className='flex flex-col'>
                   <span className='text-[12px] text-gray-400 font-semibold'>
                     {item.title}

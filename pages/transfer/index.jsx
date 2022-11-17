@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Layout from "../../components/Layout/Layout";
 import { BsPlus } from "react-icons/bs";
 import { useSession } from "next-auth/react";
@@ -9,12 +9,17 @@ import Transfers from "../../components/Models/Transfers";
 const TransferScreen = ({ transfers }) => {
   const { data: session } = useSession();
   const router = useRouter();
-  const { query } = router.query;
+  const [activeNumb, setActiveNumb] = useState(1);
+  const [curPage, setCurPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(7);
+  const numOfPage = Math.ceil(transfers.length / itemsPerPage);
+  const indexOfLastItem = curPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
 
-  const reversed = transfers.reverse();
+  const reversed = transfers.reverse().slice(indexOfFirstItem, indexOfLastItem);
 
   return (
-    <Layout title='deposits'>
+    <Layout title='transfers'>
       <div className='py-20 px-16'>
         <div className='flex justify-between mb-4 items-center h-[2.5rem]'>
           <h2 className='font-semibold text-2xl flex flex-col mb-8'>
@@ -53,7 +58,15 @@ const TransferScreen = ({ transfers }) => {
                   <td>{item.account_number}</td>
                   <td>{item.account_name}</td>
                   <td>{item.type}</td>
-                  <td>{item.amount}</td>
+                  <td>
+                    {" "}
+                    <CurrencyFormat
+                      value={parseInt(item.amount)}
+                      displayType={"text"}
+                      thousandSeparator={true}
+                      prefix={"$"}
+                    />
+                  </td>
                   <td
                     className={` flex items-center justify-center h-full py-auto  `}
                   >
@@ -76,11 +89,28 @@ const TransferScreen = ({ transfers }) => {
             </tbody>
           </table>
         </div>
+        <ul className='flex justify-start gap-4 items-center py-3 px-4 border border-solid border-gray-300 border-t-0'>
+          {[...new Array(numOfPage).keys()].map((item) => (
+            <li
+              key={item}
+              className={`h-5 flex justify-center items-center cursor-pointer text-white w-5 rounded-md  ${
+                activeNumb === item + 1 ? "bg-green-500" : "bg-blue-500"
+              }`}
+              onClick={() => {
+                setActiveNumb(item + 1);
+                setCurPage(item + 1);
+              }}
+            >
+              {item + 1}
+            </li>
+          ))}
+        </ul>
       </div>
     </Layout>
   );
 };
 
+TransferScreen.auth = true;
 export default TransferScreen;
 
 export async function getServerSideProps() {

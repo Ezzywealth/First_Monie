@@ -41,6 +41,7 @@ const RequestScreen = ({ receive_req, send_req }) => {
   );
 };
 
+RequestScreen.auth = true;
 export default RequestScreen;
 
 export async function getServerSideProps() {

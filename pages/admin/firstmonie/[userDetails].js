@@ -13,6 +13,7 @@ import User from "../../../components/Models/User";
 import { userLists } from "../../../components/AdminPanel/utils";
 import { useEffect } from "react";
 import { toast } from "react-toastify";
+import CurrencyFormat from "react-currency-format";
 
 const UserDetails = ({ newUser }) => {
   const dispatch = useDispatch();
@@ -61,6 +62,8 @@ const UserDetails = ({ newUser }) => {
       return newUser[0].email;
     } else if (name === "Account Number") {
       return newUser[0].account_number;
+    } else if (name === "Otp Code") {
+      return newUser[0].secret_code;
     }
   };
 
@@ -132,9 +135,83 @@ const UserDetails = ({ newUser }) => {
                   Available Balance
                 </h2>
                 <h3 className='text-2xl text-gray-500 font-bold'>
-                  {`${accountBalance} USD` || "20,000USD"}
+                  <CurrencyFormat
+                    value={accountBalance || "20000"}
+                    displayType={"text"}
+                    thousandSeparator={true}
+                    prefix={"$"}
+                  />
                 </h3>
               </div>
+
+              <form
+                id='form3'
+                className='space-y-6'
+                onSubmit={handleSubmit(formHandler)}
+              >
+                <div className='flex flex-col w-full'>
+                  <label
+                    htmlFor='amount'
+                    className='text-gray-500 font-semibold'
+                  >
+                    Amount
+                  </label>
+                  <input
+                    placeholder='Enter Amount'
+                    type='text'
+                    name=''
+                    id='amount'
+                    className='action_edit p-2 rounded-lg focus:outline-none border border-solid border-gray-400'
+                    {...register("amount", {
+                      required: "Please enter an amount",
+                    })}
+                  />
+                </div>
+                <div className='flex flex-col w-full'>
+                  <label
+                    htmlFor='action'
+                    className='text-gray-500 font-semibold'
+                  >
+                    Select Method
+                  </label>
+                  <select
+                    className=' p-2 rounded-lg focus:outline-none border border-solid border-gray-400'
+                    id='action'
+                    {...register("method", {
+                      required: "Please select a method",
+                    })}
+                  >
+                    <option
+                      value='add_amount'
+                      className='bg-gray-300 focus:bg-gray-300'
+                    >
+                      Add amount
+                    </option>
+                    <option
+                      value='subtract_amount'
+                      className='bg-gray-300 focus:bg-gray-300'
+                    >
+                      Subtract Amount
+                    </option>
+                  </select>
+                </div>
+                <div>
+                  <button className='bg-indigo-500 rounded-lg px-3 py-2 text-white w-full'>
+                    Submit
+                  </button>
+                </div>
+              </form>
+            </div>
+            <div className='mt-12'>
+              <div className='flex flex-col items-center'>
+                <h2 className='text-xl text-gray-500 font-bold'>
+                  Change Otp Code
+                </h2>
+                <h3 className='text-2xl text-gray-500 font-bold'>
+                  {newUser[0].secret_code}
+                </h3>
+              </div>
+
               <form
                 id='form3'
                 className='space-y-6'

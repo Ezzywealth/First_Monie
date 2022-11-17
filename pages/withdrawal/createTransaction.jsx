@@ -60,4 +60,5 @@ const CreateTransactionScreen = () => {
   );
 };
 
+CreateTransactionScreen.auth = true;
 export default CreateTransactionScreen;

@@ -1,11 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import Link from "next/link";
 import { BsPersonCheckFill } from "react-icons/bs";
 import { HiOutlineMenuAlt1 } from "react-icons/hi";
 import { useDispatch, useSelector } from "react-redux";
-import { FiLogOut } from "react-icons/fi";
-import Button from "./Button";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 import { signOut } from "next-auth/react";
@@ -16,32 +14,29 @@ import AccountType from "../../components/Layout/AccountType";
 import MoreLists from "../../components/Layout/MoreLists";
 import { openSidebar, startLoading } from "../../Redux/generalSlice";
 import Button2 from "./Button2";
+import { BeatLoader } from "react-spinners";
 
 const Navbar = () => {
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
   const dispatch = useDispatch();
   const { data: session } = useSession();
   const [activeLink, setActiveLink] = useState("");
-  const [loading, setLoading] = useState(false);
   const [accountType, setAccountType] = useState(false);
   const [more, setMore] = useState(false);
+
+  useEffect(() => {
+    setLoading(false);
+  }, []);
+
   const handleSignIn = () => {
     dispatch(startLoading());
     router.push("/login");
   };
 
   const handleNavLink = (name) => {
-    dispatch(startLoading());
+    setLoading(true);
     setActiveLink(name);
-    // dispatch(startLoading());
-  };
-
-  const handleSignOut = async () => {
-    const data = await signOut({ redirect: false, callbackUrl: "/" });
-    router.push(data.url);
-    // Cookies.remove("transactions");
-    // Cookies.remove("withdrawals");
-    // Cookies.remove("deposits");
   };
 
   if (loading) {
@@ -49,7 +44,7 @@ const Navbar = () => {
       <div className='flex justify-center bg-indigo-50 items-center h-screen w-full'>
         <BeatLoader
           color='indigo'
-          loading={loadingState}
+          loading={loading}
           size={10}
           aria-label='Loading Spinner'
           data-testid='loader'
@@ -151,9 +146,9 @@ const Navbar = () => {
                   <MdArrowDropDown />
 
                   <div
-                    className={`customTransition cursor-pointer flex items-center w-[200px] mt-4  bg-white ${
+                    className={`customTransition cursor-pointer flex items-center w-[200px] mt-8 rounded-2xl  bg-white ${
                       more
-                        ? "absolute -bottom-[11rem] -left-32 customTransition "
+                        ? "absolute -bottom-[12.5rem] -left-32 customTransition "
                         : "hidden customTransition "
                     }`}
                   >

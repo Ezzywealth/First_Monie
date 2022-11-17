@@ -17,4 +17,5 @@ const Referrals = () => {
   );
 };
 
+Referrals.auth = true;
 export default Referrals;

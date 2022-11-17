@@ -23,4 +23,5 @@ const Support = () => {
   );
 };
 
+Support.auth = true;
 export default Support;

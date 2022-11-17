@@ -2,6 +2,7 @@ import React from "react";
 import { BsPlus } from "react-icons/bs";
 
 import { useRouter } from "next/router";
+import CurrencyFormat from "react-currency-format";
 
 const SendRequestScreen = ({ send_req }) => {
   const router = useRouter();
@@ -41,7 +42,14 @@ const SendRequestScreen = ({ send_req }) => {
               >
                 <td className='p-4'>{item.date}</td>
                 <td>{item.sender}</td>
-                <td>{item.amount}</td>
+                <td>
+                  <CurrencyFormat
+                    value={parseInt(item.amount)}
+                    displayType={"text"}
+                    thousandSeparator={true}
+                    prefix={"$"}
+                  />
+                </td>
                 <td>{item.receiver}</td>
 
                 <td className={` flex items-center  h-full py-auto  `}>

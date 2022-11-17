@@ -76,6 +76,7 @@ const DpsScreen = ({ dps }) => {
   );
 };
 
+DpsScreen.auth = true;
 export default DpsScreen;
 
 export async function getServerSideProps() {

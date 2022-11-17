@@ -1,24 +1,70 @@
-import React from "react";
+import React, { useState } from "react";
 import Layout from "../../components/Layout/Layout";
 import { BsPlus } from "react-icons/bs";
 import db from "../../utils/db";
 import { useRouter } from "next/router";
 import Wire from "../../components/Models/Wire";
 import CurrencyFormat from "react-currency-format";
+import { BeatLoader } from "react-spinners";
+import MyDocument from "../../components/Layout/Document";
+import { PDFDownloadLink } from "@react-pdf/renderer";
 
 const WireScreen = ({ wires }) => {
-  const router = useRouter();
+  const [loading, setLoading] = useState(false);
 
+  const router = useRouter();
+  const [activeNumb, setActiveNumb] = useState(1);
+  const [curPage, setCurPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(7);
+  const numOfPage = Math.ceil(wires.length / itemsPerPage);
+  const indexOfLastItem = curPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+
+  const reversed = wires.reverse().slice(indexOfFirstItem, indexOfLastItem);
+
+  const handleWire = () => {
+    setLoading(true);
+    router.push("/wire/createWire");
+  };
+  if (loading) {
+    return (
+      <div className='flex justify-center bg-indigo-50 items-center h-screen w-full'>
+        <BeatLoader
+          color='indigo'
+          loading={loading}
+          size={10}
+          aria-label='Loading Spinner'
+          data-testid='loader'
+        />
+      </div>
+    );
+  }
   return (
-    <Layout title='deposits'>
+    <Layout title='wire transfer'>
       <div className='py-10 px-2 md:px-8 lg:px-16 bgContact'>
+        <div className=''>
+          <PDFDownloadLink
+            document={<MyDocument />}
+            fileName='Account Statement'
+          >
+            {({ loading }) =>
+              loading ? (
+                <button>Loading Document</button>
+              ) : (
+                <button>Download</button>
+              )
+            }
+          </PDFDownloadLink>
+        </div>
         <div className='flex justify-between mb-4 items-center h-[2.5rem]'>
           <h2 className='font-semibold text-xl flex flex-col'>
             <span className='text-[#333333] text-[12px]'>Overview</span> Wire
             Transfer
           </h2>
           <button
-            onClick={() => router.push("/wire/createWire")}
+            onClick={() => {
+              handleWire();
+            }}
             className='bg-indigo-800 rounded-lg items-center px-3 py-2 flex gap-3 text-gray-200'
           >
             <BsPlus /> Add Wire Transfer
@@ -37,7 +83,7 @@ const WireScreen = ({ wires }) => {
               </tr>
             </thead>
             <tbody>
-              {wires?.map((item) => (
+              {reversed?.map((item) => (
                 <tr
                   key={item._id}
                   className='border-b border-solid border-gray-200 text-[13px] gap-4'
@@ -70,11 +116,28 @@ const WireScreen = ({ wires }) => {
             </tbody>
           </table>
         </div>
+        <ul className='flex justify-start gap-4 items-center py-3 px-4 border border-solid border-gray-300 border-t-0'>
+          {[...new Array(numOfPage).keys()].map((item) => (
+            <li
+              key={item}
+              className={`h-5 flex justify-center items-center cursor-pointer text-white w-5 rounded-md  ${
+                activeNumb === item + 1 ? "bg-green-500" : "bg-blue-500"
+              }`}
+              onClick={() => {
+                setActiveNumb(item + 1);
+                setCurPage(item + 1);
+              }}
+            >
+              {item + 1}
+            </li>
+          ))}
+        </ul>
       </div>
     </Layout>
   );
 };
 
+WireScreen.auth = true;
 export default WireScreen;
 
 export async function getServerSideProps() {

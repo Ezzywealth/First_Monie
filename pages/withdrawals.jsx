@@ -1,13 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import Layout from "../components/Layout/Layout";
 import { BsPlus } from "react-icons/bs";
 import Withdrawals from "../components/Models/Withdrawals";
 import db from "../utils/db";
 import { useRouter } from "next/router";
+import CurrencyFormat from "react-currency-format";
 
 const WithdrawalScreen = ({ withdraws }) => {
   const router = useRouter();
-  const { query } = router.query;
+  const [activeNumb, setActiveNumb] = useState(1);
+  const [curPage, setCurPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(7);
+  const numOfPage = Math.ceil(withdraws.length / itemsPerPage);
+  const indexOfLastItem = curPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+
   return (
     <Layout title='withdrawals'>
       <div className='py-20 px-16'>
@@ -35,33 +42,60 @@ const WithdrawalScreen = ({ withdraws }) => {
               </tr>
             </thead>
             <tbody>
-              {withdraws?.map((item) => (
-                <tr
-                  key={item._id}
-                  className='border-b border-solid border-gray-200 text-[13px] gap-4'
-                >
-                  <td className='p-4'>{item.date}</td>
-                  <td>{item.method}</td>
-                  <td>{item.amount}</td>
-                  <td>{item.status}</td>
-                  <td>
-                    <button
-                      className='bg-indigo-500 rounded-md px-4 py-2 text-white'
-                      onClick={() => router.push(`/withdrawal/${item._id}`)}
-                    >
-                      Details
-                    </button>
-                  </td>
-                </tr>
-              ))}
+              {withdraws
+                .reverse()
+                .slice(indexOfFirstItem, indexOfLastItem)
+                .map((item) => (
+                  <tr
+                    key={item._id}
+                    className='border-b border-solid border-gray-200 text-[13px] gap-4'
+                  >
+                    <td className='p-4'>{item.date}</td>
+                    <td>{item.method}</td>
+                    <td>
+                      <CurrencyFormat
+                        value={item.amount}
+                        displayType={"text"}
+                        thousandSeparator={true}
+                        prefix={"$"}
+                      />
+                    </td>
+                    <td>{item.status}</td>
+                    <td>
+                      <button
+                        className='bg-indigo-500 rounded-md px-4 py-2 text-white'
+                        onClick={() => router.push(`/withdrawal/${item._id}`)}
+                      >
+                        Details
+                      </button>
+                    </td>
+                  </tr>
+                ))}
             </tbody>
           </table>
         </div>
+        <ul className='flex justify-start gap-4 items-center py-3 px-4 border border-solid border-gray-300 border-t-0'>
+          {[...new Array(numOfPage).keys()].map((item) => (
+            <li
+              key={item}
+              className={`h-5 flex justify-center items-center cursor-pointer text-white w-5 rounded-md  ${
+                activeNumb === item + 1 ? "bg-green-500" : "bg-blue-500"
+              }`}
+              onClick={() => {
+                setActiveNumb(item + 1);
+                setCurPage(item + 1);
+              }}
+            >
+              {item + 1}
+            </li>
+          ))}
+        </ul>
       </div>
     </Layout>
   );
 };
 
+WithdrawalScreen.auth = true;
 export default WithdrawalScreen;
 
 export async function getServerSideProps() {

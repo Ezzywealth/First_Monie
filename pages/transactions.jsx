@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Layout from "../components/Layout/Layout";
 import { dashboardData } from "../utils/constants";
 import { useSession } from "next-auth/react";
@@ -10,41 +10,19 @@ import db from "../utils/db";
 import { data } from "autoprefixer";
 import Deposits from "../components/Models/Deposits";
 import Withdrawals from "../components/Models/Withdrawals";
+import CurrencyFormat from "react-currency-format";
 
 const Transactions = ({ transactions, deposits, withdrawals }) => {
   console.log(transactions);
-  const { data: session } = useSession();
-  const handleDashboardData = (name) => {
-    if (name === "AVAILABLE BALANCE") {
-      return "20,000";
-    } else if (name === "ACCOUNT NUMBER") {
-      return "GS2217525904KbtCyv";
-    } else if (name === "Withdraws") {
-      return "191";
-    } else if (name === "Deposits") {
-      return "535";
-    } else if (name === "Transactions") {
-      return "437";
-    } else if (name === "Loan") {
-      return "41";
-    } else if (name === "DPS") {
-      return "118";
-    } else if (name === "FDR") {
-      return "33";
-    }
-  };
-  const copyContent = async () => {
-    let text = document.getElementById("myLink").innerHTML;
-    try {
-      await navigator.clipboard.writeText(text);
-      toast.success("Link copied");
-    } catch (err) {
-      toast.error("Failed to copy: ", err);
-    }
-  };
 
   const allTransactions = [...transactions, ...deposits, ...withdrawals];
-  console.log(allTransactions);
+  const [activeNumb, setActiveNumb] = useState(1);
+  const [curPage, setCurPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(7);
+  const numOfPage = Math.ceil(allTransactions.length / itemsPerPage);
+  const indexOfLastItem = curPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+
   return (
     <Layout title='transactions'>
       <div className='mt-20 py-16'>
@@ -62,29 +40,54 @@ const Transactions = ({ transactions, deposits, withdrawals }) => {
                 </tr>
               </thead>
               <tbody>
-                {allTransactions.map((data, index) => (
-                  <tr
-                    key={data._id}
-                    className='border-b border-solid border-gray-200 text-[13px] gap-4'
-                  >
-                    <td className='p-2'>{index + 1}</td>
-                    <td>{data.type || "Payout"}</td>
-                    <td>{data._id}</td>
-                    <td
-                      className={`${
-                        data.type === "Deposit"
-                          ? "text-green-500"
-                          : "text-red-500"
-                      }`}
+                {allTransactions
+                  .slice(indexOfFirstItem, indexOfLastItem)
+                  .map((data, index) => (
+                    <tr
+                      key={data._id}
+                      className='border-b border-solid border-gray-200 text-[13px] gap-4'
                     >
-                      {data.amount}
-                    </td>
-                    <td>{data.date}</td>
-                  </tr>
-                ))}
+                      <td className='p-2'>
+                        {index + 1 + (curPage - 1) * itemsPerPage}
+                      </td>
+                      <td>{data.type || "Payout"}</td>
+                      <td>{data._id}</td>
+                      <td
+                        className={`${
+                          data.type === "Deposit"
+                            ? "text-green-500"
+                            : "text-red-500"
+                        }`}
+                      >
+                        <CurrencyFormat
+                          value={data.amount}
+                          displayType={"text"}
+                          thousandSeparator={true}
+                          prefix={"$"}
+                        />
+                      </td>
+                      <td>{data.date}</td>
+                    </tr>
+                  ))}
               </tbody>
             </table>
           </div>
+          <ul className='flex justify-start gap-4 items-center py-3 px-4'>
+            {[...new Array(numOfPage).keys()].map((item) => (
+              <li
+                key={item}
+                className={`h-5 flex justify-center items-center cursor-pointer text-white w-5 rounded-md  ${
+                  activeNumb === item + 1 ? "bg-green-500" : "bg-blue-500"
+                }`}
+                onClick={() => {
+                  setActiveNumb(item + 1);
+                  setCurPage(item + 1);
+                }}
+              >
+                {item + 1}
+              </li>
+            ))}
+          </ul>
         </section>
       </div>
     </Layout>

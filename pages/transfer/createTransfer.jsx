@@ -12,13 +12,14 @@ import {
 import { BeatLoader } from "react-spinners";
 
 const CreateTransfer = () => {
+  const dispatch = useDispatch();
+  dispatch(stopLoading());
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
   const loadingState = useSelector((state) => state.generalSlice.loadingState);
-  const dispatch = useDispatch();
   const otpModal = useSelector((state) => state.generalSlice.otpModal);
 
   const formHandler = ({ account_name, amount, account_number }) => {
@@ -126,4 +127,5 @@ const CreateTransfer = () => {
   );
 };
 
+CreateTransfer.auth = true;
 export default CreateTransfer;
