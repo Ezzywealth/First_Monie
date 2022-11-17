@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import Layout from "../components/Layout/Layout";
-import Receive from "../components/Models/ReceiveRequest";
-import Send from "../components/Models/SendRequest";
-import ReceiveRequestScreen from "../components/ReceiveReq";
-import SendRequestScreen from "../components/SendReq";
-import db from "../utils/db";
+import Layout from "../../components/Layout/Layout";
+import Receive from "../../components/Models/ReceiveRequest";
+import Send from "../../components/Models/SendRequest";
+import ReceiveRequestScreen from "../../components/ReceiveReq";
+import SendRequestScreen from "../../components/SendReq";
+import db from "../../utils/db";
 
 const RequestScreen = ({ receive_req, send_req }) => {
   const [receive, setReceive] = useState(false);

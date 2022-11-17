@@ -39,7 +39,7 @@ const LoginScreen = () => {
   }, [session?.user]);
 
   const onSubmit = async () => {
-    // document.querySelector("form").reset();
+    document.querySelector("form").reset();
     dispatch(startLoading());
     try {
       setLoading(true);
