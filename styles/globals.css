@@ -43,8 +43,8 @@ html {
   } */
 
   .bgLanding {
-    background-image: url("../public/homepage.jpg");
-    background-color: rgb(13, 16, 23);
+    background-image: url("../public/hero8.jpg");
+    /* background-color: rgb(13, 16, 23); */
     height: 100%;
     background-size: cover;
     background-repeat: no-repeat;

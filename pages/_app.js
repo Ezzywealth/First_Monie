@@ -84,7 +84,7 @@ drift.load('gnsrprytez8p');`,
       {showTopBtn && (
         <div
           onClick={() => handleTop()}
-          className='fixed  bottom-12 right-8 bg-indigo-600 rounded-full p-3 cursor-pointer'
+          className='fixed  bottom-32 right-8 bg-indigo-600 rounded-full p-3 cursor-pointer'
         >
           <BsArrowUpShort className='text-white text-3xl' />
         </div>

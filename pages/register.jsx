@@ -81,7 +81,9 @@ const RegisterScreen = () => {
         secret_code: otp,
       });
 
-      toast.success("Your requestr has been submitted and been reviewed");
+      toast.success(
+        "Your request has been submitted and reviewed by our team. Thank You"
+      );
       router.push("/");
       if (data.error) throw new Error(data.error);
     } catch (error) {
@@ -106,7 +108,7 @@ const RegisterScreen = () => {
 
   return (
     <div className='bgRegister h-full'>
-      <div className='flex justify-center items-center flex-col-reverse mx-auto w-full p-4 md:p-10'>
+      <div className='flex justify-center items-center flex-col-reverse mx-auto w-full p-2 md:p-10'>
         <form
           className='w-full my-4 bgContact overflow-auto py-8 pt-8 rounded-lg px-4 '
           onSubmit={handleSubmit(formHandler)}
@@ -378,11 +380,11 @@ const RegisterScreen = () => {
               />
               I agree with
               <Link href={"/privacy"} legacyBehavior>
-                <a className='text-blue-600'>Privacy Policy</a>
+                <a className='text-blue-600 text-sm'>Privacy Policy</a>
               </Link>
               &
               <Link href='/terms' legacyBehavior>
-                <a className='text-blue-600'>Terms & Condition</a>
+                <a className='text-blue-600 text-sm'>Terms & Condition</a>
               </Link>
             </label>
             {errors.remember && (

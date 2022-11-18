@@ -46,7 +46,7 @@ const LandingPage = () => {
   }
   return (
     <div className='bgLanding w-full h-[650px] relative'>
-      <div className='absolute top-0 left-0 w-full  h-full bg-[rgba(0,0,0,0.4)] '>
+      <div className='absolute top-0 left-0 w-full  h-full bg-[rgba(0,0,0,0.5)] '>
         <div className='absolute md:w-1/2 lg:w-[40%] top-[25%] space-y-8 bottom-[50%] left-4 w-[90%] md:left-16 h-full'>
           <h2 className='text-4xl md:text-5xl text-white capitalize font-extrabold tracking-wider'>
             Smart-free{" "}
@@ -63,11 +63,11 @@ const LandingPage = () => {
           />
         </div>
         <div className='hidden absolute  left-0 right-0 md:-bottom-16 md:flex justify-center'>
-          <div className='flex flex-col md:flex-row mx-8   w-full md:w-[80%]  -bottom-16'>
+          <div className='flex flex-col md:flex-row mx-8 gap-2  w-full md:w-[80%]  -bottom-16'>
             {services.map((item) => (
               <div
                 key={item.id}
-                className='relative bg-white px-2 md:px-5 flex justify-center items-center flex-1 h-44 border border-solid border-gray'
+                className='relative bg-white px-2 md:px-5 rounded-lg flex justify-center items-center flex-1 h-44 border border-solid border-gray bgContact'
               >
                 <div className='flex items-center gap-4 flex-col'>
                   <span

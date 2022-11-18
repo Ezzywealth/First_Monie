@@ -76,9 +76,14 @@ const LoginScreen = () => {
   return (
     <div className='bgRegister h-screen flex items-center shadow-2xl'>
       <div className='flex justify-center flex-col items-center mx-auto w-full px-4 '>
-        <div className='flex justify-center w-full'>
+        <div className='flex justify-center w-full'></div>
+        <form
+          className='w-[380px] md:w-[400px]  my-4 bg-white overflow-auto py-8 pt-3 rounded-lg px-4 '
+          onSubmit={handleSubmit(onSubmit)}
+          mailto=''
+        >
           <Link href='/'>
-            <div className='flex items-center w-full  gap-5 border bg-white border-indigo-200 pr-2 mx-2 md:pr-16 shadow-xl md:pl-2 py-1 justify-start'>
+            <div className='flex mb-8 items-center w-full  gap-5 border bg-white border-indigo-200 pr-2 mx-2 md:pr-16 shadow-xl md:pl-2 py-1 justify-start'>
               <div className='h-8 w-8'>
                 <Image
                   src='/logo_pic2.png'
@@ -89,7 +94,7 @@ const LoginScreen = () => {
                 />
               </div>
               <div className='flex font-extrabold flex-col tracking-wider text-sm'>
-                <span className=' text-base md:text-3xl  text-indigo-900'>
+                <span className=' text-2xl md:text-3xl  text-indigo-900'>
                   First Monie
                 </span>
                 <span className='font-bold italic text-center'>
@@ -98,14 +103,10 @@ const LoginScreen = () => {
               </div>
             </div>
           </Link>
-        </div>
-        <form
-          className='w-full md:w-[400px]  my-4 bg-white overflow-auto py-8 pt-3 rounded-lg px-4 '
-          onSubmit={handleSubmit(onSubmit)}
-          mailto=''
-        >
           <div className='grid grid-cols-1 mb-8 gap-4'>
-            <h2 className='text-center'>Account Login</h2>
+            <h2 className='text-center font-semibold text-xl text-gray-500'>
+              Account Login
+            </h2>
             <div>
               <label htmlFor='account' className='text-[#333333] '>
                 Account Number

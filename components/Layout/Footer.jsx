@@ -34,16 +34,6 @@ const Footer = () => {
             Our response by the end of 2022 included a $20 million premium pay
             program for our employees.
           </p>
-          <div className=''>
-            <h2 className='font-bold text-xl tracking-wider mb-2'>Socials</h2>
-            <span className='flex gap-4 '>
-              {icons.map((icon) => (
-                <span key={icon.id} className='font-bold text-indigo-500'>
-                  {icon.icon}
-                </span>
-              ))}
-            </span>
-          </div>
         </div>
         <div className='flex-1'>
           <h2 className='font-bold text-xl tracking-wider'>Company</h2>
@@ -66,7 +56,7 @@ const Footer = () => {
           </ul>
         </div>
         <div className='flex-1'>
-          <h2 className='font-bold text-xl tracking-wider'>Address</h2>
+          <h2 className='font-bold text-xl tracking-wider'>Contact</h2>
           <ul className='flex flex-col gap-2 mt-2'>
             {address.map((item) => (
               <li key={item.id} className='text-sm tracking-wider'>

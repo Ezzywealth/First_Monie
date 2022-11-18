@@ -156,16 +156,11 @@ export const support = [
 export const address = [
   {
     id: 1,
-    title:
-      "Location: Office. Main Office 175 S. Washington St. Tiffin, Ohio 44895",
+    title: "Telegram: +1(616) 666-3409",
   },
   {
     id: 2,
-    title: "Phone: +1(616) 666-3409",
-  },
-  {
-    id: 3,
-    title: "Email: support@Stockpointsavings.com",
+    title: "Email: support@Firstmoniebank.com",
   },
 ];
 
