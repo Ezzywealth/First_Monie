@@ -5,6 +5,8 @@ import { useRouter } from "next/router";
 import { BeatLoader } from "react-spinners";
 import { useState } from "react";
 import { useSession } from "next-auth/react";
+import bgImage from "../../public/hero8.jpg";
+import bgImage2 from "../../public/hero9.jpg";
 const LandingPage = () => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);

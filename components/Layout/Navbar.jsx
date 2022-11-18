@@ -131,23 +131,29 @@ const Navbar = () => {
         <div className='hidden lg:contents'>
           {session?.user ? (
             <div className='flex items-center gap-1'>
-              <span className='bg-indigo-400 p-2 rounded-full cursor-pointer'>
-                <BsPersonCheckFill className='w-6 h-6 text-white' />
-              </span>
-
-              <h5 className='flex gap-1 relative text-sm font-semibold italic'>
-                {session.user.name}
+              <h5 className='flex items-center gap-2 relative text-sm font-semibold italic'>
+                <div className=''>
+                  <Image
+                    src='/profile_fmb.jpeg'
+                    alt='logo'
+                    className='cursor-pointer rounded-full h-8 w-8 shadow-2xl scale-150  customTransition ml-2'
+                    width={80}
+                    height={80}
+                  />
+                </div>
+                <span className='text-gray-900 text-base font-bold'>
+                  {session?.user.name}
+                </span>
                 <span
-                  className='flex items-center'
-                  onClick={() => setMore(true)}
-                  onMouseLeave={() => setMore(false)}
+                  className='relative flex items-center text-gray-900'
+                  onClick={() => setMore(!more)}
                 >
                   <MdArrowDropDown />
 
                   <div
                     className={`customTransition cursor-pointer flex items-center w-[200px] mt-8 rounded-2xl border border-solid border-indigo-500 bg-white ${
                       more
-                        ? "absolute -bottom-[15.5rem] -left-32 customTransition "
+                        ? "absolute -bottom-[16rem] -left-44 customTransition "
                         : "hidden customTransition "
                     }`}
                   >

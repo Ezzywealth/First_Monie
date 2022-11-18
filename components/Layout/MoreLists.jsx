@@ -88,17 +88,7 @@ const MoreLists = () => {
             Transactions
           </li>
         </Link>
-        <Link href='/profile' legacyBehavior>
-          <li
-            onClick={() => {
-              setLoading(true);
-              dispatch(closeSidebar());
-            }}
-            className='hover:scale-105 customTransition '
-          >
-            Profile Update
-          </li>
-        </Link>
+
         <Link href='/referrals' legacyBehavior>
           <li
             onClick={() => {

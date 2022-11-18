@@ -34,18 +34,18 @@ const Sidebar = () => {
   const newLinks = session?.user ? navLinks3 : navLinks2;
   return (
     <div className='bg-[rgba(0,0,0,0.2)]'>
-      <div className='bg-gray-200 w-[360px] md:w-[60%]  lg:w-[50%] h-screen px-8 py-2 pr-2'>
+      <div className='bg-gray-900 text-white w-[360px] md:w-[60%]  lg:w-[50%] h-screen px-8 py-2 pr-2'>
         <div>
           <span
             onClick={() => dispatch(closeSidebar())}
             className='flex justify-end '
           >
-            <AiOutlineArrowLeft className='h-8 w-8 mb-2 text-black' />
+            <AiOutlineArrowLeft className='h-8 w-8 mb-2 text-gray-300' />
           </span>
           <div className='flex flex-col gap-2'>
-            <div>
-              <Link href='/'>
-                <div className='flex w-[80%] sm:w-[70%] md:w-0%] items-center gap-5 border border-black pr-2 mx-2 shadow-xl md:pl-2 py-1 justify-start'>
+            <div className='flex flex-col gap-4'>
+              {/* <Link href='/'>
+                <div className='flex w-[80%] sm:w-[70%] md:w-0%] items-center gap-5 border border-gray-300 pr-2 mx-2 shadow-xl md:pl-2 py-1 justify-start'>
                   <div className='h-8 w-8'>
                     <Image
                       src='/logo_pic2.png'
@@ -56,7 +56,7 @@ const Sidebar = () => {
                     />
                   </div>
                   <div className='flex font-extrabold flex-col tracking-wider text-sm'>
-                    <span className=' text-base md:text-3xl  text-indigo-900'>
+                    <span className=' text-base md:text-3xl  text-indigo-500'>
                       First Monie
                     </span>
                     <span className='font-bold italic text-center'>
@@ -64,14 +64,38 @@ const Sidebar = () => {
                     </span>
                   </div>
                 </div>
-              </Link>
+              </Link> */}
+              {session?.user ? (
+                <div className='flex text-white capitalize px-4 items-center z-10 gap-6'>
+                  <div className=''>
+                    <Image
+                      src='/profile_fmb.jpeg'
+                      alt='logo'
+                      className='cursor-pointer rounded-full h-12 w-12 shadow-2xl scale-150 hover:h-20 hover:w-20 customTransition ml-2'
+                      width={80}
+                      height={80}
+                    />
+                  </div>
+                  <span className='text-gray-300 text-xl font-bold'>
+                    {session?.user.name}
+                  </span>
+                </div>
+              ) : (
+                <Button
+                  title='Online Banking'
+                  onClick={() => {
+                    router.push("/login");
+                    dispatch(closeSidebar());
+                  }}
+                />
+              )}
             </div>
             <div className='flex flex-col gap-4 mt-8'>
-              <ul className='flex flex-col gap-4 mt-2'>
+              <ul className='flex flex-col gap-4 mt-2 mb-4'>
                 {newLinks.map((link) => (
                   <li
                     key={link.id}
-                    className={` cursor-pointer hover:scale-y-105 customTransition text-black font-semibold ${
+                    className={` cursor-pointer hover:bg-gray-300 hover:text-gray-900 rounded-lg px-2 py-1 hover:scale-y-105 customTransition text-gray-300 font-semibold ${
                       activeLink === link.name && "text-pink-300 p-1 px-2  "
                     }`}
                   >
@@ -87,8 +111,9 @@ const Sidebar = () => {
                               link.name === "Personal" && setAccountType(false)
                             }
                           >
-                            {link.icon}
-                            {link.name}
+                            <span className='flex gap-4 items-center text-xl'>
+                              {link.icon} {link.name}
+                            </span>
                             <MdArrowDropDown />
 
                             <div
@@ -102,13 +127,17 @@ const Sidebar = () => {
                             </div>
                           </span>
                         )}
-                        {link.name !== "Personal" &&
-                          link.name !== "More" &&
-                          link.name}
+                        {link.name !== "Personal" && link.name !== "More" && (
+                          <span className='flex gap-4 items-center text-xl'>
+                            {link.icon} {link.name}
+                          </span>
+                        )}
 
                         {link.name === "More" && (
                           <span className='relative flex'>
-                            {link.name}
+                            <span className='flex gap-4 items-center text-xl'>
+                              {link.icon} {link.name}
+                            </span>
                             <span
                               className='relative flex items-center'
                               onClick={() => setMore(true)}
@@ -117,9 +146,9 @@ const Sidebar = () => {
                               <MdArrowDropDown />
 
                               <div
-                                className={`customTransition cursor-pointer flex items-center w-[200px] mt-8 rounded-2xl border border-solid border-indigo-500 bg-white ${
+                                className={`customTransition z-50 cursor-pointer flex items-center w-[200px] mt-8 rounded-2xl border border-solid border-indigo-500 bg-white ${
                                   more
-                                    ? "absolute -bottom-[10rem] left-2 customTransition "
+                                    ? "absolute -bottom-[6rem] left-2 z-50 customTransition "
                                     : "hidden customTransition "
                                 }`}
                               >
@@ -133,27 +162,6 @@ const Sidebar = () => {
                   </li>
                 ))}
               </ul>
-              {session?.user ? (
-                <div className='flex text-white capitalize justify-center items-center gap-2'>
-                  <span
-                    className='bg-[#CCA354] p-2 rounded-md cursor-pointer'
-                    onClick={() => handleSignOut()}
-                  >
-                    <BsPersonCheckFill className='w-6 h-6 text-white' />
-                  </span>
-                  <span className='text-gray-600 text-xl font-bold'>
-                    {session?.user.name}
-                  </span>
-                </div>
-              ) : (
-                <Button
-                  title='Online Banking'
-                  onClick={() => {
-                    router.push("/login");
-                    dispatch(closeSidebar());
-                  }}
-                />
-              )}
             </div>
           </div>
         </div>

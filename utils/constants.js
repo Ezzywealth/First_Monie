@@ -8,11 +8,16 @@ import {
   BsWallet2,
 } from "react-icons/bs";
 import { GrMoney } from "react-icons/gr";
-import { MdOutlineAttachMoney } from "react-icons/md";
+
 import { AiOutlineHome } from "react-icons/ai";
 import { FiFacebook, FiTwitter, FiInstagram, FiLinkedin } from "react-icons/fi";
-import { TbShieldCheck } from "react-icons/tb";
-import { BsCreditCard2Back, BsQuestionDiamond } from "react-icons/bs";
+import { TbShieldCheck, TbCashBanknote } from "react-icons/tb";
+import {
+  BsCreditCard2Back,
+  BsQuestionDiamond,
+  BsCashCoin,
+  BsCashStack,
+} from "react-icons/bs";
 import {
   MdOutlineSavings,
   MdOutlineContactSupport,
@@ -23,7 +28,7 @@ import { BiTransferAlt, BiDollar } from "react-icons/bi";
 import { CiWallet } from "react-icons/ci";
 import { CgArrowsExchange } from "react-icons/cg";
 import { FaMoneyBillWave } from "react-icons/fa";
-import { GiPayMoney } from "react-icons/gi";
+import { GiPayMoney, GiReceiveMoney } from "react-icons/gi";
 
 export const navLinks = [
   {
@@ -135,27 +140,27 @@ export const navLinks3 = [
     id: 4,
     name: "Request Money",
     link: "/request",
-    icon: <GrMoney />,
+    icon: <BsCashStack />,
   },
 
   {
     id: 5,
     name: "Transfers",
     link: "/transfer",
-    icon: <MdOutlineContactSupport />,
+    icon: <BsCashCoin />,
   },
   {
     id: 6,
     name: "Deposits",
     link: "/deposits",
-    icon: <GrMoney />,
+    icon: <TbCashBanknote />,
   },
 
   {
     id: 8,
     name: "Withdrawals",
     link: "/withdrawals",
-    icon: <MdOutlineContactSupport />,
+    icon: <GiReceiveMoney />,
   },
   {
     id: 9,
