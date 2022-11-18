@@ -43,7 +43,21 @@ html {
   } */
 
   .bgLanding {
-    background-image: url("../public/hero8.jpg");
+    background-image: url("../public/hero7.jpg");
+    /* background-color: rgb(13, 16, 23); */
+    height: 100%;
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+  .bgLandingNext {
+    background-image: url("../public/hero6.jpg");
+    /* background-color: rgb(13, 16, 23); */
+    height: 100%;
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+  .bgLandingNexts {
+    background-image: url("../public/hero5.jpg");
     /* background-color: rgb(13, 16, 23); */
     height: 100%;
     background-size: cover;

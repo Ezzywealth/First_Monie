@@ -6,7 +6,7 @@ import { BeatLoader } from "react-spinners";
 import { useState } from "react";
 import { useSession } from "next-auth/react";
 
-const LandingPage = () => {
+const LandingPageNext = () => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const { data: session } = useSession();
@@ -51,12 +51,12 @@ const LandingPage = () => {
   };
 
   return (
-    <div className='bgLanding w-full h-[650px] relative' id='landing'>
+    <div className='bgLandingNext w-full h-[650px] relative' id='landing'>
       <div className='absolute top-0 left-0 w-full  h-full bg-[rgba(0,0,0,0.5)] '>
         <div className='absolute md:w-1/2 lg:w-[40%] top-[40%] md:top-[25%] space-y-4 bottom-[50%] left-4 w-[90%] md:left-16 h-full'>
           <h2 className='text-4xl md:text-5xl text-white capitalize font-extrabold tracking-wider'>
-            Bank Stress? <br />
-            <span className='text-indigo-500'>Say No More</span>
+            Smart-free{" "}
+            <span className='text-indigo-500'>banking for everybody</span>
           </h2>
           <p className='font-bold text-gray-100 text-lg'>
             Bank smarter with us now and browse <br /> personal and consumer
@@ -116,4 +116,4 @@ const LandingPage = () => {
   );
 };
 
-export default LandingPage;
+export default LandingPageNext;
