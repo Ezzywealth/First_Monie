@@ -87,6 +87,7 @@ const Sidebar = () => {
                               link.name === "Personal" && setAccountType(false)
                             }
                           >
+                            {link.icon}
                             {link.name}
                             <MdArrowDropDown />
 

@@ -11,6 +11,7 @@ const initialState = {
   loanResponse: false,
   loanDetails: {},
   loanAmount: 0,
+  supportModal: false,
 };
 
 const generalSlice = createSlice({
@@ -50,6 +51,12 @@ const generalSlice = createSlice({
     openAdminSidebar: (state, action) => {
       state.isAdminSidebarOpen = true;
     },
+    closeSupportModal: (state, action) => {
+      state.supportModal = false;
+    },
+    openSupportModal: (state, action) => {
+      state.supportModal = true;
+    },
     setLoanTrue: (state, action) => {
       state.loanResponse = true;
     },
@@ -82,4 +89,6 @@ export const {
   setLoanTrue,
   setLoanDetails,
   setLoanAmount,
+  openSupportModal,
+  closeSupportModal,
 } = generalSlice.actions;
