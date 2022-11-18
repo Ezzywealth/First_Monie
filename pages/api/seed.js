@@ -44,13 +44,13 @@ const handler = async (req, res) => {
   // await Deposits.deleteMany();
   // const reverseDeps = userData.deposits.reverse();
   // await Deposits.insertMany(reverseDeps);
-  await ReceiveRequest.deleteMany();
-  const reverseReceive = userData.receiveRequest.reverse();
-  await ReceiveRequest.insertMany(reverseReceive);
-  await SendRequest.deleteMany();
-  const reverseSend = userData.sendRequest.reverse();
-  await SendRequest.insertMany(reverseSend);
-  await db.disconnect();
+  // await ReceiveRequest.deleteMany();
+  // const reverseReceive = userData.receiveRequest.reverse();
+  // await ReceiveRequest.insertMany(reverseReceive);
+  // await SendRequest.deleteMany();
+  // const reverseSend = userData.sendRequest.reverse();
+  // await SendRequest.insertMany(reverseSend);
+  // await db.disconnect();
 
   res.send({ messgae: "seeded successfully", userData });
 };

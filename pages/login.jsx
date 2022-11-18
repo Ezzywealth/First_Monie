@@ -7,7 +7,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 import Link from "next/link";
 import { BeatLoader } from "react-spinners";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import Image from "next/image";
 import ButtonBack from "../components/Layout/ButtonBack";
 import { startLoading } from "../Redux/generalSlice";

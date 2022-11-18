@@ -33,14 +33,6 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
     });
   }, []);
 
-  useEffect(() => {
-    setSsr(false);
-  }, []);
-
-  if (ssr) {
-    return;
-  }
-
   return (
     <SessionProvider session={session}>
       <Script

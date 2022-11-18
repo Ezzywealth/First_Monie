@@ -112,6 +112,59 @@ export const navLinks2 = [
   },
 ];
 
+export const navLinks3 = [
+  {
+    id: 1,
+    name: "Home",
+    link: "/",
+    icon: <AiOutlineHome />,
+  },
+  {
+    id: 2,
+    name: "Personal",
+    link: "",
+    icon: <BsPersonCheck />,
+  },
+  {
+    id: 3,
+    name: "Dashboard",
+    link: "/dashboard",
+    icon: <MdSpaceDashboard />,
+  },
+  {
+    id: 4,
+    name: "Request Money",
+    link: "/request",
+    icon: <GrMoney />,
+  },
+
+  {
+    id: 5,
+    name: "Transfers",
+    link: "/transfer",
+    icon: <MdOutlineContactSupport />,
+  },
+  {
+    id: 6,
+    name: "Deposits",
+    link: "/deposits",
+    icon: <GrMoney />,
+  },
+
+  {
+    id: 8,
+    name: "Withdrawals",
+    link: "/withdrawals",
+    icon: <MdOutlineContactSupport />,
+  },
+  {
+    id: 9,
+    name: "More",
+    link: "",
+    icon: <MdOutlineContactSupport />,
+  },
+];
+
 export const company = [
   {
     id: 1,
