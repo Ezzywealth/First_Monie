@@ -12,6 +12,7 @@ const initialState = {
   loanDetails: {},
   loanAmount: 0,
   supportModal: false,
+  user: {},
 };
 
 const generalSlice = createSlice({
@@ -69,6 +70,9 @@ const generalSlice = createSlice({
     setLoanAmount: (state, action) => {
       state.loanAmount = action.payload;
     },
+    setUserDetails: (state, action) => {
+      state.user = action.payload;
+    },
   },
 });
 
@@ -91,4 +95,5 @@ export const {
   setLoanAmount,
   openSupportModal,
   closeSupportModal,
+  setUserDetails,
 } = generalSlice.actions;

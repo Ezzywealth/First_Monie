@@ -55,6 +55,7 @@ const DepositScreenAdmin = ({ deposits }) => {
   );
 };
 
+DepositScreenAdmin.auth = { adminOnly: true };
 export default DepositScreenAdmin;
 
 export async function getServerSideProps() {

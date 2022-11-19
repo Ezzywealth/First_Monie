@@ -103,5 +103,11 @@ function Auth({ children, adminOnly }) {
     );
   }
 
+  useEffect(() => {
+    if (adminOnly && session?.user.isAdmin === false) {
+      router.push("/");
+    }
+  }, []);
+
   return children;
 }

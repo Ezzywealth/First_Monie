@@ -4,6 +4,8 @@ import { CiLocationOn } from "react-icons/ci";
 import { BsTelephoneInbound } from "react-icons/bs";
 import { useForm } from "react-hook-form";
 import Button from "../components/Layout/Button";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 const Contact = () => {
   const {
@@ -13,29 +15,32 @@ const Contact = () => {
     getValues,
   } = useForm();
 
-  const formHandler = ({ name, phone, message, subject }) => {
+  const formHandler = async ({ name, email, phone, message, subject }) => {
+    // document.getElementById('myForm').reset()
     console.log(name, phone, subject, message);
-    document.querySelector("form").reset();
+
+    try {
+      const { data } = await axios.post(`/api/support`, {
+        name,
+        email,
+        phone,
+        message,
+        subject,
+      });
+      toast.success(data.message);
+    } catch (error) {
+      toast.error(error);
+    }
   };
 
-  const sendEmail = (e) => {
-    e.preventDefault();
-    emailjs.sendForm(
-      "service_ezzy",
-      "template_lf4fnom",
-      form.current,
-      "vngt2iIdOB55EqdDp"
-    );
-    e.target.reset();
-  };
   return (
     <Layout>
-      <div className='px-4 md:px-16 py-8 mt-[90px] bgContact'>
+      <div className='px-4 md:px-8 lg:px-16 py-8 mt-[90px] bgContact'>
         <h2 className='text-center font-bold text-[#333333] mb-8 text-3xl'>
-          Drop a Message for any query you have
+          Drop a Message for our support team
         </h2>
 
-        <div className='grid grid-cols-1 gap-4 md:grid-cols-3'>
+        <div className='grid grid-cols-1 gap-4 lg:grid-cols-3'>
           <div className='col-span-1 space-y-4'>
             <div className='flex gap-4 '>
               <span className='border  text-white   rounded-full  p-2 items-center  border-dashed flex justify-center w-16 h-16'>
@@ -47,10 +52,8 @@ const Contact = () => {
                 </span>
               </span>
               <span className='flex flex-col'>
-                <h2 className='font-semibold'>Address:</h2>
-                <p>
-                  Office. Main Office 175 S. Washington St. Tiffin, Ohio 44895
-                </p>
+                <h2 className='font-semibold'>Email:</h2>
+                <p>support@firstmoniebank.com</p>
               </span>
             </div>
             <div className='flex gap-4'>
@@ -70,7 +73,7 @@ const Contact = () => {
           </div>
           <div className='col-span-1 md:col-span-2'>
             <form
-              action=''
+              id='myForm'
               onSubmit={handleSubmit(formHandler)}
               className='md:grid flex flex-col md:grid-cols-2 gap-4'
             >
@@ -81,6 +84,9 @@ const Contact = () => {
                   placeholder='name'
                   {...register("name", { required: "Please enter your name" })}
                 />
+                {errors.name && (
+                  <span className='text-red-500'>{errors.name.message}</span>
+                )}
               </div>
               <div>
                 <input

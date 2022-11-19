@@ -139,7 +139,7 @@ const FirstmonieAdmin = ({ transactions, users }) => {
           </section>
 
           <section className='flex flex-col mx-2 md:mx-10 space-y-4 mb-16  lg:mx-8 bg-white py-4 border border-gray-300 border-solid'>
-            <h2 className='px-4 text-gray-500 font-bold '>Lists of USers</h2>
+            <h2 className='px-4 text-gray-500 font-bold '>Lists of Users</h2>
 
             <table className='min-w-full overflow-auto md:table-auto'>
               <thead>
@@ -181,6 +181,7 @@ const FirstmonieAdmin = ({ transactions, users }) => {
   );
 };
 
+FirstmonieAdmin.auth = { adminOnly: true };
 export default FirstmonieAdmin;
 
 export async function getServerSideProps(context) {
