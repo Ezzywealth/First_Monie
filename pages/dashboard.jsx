@@ -119,19 +119,27 @@ const Dashboard = ({ transactions, newUser }) => {
   const createdDate = new Date().toLocaleString("en-US", options);
 
   const welcomeModal = useSelector((state) => state.generalSlice.welcomeModal);
+
+  useEffect(() => {
+    dispatch(openWelcomeModal());
+
+    setTimeout(() => {
+      dispatch(closeWelcomeModal());
+    }, 7000);
+  }, [session?.user.name]);
   return (
     <Layout title='dashboard'>
       <div className='  py-[100px] md:py-4 bgContact  px-4 md:px-10 lg:px-16'>
         <div
-          className={`customTransition ${
+          className={`transition-all duration-700 ease-in-out ${
             welcomeModal
               ? "fixed top-0 left-0 right-0 flex justify-center"
-              : "fixed -top-[450px] left-0 right-0 flex justify-center"
+              : "fixed -top-[500px] left-0 right-0 flex justify-center"
           } z-50`}
         >
           <Welcome />
         </div>
-        <section className='py-2 border-b border-gray-200 border-solid mb-4'>
+        <section className='py-2 border-b border-gray-200 border-solid mb-3'>
           <div className='flex gap-3 justify-between'>
             <button
               className='bg-gray-400 rounded-lg hover:scale-105 customTransition items-center px-3 py-1 flex gap-2 text-white'

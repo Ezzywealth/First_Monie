@@ -9,7 +9,7 @@ const Welcome = () => {
   const dispatch = useDispatch();
   const { data: session } = useSession();
   return (
-    <div className='w-full md:w-[60%] lg:w-[30%] mx-4 pb-16 pt-4  rounded-lg bg-orange-50 justify-center px-8 border border-solid border-indigo-200 shadow-lg '>
+    <div className='w-full md:w-[60%] lg:w-[45%] mx-4 pb-16 pt-4  rounded-lg bg-orange-50 justify-center px-8 border border-solid border-indigo-200 shadow-lg '>
       <div className='flex justify-end '>
         <FaRegWindowClose
           className='text-blue-700'
