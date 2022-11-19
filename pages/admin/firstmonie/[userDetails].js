@@ -103,7 +103,7 @@ const UserDetails = ({ newUser }) => {
   };
 
   return (
-    <div className='relative bg-indigo-50 w-full h-screen   gap-8 grid grid-cols-1 md:grid-cols-4 mb-8 '>
+    <div className='relative bg-indigo-50 w-full h-screen gap-4 grid grid-cols-1 md:grid-cols-4 mb-8 '>
       <div
         className={`h-screen md:flex customTransition col-span-1 ${
           isAdminSidebarOpen ? "" : "hidden"
@@ -111,7 +111,7 @@ const UserDetails = ({ newUser }) => {
       >
         <AdminSidebar />
       </div>
-      <div className='col-span-3 relative overflow-auto h-screen px-8 pb-16 '>
+      <div className='col-span-3 relative overflow-auto h-screen px-4  pb-16 '>
         <main className='relative '>
           <div>
             <Navbar />
@@ -123,12 +123,12 @@ const UserDetails = ({ newUser }) => {
             </div>
           </section>
 
-          <section className='grid lg:grid-cols-3 gap-10 bg-white rounded-lg p-16 px-4'>
-            <div className='col-span-2'>
+          <section className='grid lg:grid-cols-3 gap-10 overflow-auto bg-white rounded-lg px-4 md:px-8  py-16'>
+            <div className='col-span-2 overflow-auto'>
               {userLists?.map((item) => (
                 <li
                   key={item.id}
-                  className='list-none border-y border-solid border-gray-300 p-2 grid grid-cols-2 gap-16'
+                  className='list-none border-y border-solid border-gray-300 p-2 grid grid-cols-2 gap-4  md:gap-10 lg:gap-16'
                 >
                   <span className='text-gray-500 font-bold'>{item.title}</span>
                   <span className='text-sm tracking-wider'>

@@ -341,7 +341,6 @@ export async function getServerSideProps(ctx) {
   const data = await Transaction.find().lean();
   const user = await User.find({ email: session.user.email });
   await db.disconnect();
-  console.log(user);
   const newUser = [
     {
       _id: user[0]?._id,
