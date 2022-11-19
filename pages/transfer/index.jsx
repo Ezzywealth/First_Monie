@@ -25,7 +25,7 @@ const TransferScreen = ({ transfers }) => {
         <div className='flex justify-between mb-4 items-center h-[2.5rem]'>
           <h2 className='font-semibold text-2xl flex flex-col mb-8'>
             <span className='text-[#333333] text-[13px]'>Overview</span>{" "}
-            Transfers
+            Transfers Logs
           </h2>
           <button
             onClick={() => router.push("/transfer/createTransfer")}

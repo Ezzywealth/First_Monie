@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { BsPersonCheckFill } from "react-icons/bs";
 import { HiOutlineMenuAlt1 } from "react-icons/hi";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 import { navLinks, navLinks2 } from "../../utils/constants";
@@ -11,7 +11,11 @@ import Image from "next/image";
 import { MdArrowDropDown } from "react-icons/md";
 import AccountType from "../../components/Layout/AccountType";
 import MoreLists from "../../components/Layout/MoreLists";
-import { openSidebar, startLoading } from "../../Redux/generalSlice";
+import {
+  openSidebar,
+  setActiveNavLink,
+  startLoading,
+} from "../../Redux/generalSlice";
 import Button2 from "./Button2";
 import { BeatLoader } from "react-spinners";
 
@@ -23,6 +27,9 @@ const Navbar = () => {
   const [activeLink, setActiveLink] = useState("");
   const [accountType, setAccountType] = useState(false);
   const [more, setMore] = useState(false);
+  const activeNavLink = useSelector(
+    (state) => state.generalSlice.activeNavLink
+  );
 
   useEffect(() => {
     setLoading(false);
@@ -35,6 +42,7 @@ const Navbar = () => {
   };
 
   const handleNavLink = (name) => {
+    dispatch(setActiveNavLink(name));
     setLoading(true);
     setActiveLink(name);
   };
@@ -95,7 +103,12 @@ const Navbar = () => {
               onClick={() => handleNavLink(link.name)}
             >
               <Link href={link.link} legacyBehavior>
-                <a className={`cursor-pointer text-sm `}>
+                <a
+                  className={`cursor-pointer text-sm ${
+                    link.name === activeNavLink &&
+                    "border-b-4 pb-4 border-solid border-blue-600"
+                  } `}
+                >
                   {link.name === "Personal" && (
                     <span
                       className='flex items-center'

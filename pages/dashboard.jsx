@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Layout from "../components/Layout/Layout";
 import { accountSummary, dashboardData } from "../utils/constants";
 import { useSession, getSession } from "next-auth/react";
@@ -15,16 +15,19 @@ import Image from "next/image";
 import { MdArrowRight } from "react-icons/md";
 import { AiOutlineSetting } from "react-icons/ai";
 import { BsLink45Deg } from "react-icons/bs";
+import Welcome from "../components/Layout/Welcome";
+import { closeWelcomeModal, openWelcomeModal } from "../Redux/generalSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 const Dashboard = ({ transactions, newUser }) => {
   const router = useRouter();
   const tableRef = useRef(null);
-  console.log(newUser);
+  const dispatch = useDispatch();
+
   const { data: session } = useSession();
 
   const [loading, setLoading] = useState(false);
 
-  const [activeNumb, setActiveNumb] = useState(1);
   const [curPage, setCurPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const numOfPage = Math.ceil(transactions.length / itemsPerPage);
@@ -114,9 +117,20 @@ const Dashboard = ({ transactions, newUser }) => {
   };
 
   const createdDate = new Date().toLocaleString("en-US", options);
+
+  const welcomeModal = useSelector((state) => state.generalSlice.welcomeModal);
   return (
     <Layout title='dashboard'>
       <div className='  py-[100px] md:py-4 bgContact  px-4 md:px-10 lg:px-16'>
+        <div
+          className={`customTransition ${
+            welcomeModal
+              ? "fixed top-0 left-0 right-0 flex justify-center"
+              : "fixed -top-[450px] left-0 right-0 flex justify-center"
+          } z-50`}
+        >
+          <Welcome />
+        </div>
         <section className='py-2 border-b border-gray-200 border-solid mb-4'>
           <div className='flex gap-3 justify-between'>
             <button
@@ -135,12 +149,12 @@ const Dashboard = ({ transactions, newUser }) => {
               <BsLink45Deg /> Transfer Funds
             </button>
           </div>
-          <h2 className='flex text-gray-500 font-semibold justify-center'>
+          <h2 className='flex text-gray-500 my-4 text-xl font-semibold justify-center'>
             Financial Overview (As of {createdDate} )
           </h2>
         </section>
         <div className='flex flex-col sm:grid  sm:grid-cols-3 mb-8 gap-8 '>
-          <div className='bg-white w-full sm:w-[250px] md:w-full  pb-8 shadow-xl col-span1 hover:scale-105 w customTransition justify-start px-6 border border-indigo-200 py-2 flex flex-col gap-2 '>
+          <div className='bg-white w-full sm:w-[250px] md:w-full  pb-8 shadow-xl col-span1 hover:scale-105 w customTransition justify-center px-6 border border-indigo-200 py-2 flex flex-col items-center gap-2 '>
             <h2 className='text-blue-900 text-xl font-bold '>
               Account Passport
             </h2>
@@ -158,13 +172,16 @@ const Dashboard = ({ transactions, newUser }) => {
               More Details <MdArrowRight className='scale-150' />
             </button>
           </div>
-          <div className='bg-white col-span-2  w-full sm:w-[250px] md:w-full shadow-xl w hover:scale-105 customTransition justify-start px-2 md:px-6 border border-indigo-200 py-2 flex flex-col gap-2 '>
-            <h2 className='text-blue-900 text-xl font-bold '>
+          <div className='bg-white col-span-2  w-full  md:w-full shadow-xl w hover:scale-105 customTransition justify-start px-2 md:px-6 border border-indigo-200 py-2 flex flex-col gap-2 '>
+            <h2 className='text-blue-900 text-center text-xl font-bold '>
               Account Summary
             </h2>
             <div>
               {accountSummary.map((item) => (
-                <li key={item.id} className='list-none flex gap-4'>
+                <li
+                  key={item.id}
+                  className='list-none flex justify-between gap-4'
+                >
                   <span className='text-gray-500 text-sm font-semibold '>
                     {item.title} :
                   </span>

@@ -731,8 +731,8 @@ export const dashboardData = [
   },
   {
     id: 3,
-    title: "Deposits",
-    icons: <CiWallet />,
+    title: "Download Account Statement",
+    icons: <BsCloudDownload />,
   },
   {
     id: 4,
@@ -761,8 +761,8 @@ export const dashboardData = [
   },
   {
     id: 9,
-    title: "Download Account Statement",
-    icons: <BsCloudDownload />,
+    title: "Deposits",
+    icons: <CiWallet />,
   },
 ];
 

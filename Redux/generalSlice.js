@@ -13,6 +13,7 @@ const initialState = {
   loanAmount: 0,
   supportModal: false,
   user: {},
+  welcomeModal: false,
 };
 
 const generalSlice = createSlice({
@@ -73,6 +74,12 @@ const generalSlice = createSlice({
     setUserDetails: (state, action) => {
       state.user = action.payload;
     },
+    openWelcomeModal: (state, action) => {
+      state.welcomeModal = true;
+    },
+    closeWelcomeModal: (state, action) => {
+      state.welcomeModal = false;
+    },
   },
 });
 
@@ -96,4 +103,6 @@ export const {
   openSupportModal,
   closeSupportModal,
   setUserDetails,
+  closeWelcomeModal,
+  openWelcomeModal,
 } = generalSlice.actions;

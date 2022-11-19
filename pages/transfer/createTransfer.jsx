@@ -48,7 +48,7 @@ const CreateTransfer = () => {
 
   return (
     <Layout title='createTransaction'>
-      <div className='pt-16  px-16 mt-32 md:mt-8 bgContact'>
+      <div className='pt-16 px-4 md:px-8 lg:px-16 mt-32 md:mt-8 bgContact'>
         <div
           className={`customTransition ${
             otpModal ? "fixed left-0 right-0 top-[100px]" : "hidden top-0"
@@ -57,12 +57,10 @@ const CreateTransfer = () => {
           <TransferResponse />
         </div>
 
-        <h2 className='px-8 font-semibold text-2xl text-gray-500'>
-          Send Money
-        </h2>
+        <h2 className=' font-semibold text-2xl text-gray-500'>Send Money</h2>
         <form
           id='form7'
-          className='px-4 md:px-8 lg:px-16 border border-solid border-gray-200 m-8 mt-2 py-8'
+          className='px-4 md:px-8 lg:px-16 border border-solid border-gray-200 my-8 mt-2 py-8'
           onSubmit={handleSubmit(formHandler)}
         >
           <div>
