@@ -17,7 +17,7 @@ const Home = () => {
   return (
     <Layout title='Home'>
       <main className='flex flex-col '>
-        <Carousel
+        {/* <Carousel
           interval={8000}
           renderArrowLeft={() => null}
           renderDots={() => null}
@@ -36,8 +36,8 @@ const Home = () => {
               </div>
             )
           )}
-        </Carousel>
-        {/* <LandingPage /> */}
+        </Carousel> */}
+        <LandingPage />
         <Invest />
         <Bank />
         <Services />

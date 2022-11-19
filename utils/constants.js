@@ -40,38 +40,32 @@ export const navLinks = [
   },
   {
     id: 2,
-    name: "Personal",
-    link: "",
-    icon: <BsPersonCheck />,
-  },
-  {
-    id: 3,
     name: "Dashboard",
     link: "/dashboard",
     icon: <MdSpaceDashboard />,
   },
   {
-    id: 4,
+    id: 3,
     name: "Request Money",
     link: "/request",
     icon: <GrMoney />,
   },
 
   {
-    id: 5,
+    id: 4,
     name: "Transfers",
     link: "/transfer",
     icon: <MdOutlineContactSupport />,
   },
   {
-    id: 6,
+    id: 5,
     name: "Deposits",
     link: "/deposits",
     icon: <GrMoney />,
   },
 
   {
-    id: 7,
+    id: 6,
     name: "Withdrawal",
     link: "/withdrawals",
     icon: <MdOutlineContactSupport />,
@@ -125,46 +119,41 @@ export const navLinks3 = [
     link: "/",
     icon: <AiOutlineHome />,
   },
+
   {
     id: 2,
-    name: "Personal",
-    link: "",
-    icon: <BsPersonCheck />,
-  },
-  {
-    id: 3,
     name: "Dashboard",
     link: "/dashboard",
     icon: <MdSpaceDashboard />,
   },
   {
-    id: 4,
+    id: 3,
     name: "Request Money",
     link: "/request",
     icon: <BsCashStack />,
   },
 
   {
-    id: 5,
+    id: 4,
     name: "Transfers",
     link: "/transfer",
     icon: <BsCashCoin />,
   },
   {
-    id: 6,
+    id: 5,
     name: "Deposits",
     link: "/deposits",
     icon: <TbCashBanknote />,
   },
 
   {
-    id: 8,
+    id: 6,
     name: "Withdrawals",
     link: "/withdrawals",
     icon: <GiReceiveMoney />,
   },
   {
-    id: 9,
+    id: 7,
     name: "More",
     link: "",
     icon: <MdOutlineContactSupport />,
@@ -772,7 +761,7 @@ export const dashboardData = [
   },
   {
     id: 9,
-    title: "Download Statement",
+    title: "Download Account Statement",
     icons: <BsCloudDownload />,
   },
 ];
@@ -813,5 +802,32 @@ export const loanData = [
     maximum: "50000$",
     installment: "30 Days",
     total: "60",
+  },
+];
+
+export const accountSummary = [
+  {
+    id: 1,
+    title: "Account Number",
+  },
+  {
+    id: 2,
+    title: "Account Name",
+  },
+  {
+    id: 3,
+    title: "Account Type",
+  },
+  {
+    id: 4,
+    title: "Account Status",
+  },
+  {
+    id: 5,
+    title: "Account Balance",
+  },
+  {
+    id: 6,
+    title: "Loans and Lines of Credit",
   },
 ];

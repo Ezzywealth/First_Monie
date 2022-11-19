@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Layout from "../components/Layout/Layout";
-import { dashboardData } from "../utils/constants";
+import { accountSummary, dashboardData } from "../utils/constants";
 import { useSession, getSession } from "next-auth/react";
 import { MdContentCopy } from "react-icons/md";
 import { toast } from "react-toastify";
@@ -12,6 +12,10 @@ import { useReactToPrint } from "react-to-print";
 import { useRef } from "react";
 import { useRouter } from "next/router";
 import { BeatLoader } from "react-spinners";
+import Image from "next/image";
+import { MdArrowRight } from "react-icons/md";
+import { AiOutlineSetting } from "react-icons/ai";
+import { BsLink45Deg } from "react-icons/bs";
 
 const Dashboard = ({ transactions, newUser }) => {
   const router = useRouter();
@@ -29,7 +33,7 @@ const Dashboard = ({ transactions, newUser }) => {
 
   const [activeNumb, setActiveNumb] = useState(1);
   const [curPage, setCurPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(7);
+  const [itemsPerPage, setItemsPerPage] = useState(10);
   const numOfPage = Math.ceil(transactions.length / itemsPerPage);
   const indexOfLastItem = curPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -45,7 +49,7 @@ const Dashboard = ({ transactions, newUser }) => {
         />
       );
     } else if (name === "ACCOUNT NUMBER") {
-      return "GS2217525904KbtCyv";
+      return newUser[0].account_number;
     } else if (name === "Withdraws") {
       return "191";
     } else if (name === "Deposits") {
@@ -87,10 +91,105 @@ const Dashboard = ({ transactions, newUser }) => {
       </div>
     );
   }
+
+  const handleAccountSummary = (title) => {
+    if (title === "Account Number") {
+      return newUser[0].account_number;
+    } else if (title === "Account Name") {
+      return newUser[0].name;
+    } else if (title === "Account Type") {
+      return "Checking";
+    } else if (title === "Account Status") {
+      return "Account Active";
+    } else if (title === "Account Balance") {
+      return (
+        <CurrencyFormat
+          value={newUser[0].account_balance}
+          displayType={"text"}
+          thousandSeparator={true}
+          prefix={"$"}
+        />
+      );
+    } else if (title === "Loans and Lines of Credit") {
+      return "0.00";
+    }
+  };
+  const options = {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  };
+
+  const createdDate = new Date().toLocaleString("en-US", options);
   return (
     <Layout title='dashboard'>
-      <div className='mt-20  py-16 bgContact'>
-        <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 px-4 md:px-10 lg:px-16'>
+      <div className='  py-[100px] md:py-4 bgContact  px-4 md:px-10 lg:px-16'>
+        <section className='py-2 border-b border-gray-200 border-solid mb-4'>
+          <div className='flex gap-3'>
+            <button className='bg-gray-400 rounded-lg hover:scale-105 customTransition items-center px-3 py-1 flex gap-2 text-white' onClick={()=>router.push('/account?query=savings')}>
+              <AiOutlineSetting /> Add Account
+            </button>
+            <button
+              className='bg-green-500 rounded-lg hover:scale-105 customTransition items-center px-3 py-1 flex gap-2 text-white'
+              onClick={() => {
+                setLoading(true);
+                router.push("/transfer");
+              }}
+            >
+              <BsLink45Deg /> Transfer Funds
+            </button>
+          </div>
+          <h2>Financial Overview (As of {createdDate} )</h2>
+        </section>
+        <div className='flex flex-col sm:grid  sm:grid-cols-3 mb-8 gap-8 '>
+          <div className='bg-white w-full sm:w-[250px] md:w-full  pb-8 shadow-xl col-span1 hover:scale-105 w customTransition justify-start px-6 border border-indigo-200 py-2 flex flex-col gap-2 '>
+            <h2 className='text-blue-900 text-xl font-bold '>
+              Account Passport
+            </h2>
+            <div className='h-32 md:h-28 w-32 md:w-28 flex justify-center'>
+              <Image
+                src='/profile_fmb.jpeg'
+                height={100}
+                width={100}
+                alt='profile pic'
+                // layout='responsive'
+                className='w-full'
+              />
+            </div>
+            <button className='flex justify-start items-center text-blue-600 font-bold underline'>
+              More Details <MdArrowRight className='scale-150' />
+            </button>
+          </div>
+          <div className='bg-white col-span-2  w-full sm:w-[250px] md:w-full shadow-xl w hover:scale-105 customTransition justify-start px-2 md:px-6 border border-indigo-200 py-2 flex flex-col gap-2 '>
+            <h2 className='text-blue-900 text-xl font-bold '>
+              Account Summary
+            </h2>
+            <div>
+              {accountSummary.map((item) => (
+                <li key={item.id} className='list-none flex gap-4'>
+                  <span className='text-gray-500 text-sm font-semibold '>
+                    {item.title} :
+                  </span>
+                  <span
+                    className={`font-bold ${
+                      item.title === "Account Number" && "text-blue-900"
+                    }  ${item.title === "Account Number" && "text-blue-900"} ${
+                      item.title === "Account Name" && "text-gray-900"
+                    } ${item.title === "Account Type" && "text-gray-600"} ${
+                      item.title === "Account Status" && "text-green-600"
+                    } ${item.title === "Account Balance" && "text-green-600"} ${
+                      item.title === "Loans and Lines of Credit" &&
+                      "text-gray-600"
+                    }`}
+                  >
+                    {handleAccountSummary(item.title)}
+                  </span>
+                </li>
+              ))}
+            </div>
+          </div>
+        </div>
+        <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3'>
           {dashboardData.map((data) => (
             <div
               key={data.id}
@@ -127,12 +226,13 @@ const Dashboard = ({ transactions, newUser }) => {
                   "bg-green-200 text-green-700 hover:text-white hover:bg-green-700"
                 }
                  ${
-                   data.title === "Download Statement" &&
-                   "bg-green-200 text-green-700 hover:text-white hover:bg-green-700"
+                   data.title === "Download Account Statement" &&
+                   "bg-green-200 text-green-700 hover:text-white  hover:bg-green-700"
                  }
                 `}
                 onClick={() =>
-                  data.title === "Download Statement" && handleDownload()
+                  data.title === "Download Account Statement" &&
+                  handleDownload()
                 }
               >
                 {data.icons}
@@ -142,7 +242,10 @@ const Dashboard = ({ transactions, newUser }) => {
                   data.title === "ACCOUNT NUMBER" &&
                   data.title === "AVAILABLE BALANCE" &&
                   "flex-col-reverse"
-                } `}
+                }  ${
+                  data.title === "Download Account Statement" &&
+                  "text-xl font-bold"
+                }`}
               >
                 <span className='font-semibold text-xl'>
                   {handleDashboardData(data.title)}
@@ -154,7 +257,7 @@ const Dashboard = ({ transactions, newUser }) => {
         </div>
 
         <section>
-          <div className='mx-2 md:mx-10 lg:mx-16 border shadow-2xl p-4 my-8'>
+          <div className=' border shadow-2xl p-4 my-8'>
             <h2 className='font-semibold'>Your Referral Link</h2>
 
             <div className='relative'>
@@ -163,13 +266,13 @@ const Dashboard = ({ transactions, newUser }) => {
                 id='myLink'
                 value={`https://firstmonie.com/${session?.user.name}`}
                 readOnly
-                className='relative dashboard w-full p-3 rounded-lg focus:outline-none tracking-widest border border-indigo-500 border-solid'
+                className='relative text-sm md:text-base dashboard w-full p-3 rounded-lg focus:outline-none tracking-widest border border-indigo-500 border-solid'
               />
               <span
                 className='absolute rounded-2xl p-2 top-[10%] mr-2 md:mr-4 bg-indigo-400 right-0'
                 onClick={() => copyContent()}
               >
-                <MdContentCopy className='h-6 w-6 text-white hover:scale-105 customTransition cursor-pointer' />
+                <MdContentCopy className='md:h-6 h-4 md:w-6 w-4 text-white hover:scale-105 customTransition cursor-pointer' />
               </span>
             </div>
           </div>
@@ -177,7 +280,7 @@ const Dashboard = ({ transactions, newUser }) => {
 
         <section
           ref={tableRef}
-          className='flex flex-col mx-2 md:mx-10  lg:mx-16 border border-gray-300 border-solid'
+          className='flex flex-col border border-gray-300 border-solid'
         >
           <h2 className='p-4 font-semibold tracking-wide text-gray-500 text-xl'>
             Recent Transactions

@@ -53,6 +53,10 @@ const FirstmonieAdmin = ({ transactions, users }) => {
       "Fdr",
       "Wire Transfer",
       "Money Request",
+      "Medicine-Transfer Update",
+      "Stock Investment-CR",
+      "Motor Repair-CR",
+      "Walmart-DR",
     ];
 
     const names = [

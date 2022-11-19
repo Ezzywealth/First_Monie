@@ -8,10 +8,8 @@ import User from "../components/Models/User";
 import CurrencyFormat from "react-currency-format";
 import { useReactToPrint } from "react-to-print";
 import { useRef } from "react";
-import { useEffect } from "react";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { useLayoutEffect } from "react";
 import { BeatLoader } from "react-spinners";
 const Dashboard = ({ transactions, newUser }) => {
   const [loading, setLoading] = useState();
@@ -25,11 +23,9 @@ const Dashboard = ({ transactions, newUser }) => {
     documentTitle: "Account Statement",
     onafterprint: () => router.push("/dashboard"),
   });
-  useLayoutEffect(() => {
-    setLoading(true);
-    router.push("/dashboard");
-    handlePrint();
-  }, []);
+
+  // handlePrint();
+
   if (loading) {
     return (
       <div className='flex justify-center bg-indigo-50 items-center h-screen w-full'>
@@ -47,13 +43,22 @@ const Dashboard = ({ transactions, newUser }) => {
   return (
     <Layout title='dashboard'>
       <div className='relative mt-20 py-16 bgContact'>
+        <section className='mx-4 md:mx-10 flex justify-between md:px-4 mb-8 '>
+          <h2 className=' text-xl text-amber-500'>e-statement</h2>
+          <button
+            className='bg-green-500 text-white rounded-lg hover:scale-105 customTransition px-3 py-1'
+            onClick={handlePrint}
+          >
+            Download Statement
+          </button>
+        </section>
         <section className=' '>
           <section
             ref={tableRef}
-            className='flex flex-col mx-2 md:mx-10 py-5 lg:mx-16 border border-orange-300 border-solid bg-orange-50'
+            className='flex flex-col mx-2 px-2 md:mx-10 py-5 lg:mx-16 border border-orange-300 border-solid bg-orange-50'
           >
-            <section className='flex justify-between px-4 w-full'>
-              <div className='flex md:w-[250px] h-16 items-center gap-5 border border-black pr-1 mx-2 md:pr-4 shadow-xl md:pl-2 py-1 justify-start'>
+            <section className='flex flex-col md:flex-row gap-8 justify-between px-4 w-full'>
+              <div className='flex w-[250px] h-16 items-center gap-5 border border-black pr-1 mx-2 md:pr-4 shadow-xl md:pl-2 py-1 justify-start'>
                 <div className='h-8 w-8'>
                   <Image
                     src='/logo_pic2.png'
@@ -73,20 +78,20 @@ const Dashboard = ({ transactions, newUser }) => {
                 </div>
               </div>
 
-              <div className='flex px-4 flex-col '>
+              <div className='flex px-4 flex-col text-sm '>
                 <h2 className='gap-4'>
-                  <span className='text-xl font-semibold text-blue-500 mr-4'>
-                    Name:{" "}
+                  <span className='text-sm font-semibold text-gray-500 mr-4'>
+                    Acc Name:{" "}
                   </span>
-                  <span className='text-gray-600 font-bold'>
+                  <span className='text-indigo-900 font-bold'>
                     {newUser[0].name}
                   </span>
                 </h2>
                 <h2 className='gap-4'>
-                  <span className='text-xl font-semibold text-blue-500 mr-4'>
+                  <span className='text-sm font-semibold text-gray-500 mr-4'>
                     Acc Bal:
                   </span>
-                  <span className='text-gray-600 font-bold'>
+                  <span className='text-green-600 font-bold'>
                     <CurrencyFormat
                       value={newUser[0].account_balance}
                       displayType={"text"}
@@ -96,21 +101,33 @@ const Dashboard = ({ transactions, newUser }) => {
                   </span>
                 </h2>
                 <h2 className='gap-4'>
-                  <span className='text-xl font-semibold text-blue-500 mr-4'>
+                  <span className='text-sm font-semibold text-gray-500 mr-4'>
                     Acc No:
                   </span>
-                  <span className='text-gray-600 font-bold'>
+                  <span className='text-indigo-900 font-bold'>
                     {newUser[0].account_number}
                   </span>
+                </h2>
+                <h2 className='gap-4'>
+                  <span className='text-sm font-semibold text-gray-500 mr-4'>
+                    Acc Type:
+                  </span>
+                  <span className='text-green-600 font-bold'>Checking</span>
+                </h2>
+                <h2 className='gap-4'>
+                  <span className='text-sm font-semibold text-gray-500 mr-4'>
+                    Acc Status:
+                  </span>
+                  <span className='t font-bold text-green-600'>Active</span>
                 </h2>
                 <span></span>
               </div>
             </section>
-            <h2 className='p-4 font-semibold tracking-wide text-gray-500 text-xl'>
-              Recent Transactions
+            <h2 className='p-4 font-bold tracking-wide text-gray-500 text-xl'>
+              Account Statement
             </h2>
-            <div className='flex justify-center px-auto overflow-auto'>
-              <table className='table-fixed min-w-full px-8 '>
+            <div className=' px-auto overflow-auto'>
+              <table className='table-auto w-[700px] min-w-full px-8 '>
                 <thead>
                   <tr className='bg-gray-100 font-bold text-gray-500 text-[16px]'>
                     <td className='p-2'>No</td>

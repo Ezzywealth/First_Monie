@@ -15,21 +15,27 @@ import CurrencyFormat from "react-currency-format";
 const Transactions = ({ transactions, deposits, withdrawals }) => {
   console.log(transactions);
 
-  const allTransactions = [...transactions, ...deposits, ...withdrawals];
+  const allTransactions = [
+    ...transactions,
+    ...deposits,
+    ...withdrawals,
+  ].reverse();
   const [activeNumb, setActiveNumb] = useState(1);
   const [curPage, setCurPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(7);
+  const [itemsPerPage, setItemsPerPage] = useState(10);
   const numOfPage = Math.ceil(allTransactions.length / itemsPerPage);
   const indexOfLastItem = curPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
 
+  console.log(allTransactions);
+
   return (
     <Layout title='transactions'>
-      <div className='mt-20 py-16'>
+      <div className='mt-20 py-16 bgContact'>
         <section className='flex flex-col mx-2 md:mx-10  lg:mx-16 border border-gray-300 border-solid'>
           <h2 className='p-4 font-semibold tracking-wide'>All Transactions</h2>
-          <div className='flex justify-center px-auto overflow-auto'>
-            <table className='table-fixed min-w-full px-8 '>
+          <div className=' px-auto overflow-auto'>
+            <table className='table-auto w-[700px] min-w-full px-8 '>
               <thead>
                 <tr className='bg-gray-100 font-semibold text-[15px]'>
                   <td className='p-2'>No</td>

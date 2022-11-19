@@ -37,6 +37,15 @@ const Sidebar = () => {
     );
   }
   const newLinks = session?.user ? navLinks3 : navLinks2;
+
+  const handleClick = (name, link) => {
+    if (name === "Personal" || name === "More") {
+      return;
+    }
+
+    dispatch(closeSidebar());
+    router.push(link.link);
+  };
   return (
     <div className='bg-[rgba(0,0,0,0.2)]'>
       <div className='bg-gray-900 text-white w-[360px] md:w-[60%]  lg:w-[50%] h-screen px-8 py-2 pr-2'>
@@ -87,10 +96,7 @@ const Sidebar = () => {
                       <a
                         className={`cursor-pointer text-sm `}
                         onClick={() => {
-                          setLoading(true);
-                          dispatch(closeSidebar());
-                          router.push(link.link);
-                          setLoading(false);
+                          handleClick(link.name, link.link);
                         }}
                       >
                         {link.name === "Personal" && (
