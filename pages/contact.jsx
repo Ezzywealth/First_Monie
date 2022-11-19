@@ -71,7 +71,7 @@ const Contact = () => {
           <div className='col-span-1 md:col-span-2'>
             <form
               action=''
-              onSubmit={handleSubmit(sendEmail)}
+              onSubmit={handleSubmit(formHandler)}
               className='md:grid flex flex-col md:grid-cols-2 gap-4'
             >
               <div>

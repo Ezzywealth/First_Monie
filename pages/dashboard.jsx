@@ -8,6 +8,7 @@ import Transaction from "../components/Models/Transactions";
 import db from "../utils/db";
 import User from "../components/Models/User";
 import CurrencyFormat from "react-currency-format";
+import MyDocument from "../components/Layout/Document";
 
 const Dashboard = ({ transactions, newUser }) => {
   console.log(newUser);
@@ -59,7 +60,10 @@ const Dashboard = ({ transactions, newUser }) => {
   const reversed = transactions.reverse();
   return (
     <Layout title='dashboard'>
-      <div className='mt-20 py-16'>
+      <div className='mt-20 py-16 bgContact'>
+        <div className='hidden'>
+          <MyDocument reversed={reversed} />
+        </div>
         <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 px-4 md:px-10 lg:px-16'>
           {dashboardData.map((data) => (
             <div
@@ -222,7 +226,7 @@ export async function getServerSideProps(ctx) {
 
   return {
     props: {
-      transactions: data.map(db.convertDocToObj),
+      transactions: data.map(db.convertDocToObj).reverse(),
       newUser: newUser.map(db.convertUsersDocToObj),
     },
   };

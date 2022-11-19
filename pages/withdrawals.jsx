@@ -5,8 +5,10 @@ import Withdrawals from "../components/Models/Withdrawals";
 import db from "../utils/db";
 import { useRouter } from "next/router";
 import CurrencyFormat from "react-currency-format";
+import { BeatLoader } from "react-spinners";
 
 const WithdrawalScreen = ({ withdraws }) => {
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
   const [activeNumb, setActiveNumb] = useState(1);
   const [curPage, setCurPage] = useState(1);
@@ -14,6 +16,19 @@ const WithdrawalScreen = ({ withdraws }) => {
   const numOfPage = Math.ceil(withdraws.length / itemsPerPage);
   const indexOfLastItem = curPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  if (loading) {
+    return (
+      <div className='flex justify-center bg-indigo-50 items-center h-screen w-full'>
+        <BeatLoader
+          color='indigo'
+          loading={loading}
+          size={10}
+          aria-label='Loading Spinner'
+          data-testid='loader'
+        />
+      </div>
+    );
+  }
 
   return (
     <Layout title='withdrawals'>
@@ -24,7 +39,10 @@ const WithdrawalScreen = ({ withdraws }) => {
             Withdrawals
           </h2>
           <button
-            onClick={() => router.push("/withdrawal/createTransaction")}
+            onClick={() => {
+              setLoading(true);
+              router.push("/withdrawal/createTransaction");
+            }}
             className='bg-indigo-800 rounded-lg items-center px-3 py-2 flex gap-3 text-gray-200'
           >
             <BsPlus /> Create new Withdrawal
@@ -105,7 +123,7 @@ export async function getServerSideProps() {
 
   return {
     props: {
-      withdraws: data.map(db.convertDocToObj),
+      withdraws: data.map(db.convertDocToObj).reverse(),
     },
   };
 }

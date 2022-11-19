@@ -5,6 +5,7 @@ import { useSession } from "next-auth/react";
 import db from "../../utils/db";
 import { useRouter } from "next/router";
 import Transfers from "../../components/Models/Transfers";
+import CurrencyFormat from "react-currency-format";
 
 const TransferScreen = ({ transfers }) => {
   const { data: session } = useSession();

@@ -42,7 +42,7 @@ const WireScreen = ({ wires }) => {
   return (
     <Layout title='wire transfer'>
       <div className='py-10 px-2 md:px-8 lg:px-16 bgContact'>
-        <div className=''>
+        {/* <div className=''>
           <PDFDownloadLink
             document={<MyDocument />}
             fileName='Account Statement'
@@ -55,7 +55,7 @@ const WireScreen = ({ wires }) => {
               )
             }
           </PDFDownloadLink>
-        </div>
+        </div> */}
         <div className='flex justify-between mb-4 items-center h-[2.5rem]'>
           <h2 className='font-semibold text-xl flex flex-col'>
             <span className='text-[#333333] text-[12px]'>Overview</span> Wire
@@ -147,7 +147,7 @@ export async function getServerSideProps() {
 
   return {
     props: {
-      wires: data.map(db.convertDocToObj),
+      wires: data.map(db.convertDocToObj).reverse(),
     },
   };
 }

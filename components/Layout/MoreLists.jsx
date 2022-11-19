@@ -100,7 +100,7 @@ const MoreLists = () => {
             Referrals
           </li>
         </Link>
-        <Link href='/support' legacyBehavior>
+        <Link href='/contact' legacyBehavior>
           <li
             onClick={() => {
               setLoading(true);
