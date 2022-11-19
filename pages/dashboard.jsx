@@ -8,7 +8,6 @@ import Transaction from "../components/Models/Transactions";
 import db from "../utils/db";
 import User from "../components/Models/User";
 import CurrencyFormat from "react-currency-format";
-import { useReactToPrint } from "react-to-print";
 import { useRef } from "react";
 import { useRouter } from "next/router";
 import { BeatLoader } from "react-spinners";
@@ -22,12 +21,6 @@ const Dashboard = ({ transactions, newUser }) => {
   const tableRef = useRef(null);
   console.log(newUser);
   const { data: session } = useSession();
-
-  const handlePrint = useReactToPrint({
-    content: () => tableRef.current,
-    documentTitle: "Account Statement",
-    onafterprint: () => toast.success("Document downloaded"),
-  });
 
   const [loading, setLoading] = useState(false);
 
@@ -125,8 +118,11 @@ const Dashboard = ({ transactions, newUser }) => {
     <Layout title='dashboard'>
       <div className='  py-[100px] md:py-4 bgContact  px-4 md:px-10 lg:px-16'>
         <section className='py-2 border-b border-gray-200 border-solid mb-4'>
-          <div className='flex gap-3'>
-            <button className='bg-gray-400 rounded-lg hover:scale-105 customTransition items-center px-3 py-1 flex gap-2 text-white' onClick={()=>router.push('/account?query=savings')}>
+          <div className='flex gap-3 justify-between'>
+            <button
+              className='bg-gray-400 rounded-lg hover:scale-105 customTransition items-center px-3 py-1 flex gap-2 text-white'
+              onClick={() => router.push("/accounts?query=savings")}
+            >
               <AiOutlineSetting /> Add Account
             </button>
             <button
@@ -139,7 +135,9 @@ const Dashboard = ({ transactions, newUser }) => {
               <BsLink45Deg /> Transfer Funds
             </button>
           </div>
-          <h2>Financial Overview (As of {createdDate} )</h2>
+          <h2 className='flex text-gray-500 font-semibold justify-center'>
+            Financial Overview (As of {createdDate} )
+          </h2>
         </section>
         <div className='flex flex-col sm:grid  sm:grid-cols-3 mb-8 gap-8 '>
           <div className='bg-white w-full sm:w-[250px] md:w-full  pb-8 shadow-xl col-span1 hover:scale-105 w customTransition justify-start px-6 border border-indigo-200 py-2 flex flex-col gap-2 '>
@@ -341,7 +339,7 @@ export async function getServerSideProps(ctx) {
   const session = await getSession({ ctx });
 
   const data = await Transaction.find().lean();
-  const user = await User.find({ email: session?.user.email });
+  const user = await User.find({ email: session.user.email });
   await db.disconnect();
   console.log(user);
   const newUser = [
@@ -352,7 +350,6 @@ export async function getServerSideProps(ctx) {
       telephone: user[0]?.telephone,
       password: user[0]?.password,
       userName: user[0]?.userName,
-
       birthday: user[0]?.birthday,
       sex: user[0]?.sex,
       marital_status: user[0]?.marital_status,

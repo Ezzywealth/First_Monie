@@ -6,7 +6,7 @@ const CurrentAccount = () => {
   return (
     <div className='py-16'>
       <div>
-        <div className='flex flex-col items-center mb-4'>
+        <div className='flex flex-col gap-6 items-center mb-4'>
           <h2 className='font-bold text-3xl text-[#333333]'>
             CHECKING ACCOUNTS
           </h2>
@@ -19,7 +19,7 @@ const CurrentAccount = () => {
           {currentAccount.map((item) => (
             <div
               key={item.id}
-              className='bg-white rounded-lg flex flex-col items-center px-2 gap-4 shadow-xl py-4 hover:scale-105 customTransition'
+              className='bg-white rounded-lg flex flex-col items-center px-2 gap-4 shadow-xl py-4 hover:scale-105 customTransition border border-gray-400 border-solid'
             >
               <h2
                 className={` text-2xl font-semibold ${

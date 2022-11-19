@@ -29,7 +29,8 @@ const Navbar = () => {
   }, []);
 
   const handleSignIn = () => {
-    dispatch(startLoading());
+    setLoading(true);
+    // dispatch(startLoading());
     router.push("/login");
   };
 

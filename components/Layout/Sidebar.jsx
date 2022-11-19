@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { AiOutlineArrowLeft } from "react-icons/ai";
 import { BsPersonCheckFill } from "react-icons/bs";
@@ -22,10 +22,13 @@ const Sidebar = () => {
   const dispatch = useDispatch();
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+  useEffect(() => {
+    setLoading(false);
+  }, []);
 
   if (loading) {
     return (
-      <div className='flex justify-center bg-indigo-50 items-center h-screen w-full'>
+      <div className='flex fixed justify-center bg-indigo-50 items-center h-screen w-full'>
         <BeatLoader
           color='indigo'
           loading={loading}
@@ -42,7 +45,7 @@ const Sidebar = () => {
     if (name === "Personal" || name === "More") {
       return;
     }
-
+    setLoading(true);
     dispatch(closeSidebar());
     router.push(link.link);
   };
@@ -75,6 +78,7 @@ const Sidebar = () => {
                 </div>
               ) : (
                 <Button
+                  className='text-white'
                   title='Online Banking'
                   onClick={() => {
                     router.push("/login");

@@ -9,7 +9,7 @@ const Accountscreen = () => {
   const { query } = router.query;
   console.log(query);
   return (
-    <Layout title='About'>
+    <Layout title='Accounts'>
       <div className='bgContact md:px-16 py-8 mt-[90px] px-4'>
         {query === "current" ? <CurrentAccount /> : <SavingsAccount />}
       </div>

@@ -33,8 +33,8 @@ const LoginScreen = () => {
     if (session?.user) {
       // setCalledRouter(true);
       // dispatch(fetchTransactions(session?.user.email));
-      router.push("/dashboard");
       toast.success(`${session?.user.name} welcome to First Monie`);
+      router.push("/dashboard");
     }
   }, [session?.user]);
 
