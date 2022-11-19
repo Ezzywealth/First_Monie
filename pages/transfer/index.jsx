@@ -17,11 +17,11 @@ const TransferScreen = ({ transfers }) => {
   const indexOfLastItem = curPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
 
-  const reversed = transfers.reverse().slice(indexOfFirstItem, indexOfLastItem);
+  const reversed = transfers.slice(indexOfFirstItem, indexOfLastItem);
 
   return (
     <Layout title='transfers'>
-      <div className='py-20 px-16'>
+      <div className='py-20 mt-[90px] px-4 md:px-8 lg:px-16 bgContact'>
         <div className='flex justify-between mb-4 items-center h-[2.5rem]'>
           <h2 className='font-semibold text-2xl flex flex-col mb-8'>
             <span className='text-[#333333] text-[13px]'>Overview</span>{" "}
@@ -35,8 +35,8 @@ const TransferScreen = ({ transfers }) => {
             Transfer Money
           </button>
         </div>
-        <div className='flex justify-center  overflow-auto'>
-          <table className='table-fixed min-w-full px-8 border border-solid border-gray-200 '>
+        <div className='overflow-auto'>
+          <table className='table-auto w-[900px] min-w-full px-8 border border-solid border-gray-200 '>
             <thead>
               <tr className='bg-gray-100 font-semibold text-[16px]'>
                 <td className='p-4'>Date</td>
@@ -68,9 +68,7 @@ const TransferScreen = ({ transfers }) => {
                       prefix={"$"}
                     />
                   </td>
-                  <td
-                    className={` flex items-center justify-center h-full py-auto  `}
-                  >
+                  <td className={` flex items-center  h-full py-auto  `}>
                     <span
                       className={` rounded-lg px-3 my-auto mt-2 mb-2 py-1 ${
                         item.status === "completed" &&
@@ -121,7 +119,7 @@ export async function getServerSideProps() {
 
   return {
     props: {
-      transfers: data.map(db.convertDocToObj),
+      transfers: data.map(db.convertDocToObj).reverse(),
     },
   };
 }

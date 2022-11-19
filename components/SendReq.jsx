@@ -12,7 +12,8 @@ const SendRequestScreen = ({ send_req }) => {
     <div>
       <div className='flex flex-col md:flex-row  md:justify-between mb-16 md:mb-4 md:items-center h-[2.5rem]'>
         <h2 className='font-semibold text-2xl flex flex-col mb-3'>
-          <span className='text-[#333333] text-[13px]'></span> Request Money
+          <span className='text-[#333333] text-[11px] md:text-[13px]'></span>{" "}
+          Request Money
         </h2>
         <button
           onClick={() => router.push("/request/createRequest")}
@@ -23,7 +24,7 @@ const SendRequestScreen = ({ send_req }) => {
         </button>
       </div>
       <div className=' overflow-auto'>
-        <table className=' table-auto  overflow-auto min-w-full px-8 border border-solid border-gray-200 '>
+        <table className=' table-auto w-[700px]  overflow-auto min-w-full px-8 border border-solid border-gray-200 '>
           <thead>
             <tr className='bg-gray-100 font-semibold text-[16px]'>
               <td className='p-4'>Date</td>

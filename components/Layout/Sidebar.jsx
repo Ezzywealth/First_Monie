@@ -12,6 +12,7 @@ import Image from "next/image";
 import { MdArrowDropDown } from "react-icons/md";
 import AccountType from "./AccountType";
 import MoreLists from "./MoreLists";
+import { BeatLoader } from "react-spinners";
 
 const Sidebar = () => {
   const { data: session } = useSession();
@@ -20,17 +21,21 @@ const Sidebar = () => {
   const [more, setMore] = useState(false);
   const dispatch = useDispatch();
   const router = useRouter();
-  const handleLinkClicked = (e, link) => {
-    const el = e.target.textContent;
-    setActiveLink(link);
-    // dispatch(startLoading());
-    dispatch(closeSidebar());
-  };
+  const [loading, setLoading] = useState(false);
 
-  const handleSignOut = async () => {
-    const data = await signOut({ redirect: false, callbackUrl: "/" });
-    router.push(data.url);
-  };
+  if (loading) {
+    return (
+      <div className='flex justify-center bg-indigo-50 items-center h-screen w-full'>
+        <BeatLoader
+          color='indigo'
+          loading={loading}
+          size={10}
+          aria-label='Loading Spinner'
+          data-testid='loader'
+        />
+      </div>
+    );
+  }
   const newLinks = session?.user ? navLinks3 : navLinks2;
   return (
     <div className='bg-[rgba(0,0,0,0.2)]'>
@@ -44,27 +49,6 @@ const Sidebar = () => {
           </span>
           <div className='flex flex-col gap-2'>
             <div className='flex flex-col gap-4'>
-              {/* <Link href='/'>
-                <div className='flex w-[80%] sm:w-[70%] md:w-0%] items-center gap-5 border border-gray-300 pr-2 mx-2 shadow-xl md:pl-2 py-1 justify-start'>
-                  <div className='h-8 w-8'>
-                    <Image
-                      src='/logo_pic2.png'
-                      alt='logo'
-                      className='cursor-pointer h-8 w-8 shadow-2xl md:scale-150 ml-2'
-                      width={80}
-                      height={80}
-                    />
-                  </div>
-                  <div className='flex font-extrabold flex-col tracking-wider text-sm'>
-                    <span className=' text-base md:text-3xl  text-indigo-500'>
-                      First Monie
-                    </span>
-                    <span className='font-bold italic text-center'>
-                      Online Banking
-                    </span>
-                  </div>
-                </div>
-              </Link> */}
               {session?.user ? (
                 <div className='flex text-white capitalize px-4 items-center z-10 gap-6'>
                   <div className=''>
@@ -100,7 +84,15 @@ const Sidebar = () => {
                     }`}
                   >
                     <Link href={link.link} legacyBehavior>
-                      <a className={`cursor-pointer text-sm `}>
+                      <a
+                        className={`cursor-pointer text-sm `}
+                        onClick={() => {
+                          setLoading(true);
+                          dispatch(closeSidebar());
+                          router.push(link.link);
+                          setLoading(false);
+                        }}
+                      >
                         {link.name === "Personal" && (
                           <span
                             className='flex items-center'

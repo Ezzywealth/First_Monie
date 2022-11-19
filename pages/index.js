@@ -9,8 +9,11 @@ import Contact from "../components/Homepage/Contact";
 import Expectation from "../components/Homepage/Expectation";
 import Services from "../components/Services";
 import Carousel from "framer-motion-carousel";
+import { useSession } from "next-auth/react";
 
 const Home = () => {
+  const { data: session } = useSession();
+  console.log(session);
   return (
     <Layout title='Home'>
       <main className='flex flex-col '>

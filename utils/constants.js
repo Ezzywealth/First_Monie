@@ -6,6 +6,7 @@ import {
   BsBank,
   BsWallet,
   BsWallet2,
+  BsCloudDownload,
 } from "react-icons/bs";
 import { GrMoney } from "react-icons/gr";
 
@@ -768,6 +769,11 @@ export const dashboardData = [
     id: 8,
     title: "FDR",
     icons: <BsWallet2 />,
+  },
+  {
+    id: 9,
+    title: "Download Statement",
+    icons: <BsCloudDownload />,
   },
 ];
 

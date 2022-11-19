@@ -8,11 +8,24 @@ import Transaction from "../components/Models/Transactions";
 import db from "../utils/db";
 import User from "../components/Models/User";
 import CurrencyFormat from "react-currency-format";
-import MyDocument from "../components/Layout/Document";
+import { useReactToPrint } from "react-to-print";
+import { useRef } from "react";
+import { useRouter } from "next/router";
+import { BeatLoader } from "react-spinners";
 
 const Dashboard = ({ transactions, newUser }) => {
+  const router = useRouter();
+  const tableRef = useRef(null);
   console.log(newUser);
   const { data: session } = useSession();
+
+  const handlePrint = useReactToPrint({
+    content: () => tableRef.current,
+    documentTitle: "Account Statement",
+    onafterprint: () => toast.success("Document downloaded"),
+  });
+
+  const [loading, setLoading] = useState(false);
 
   const [activeNumb, setActiveNumb] = useState(1);
   const [curPage, setCurPage] = useState(1);
@@ -57,13 +70,26 @@ const Dashboard = ({ transactions, newUser }) => {
     }
   };
 
-  const reversed = transactions.reverse();
+  const handleDownload = () => {
+    router.push("/statement");
+    setLoading(true);
+  };
+  if (loading) {
+    return (
+      <div className='flex justify-center bg-indigo-50 items-center h-screen w-full'>
+        <BeatLoader
+          color='indigo'
+          loading={loading}
+          size={10}
+          aria-label='Loading Spinner'
+          data-testid='loader'
+        />
+      </div>
+    );
+  }
   return (
     <Layout title='dashboard'>
-      <div className='mt-20 py-16 bgContact'>
-        <div className='hidden'>
-          <MyDocument reversed={reversed} />
-        </div>
+      <div className='mt-20  py-16 bgContact'>
         <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 px-4 md:px-10 lg:px-16'>
           {dashboardData.map((data) => (
             <div
@@ -99,7 +125,15 @@ const Dashboard = ({ transactions, newUser }) => {
                 }  ${
                   data.title === "FDR" &&
                   "bg-green-200 text-green-700 hover:text-white hover:bg-green-700"
-                }`}
+                }
+                 ${
+                   data.title === "Download Statement" &&
+                   "bg-green-200 text-green-700 hover:text-white hover:bg-green-700"
+                 }
+                `}
+                onClick={() =>
+                  data.title === "Download Statement" && handleDownload()
+                }
               >
                 {data.icons}
               </span>
@@ -141,12 +175,15 @@ const Dashboard = ({ transactions, newUser }) => {
           </div>
         </section>
 
-        <section className='flex flex-col mx-2 md:mx-10  lg:mx-16 border border-gray-300 border-solid'>
+        <section
+          ref={tableRef}
+          className='flex flex-col mx-2 md:mx-10  lg:mx-16 border border-gray-300 border-solid'
+        >
           <h2 className='p-4 font-semibold tracking-wide text-gray-500 text-xl'>
             Recent Transactions
           </h2>
-          <div className='flex justify-center px-auto overflow-auto'>
-            <table className='table-fixed min-w-full px-8 '>
+          <div className='px-auto overflow-auto'>
+            <table className='table-auto w-[600px] min-w-full px-8 '>
               <thead>
                 <tr className='bg-gray-100 font-semibold text-[16px]'>
                   <td className='p-2'>No</td>
@@ -157,7 +194,7 @@ const Dashboard = ({ transactions, newUser }) => {
                 </tr>
               </thead>
               <tbody>
-                {reversed
+                {transactions
                   ?.slice(indexOfFirstItem, indexOfLastItem)
                   .map((data, index) => (
                     <tr
@@ -203,24 +240,25 @@ export async function getServerSideProps(ctx) {
   const data = await Transaction.find().lean();
   const user = await User.find({ email: session?.user.email });
   await db.disconnect();
+  console.log(user);
   const newUser = [
     {
-      _id: user[0]._id,
-      name: user[0].name,
-      email: user[0].email,
-      telephone: user[0].telephone,
-      password: user[0].password,
-      userName: user[0].userName,
-      country: user[0].country,
-      birthday: user[0].birthday,
-      sex: user[0].sex,
-      marital_status: user[0].marital_status,
-      occupation: user[0].occupation,
-      account_number: user[0].account_number,
-      createdAt: user[0].createdAt,
-      updatedAt: user[0].updatedAt,
-      account_balance: user[0].account_balance,
-      secret_code: user[0].secret_code,
+      _id: user[0]?._id,
+      name: user[0]?.name,
+      email: user[0]?.email,
+      telephone: user[0]?.telephone,
+      password: user[0]?.password,
+      userName: user[0]?.userName,
+
+      birthday: user[0]?.birthday,
+      sex: user[0]?.sex,
+      marital_status: user[0]?.marital_status,
+      occupation: user[0]?.occupation,
+      account_number: user[0]?.account_number,
+      createdAt: user[0]?.createdAt,
+      updatedAt: user[0]?.updatedAt,
+      account_balance: user[0]?.account_balance,
+      secret_code: user[0]?.secret_code,
     },
   ];
 

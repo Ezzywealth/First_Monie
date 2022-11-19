@@ -141,9 +141,6 @@ const Navbar = () => {
                     height={80}
                   />
                 </div>
-                <span className='text-gray-900 text-base font-bold'>
-                  {session?.user.name}
-                </span>
                 <span
                   className='relative flex items-center text-gray-900'
                   onClick={() => setMore(!more)}

@@ -32,9 +32,9 @@ const WithdrawalScreen = ({ withdraws }) => {
 
   return (
     <Layout title='withdrawals'>
-      <div className='py-20 px-16'>
+      <div className='py-20 mt-[60px] px-2 md:px-8 lg:px-16'>
         <div className='flex justify-between mb-4 items-center h-[2.5rem]'>
-          <h2 className='font-semibold text-xl flex flex-col'>
+          <h2 className='font-semibold text-sm md:text-xl flex flex-col'>
             <span className='text-[#333333] text-[12px]'>Overview</span>{" "}
             Withdrawals
           </h2>
@@ -43,13 +43,13 @@ const WithdrawalScreen = ({ withdraws }) => {
               setLoading(true);
               router.push("/withdrawal/createTransaction");
             }}
-            className='bg-indigo-800 rounded-lg items-center px-3 py-2 flex gap-3 text-gray-200'
+            className='bg-indigo-800 rounded-lg items-center text-sm px-1 md:px-3 py-2 flex gap-3 text-gray-200'
           >
             <BsPlus /> Create new Withdrawal
           </button>
         </div>
-        <div className='flex justify-center  overflow-auto'>
-          <table className='table-fixed min-w-full px-8 border border-solid border-gray-200 '>
+        <div className=' overflow-auto'>
+          <table className='table-auto w-[700px] min-w-full px-8 border border-solid border-gray-200 '>
             <thead>
               <tr className='bg-gray-100 font-semibold text-[16px]'>
                 <td className='p-4'>Date</td>

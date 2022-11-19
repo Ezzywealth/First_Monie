@@ -1,5 +1,4 @@
 import React from "react";
-import { useRouter } from "next/router";
 import CurrencyFormat from "react-currency-format";
 
 const ReceiveRequestScreen = ({ receive_req }) => {
@@ -14,7 +13,7 @@ const ReceiveRequestScreen = ({ receive_req }) => {
         </h2>
       </div>
       <div className=' overflow-auto'>
-        <table className='md:table-fixed table-auto  overflow-auto min-w-full px-8 border border-solid border-gray-200 '>
+        <table className='w-[700px] table-auto  overflow-auto min-w-full px-8 border border-solid border-gray-200 '>
           <thead>
             <tr className='bg-gray-100 font-semibold text-[16px]'>
               <td className='p-4'>Date</td>
