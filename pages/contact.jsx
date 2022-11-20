@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 import Button from "../components/Layout/Button";
 import axios from "axios";
 import { toast } from "react-toastify";
+import emailjs from "emailjs-com";
 
 const Contact = () => {
   const {
@@ -18,6 +19,29 @@ const Contact = () => {
   const formHandler = async ({ name, email, phone, message, subject }) => {
     // document.getElementById('myForm').reset()
     console.log(name, phone, subject, message);
+
+    const templateParams = {
+      name: "James",
+      phone,
+      subject,
+      message,
+    };
+
+    emailjs
+      .send(
+        "<YOUR SERVICE ID>",
+        "<YOUR TEMPLATE ID>",
+        templateParams,
+        "<YOUR USER ID>"
+      )
+      .then(
+        (response) => {
+          console.log("SUCCESS!", response.status, response.text);
+        },
+        (err) => {
+          console.log("FAILED...", err);
+        }
+      );
 
     try {
       const { data } = await axios.post(`/api/support`, {

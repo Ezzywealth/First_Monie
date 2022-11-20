@@ -41,25 +41,13 @@ const WireScreen = ({ wires }) => {
   }
   return (
     <Layout title='wire transfer'>
-      <div className='py-10 px-2 md:px-8 lg:px-16 bgContact'>
-        {/* <div className=''>
-          <PDFDownloadLink
-            document={<MyDocument />}
-            fileName='Account Statement'
-          >
-            {({ loading }) =>
-              loading ? (
-                <button>Loading Document</button>
-              ) : (
-                <button>Download</button>
-              )
-            }
-          </PDFDownloadLink>
-        </div> */}
+      <div className='py-16 mt-[90px] px-4 md:px-8 lg:px-16 bgContact'>
         <div className='flex justify-between mb-4 items-center h-[2.5rem]'>
           <h2 className='font-semibold text-xl flex flex-col'>
-            <span className='text-[#333333] text-[12px]'>Overview</span> Wire
-            Transfer
+            <span className='text-[#333333] text-sm md:text-[12px]'>
+              Overview
+            </span>{" "}
+            Wire Transfer
           </h2>
           <button
             onClick={() => {

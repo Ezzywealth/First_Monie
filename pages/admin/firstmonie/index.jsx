@@ -18,6 +18,8 @@ const FirstmonieAdmin = ({ transactions, users }) => {
   const isAdminSidebarOpen = useSelector(
     (state) => state.generalSlice.isAdminSidebarOpen
   );
+
+  const [loading, setLoading] = useState(false);
   const loadingState = useSelector((state) => state.generalSlice.loadingState);
   console.log(users);
   if (status === "loading") {
@@ -92,12 +94,12 @@ const FirstmonieAdmin = ({ transactions, users }) => {
     createTransaction();
   }, 864000);
 
-  if (loadingState) {
+  if (loading) {
     return (
       <div className='flex bg-indigo-100 justify-center items-center h-screen w-full'>
         <BeatLoader
           color='indigo'
-          loading={loadingState}
+          loading={loading}
           size={10}
           aria-label='Loading Spinner'
           data-testid='loader'
@@ -166,9 +168,10 @@ const FirstmonieAdmin = ({ transactions, users }) => {
                     <td className='text-center'>{user.email}</td>
                     <td
                       className='text-center'
-                      onClick={() =>
-                        router.push(`/admin/firstmonie/${user._id}`)
-                      }
+                      onClick={() => {
+                        setLoading(true);
+                        router.push(`/admin/firstmonie/${user._id}`);
+                      }}
                     >
                       <button className='bg-indigo-500 hover:scale-105 hover:bg-indigo-700 customTransition text-white px-3 py-1 rounded-lg'>
                         Details

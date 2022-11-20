@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 import { setUserDetails } from "../../Redux/generalSlice";
 import Button2 from "../Layout/Button2";
 import { useDispatch } from "react-redux";
-const EditUser = ({}) => {
+const EditUser = () => {
   const dispatch = useDispatch();
   const [selectedCountry, setSelectedCountry] = useState("");
   const {

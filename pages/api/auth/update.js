@@ -15,7 +15,7 @@ async function handler(req, res) {
 
   const { user } = session;
   const {
-    country,
+    selectedCountry,
     fullName,
     email,
     userName,
@@ -41,7 +41,7 @@ async function handler(req, res) {
   toUpdateUser.name = fullName;
   toUpdateUser.email = email;
   toUpdateUser.telephone = telephone;
-  toUpdateUser.country = country;
+  toUpdateUser.country = selectedCountry;
   toUpdateUser.occupation = occupation;
   toUpdateUser.userName = userName;
 

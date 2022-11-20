@@ -54,7 +54,7 @@ const TransferResponse = () => {
 
   return (
     <div className='w-full  flex  justify-center h-screen bg-'>
-      <div className='w-full md:w-[70%] rounded-lg bg-gray-100 py-8 pt-4 px-4 lg:w-[50%] h-[40%] border-indigo-300 border-solid border'>
+      <div className='w-full md:w-[70%] rounded-lg bg-gray-100 py-8 pt-4 px-4 lg:w-[50%] h-[40%] md:h-[55%] border-indigo-300 border-solid border'>
         <div className='flex justify-end'>
           <button
             onClick={() => dispatch(closeOtpModal())}

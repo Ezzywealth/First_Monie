@@ -2,10 +2,15 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import Layout from "../../components/Layout/Layout";
 import { useDispatch, useSelector } from "react-redux";
-import { startLoading, stopLoading } from "../../Redux/generalSlice";
+import {
+  openOtpModal,
+  startLoading,
+  stopLoading,
+} from "../../Redux/generalSlice";
 import { BeatLoader } from "react-spinners";
 import { CountryDropdown } from "react-country-region-selector";
 import { useEffect } from "react";
+import TransferResponse from "../../components/transactions/transferResponse";
 
 const CreateWire = () => {
   const [error, setError] = useState(false);
@@ -20,19 +25,18 @@ const CreateWire = () => {
   useEffect(() => {
     setLoading(false);
   }, []);
+  const otpModal = useSelector((state) => state.generalSlice.otpModal);
 
   const dispatch = useDispatch();
 
   const formHandler = () => {
-    document.getElementById("myForm").reset();
-    dispatch(startLoading());
     setTimeout(() => {
-      setError(true);
-      dispatch(stopLoading());
-      setTimeout(() => {
-        setError(false);
-      }, 5000);
-    }, 4000);
+      setLoading(false);
+    }, 3000);
+    setTimeout(() => {
+      dispatch(openOtpModal());
+    }, 5000);
+    document.getElementById("myForm").reset();
   };
 
   if (loading) {
@@ -51,13 +55,20 @@ const CreateWire = () => {
 
   return (
     <Layout title='createTransaction'>
-      <div className='pt-16 px-3 md:px-8 lg:px-16 mt-32 md:mt-8 bgContact'>
-        <h2 className='px-8 font-semibold text-2xl text-gray-500'>
-          Wire Transfer
-        </h2>
+      <div className='pt-16 px-3 md:px-8 lg:px-16 mt-[90px] md:mt-8 bgContact'>
+        <div
+          className={`customTransition ${
+            otpModal
+              ? "fixed left-0 right-0 top-[90px]"
+              : "fixed left-0 right-0 -top-[1000px]"
+          }`}
+        >
+          <TransferResponse />
+        </div>
+        <h2 className=' font-semibold text-2xl text-gray-500'>Wire Transfer</h2>
         <form
           id='myForm'
-          className=' px-4 md:px-8 lg:px-16 border border-solid border-gray-200 m-8 mt-2 py-8'
+          className=' px-4 md:px-8 lg:px-16 border border-solid border-gray-200 my-8 mt-2 py-8'
           onSubmit={handleSubmit(formHandler)}
         >
           {error && (
@@ -71,11 +82,11 @@ const CreateWire = () => {
             <div className='flex flex-col font-semibold space-y-2 mb-2'>
               <label htmlFor='account_name'>Bank</label>
               <input
-                placeholder='000.0000.0000'
+                placeholder='bank name'
                 type='text'
                 className='p-2 focus:outline-none border-solid font-normal border text-sm rounded-lg'
                 id='account_name'
-                {...register("account_number", {
+                {...register("bank_name", {
                   required: "Please enter receiver's account number",
                 })}
               />
@@ -197,19 +208,21 @@ const CreateWire = () => {
               )}
             </div>
             <div className='flex flex-col font-semibold space-y-2 mb-8'>
-              <label htmlFor='note'>Note</label>
+              <label htmlFor='note'>Description</label>
               <textarea
                 rows={6}
-                id='note'
+                id='description'
                 placeholder='Description Note'
                 className='font-normal text-sm'
-                {...register("note", {
+                {...register("description", {
                   required: "please enter a descriptive message",
                 })}
               />
 
-              {errors.note && (
-                <span className='text-red-500'>{errors.note.message}</span>
+              {errors.description && (
+                <span className='text-red-500'>
+                  {errors.description.message}
+                </span>
               )}
             </div>
             <div>
