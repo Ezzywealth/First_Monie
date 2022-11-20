@@ -135,7 +135,7 @@ export async function getServerSideProps() {
 
   return {
     props: {
-      loans: newLoans.map(db.convertDocToObj),
+      loans: newLoans.map(db.convertDocToObj).reverse(),
     },
   };
 }

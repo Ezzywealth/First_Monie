@@ -1,6 +1,6 @@
 import React from "react";
 import Layout from "../components/Layout/Layout";
-import { CiLocationOn } from "react-icons/ci";
+import { GoLocation } from "react-icons/go";
 import { BsTelephoneInbound } from "react-icons/bs";
 import { useForm } from "react-hook-form";
 import Button from "../components/Layout/Button";
@@ -35,7 +35,7 @@ const Contact = () => {
 
   return (
     <Layout>
-      <div className='px-4 md:px-8 lg:px-16 py-8 mt-[90px] bgContact'>
+      <div className='px-4 md:px-8 lg:px-16 py-16 mt-[90px] bgContact'>
         <h2 className='text-center font-bold text-[#333333] mb-8 text-3xl'>
           Drop a Message for our support team
         </h2>
@@ -45,7 +45,7 @@ const Contact = () => {
             <div className='flex gap-4 '>
               <span className='border  text-white   rounded-full  p-2 items-center  border-dashed flex justify-center w-16 h-16'>
                 <span className=' bg-indigo-800 rounded-full p-2'>
-                  <CiLocationOn
+                  <GoLocation
                     className='h-6  w-6 text-white border-none '
                     style={{ color: "white" }}
                   />
@@ -66,7 +66,7 @@ const Contact = () => {
                 </span>
               </span>
               <span className='flex flex-col'>
-                <h2 className='font-semibold'>Phone:</h2>
+                <h2 className='font-semibold'>Telegram:</h2>
                 <p>+1(616) 666-3409</p>
               </span>
             </div>

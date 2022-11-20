@@ -62,10 +62,10 @@ const LoanRequestConfirm = () => {
     } else if (title === "Total Amount To Pay") {
       return (
         <CurrencyFormat
-          value={
+          value={(
             (loanAmount / parseInt(loanDetails.percent)) *
             parseInt(loanDetails.total)
-          }
+          ).toFixed(2)}
           displayType={"text"}
           thousandSeparator={true}
           prefix={"$"}

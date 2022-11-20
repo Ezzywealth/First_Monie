@@ -10,14 +10,14 @@ const WithdrawalDetailsScreen = ({ withdraw }) => {
   const item = withdraw[0];
   return (
     <Layout title='details'>
-      <div className='bg-indigo-200 space-y-4  py-16 h-screen px-32'>
+      <div className='bg-indigo-100 space-y-4 mt-[90px] py-16 h-screen px-4 md:px-10 lg:px-32'>
         <div>
           <h2 className='font-semibold text-2xl'>Withdrawal Details</h2>
         </div>
-        <div className='bg-white rounded-lg py-16 flex flex-col gap-4 px-8'>
+        <div className='bg-white min-w-full overflow-auto rounded-lg py-16 flex flex-col gap-4 px-8'>
           <span className='grid grid-cols-2 border-b border-solid  border-gray-200'>
-            <h2 className='font-semibold'>WithDraw Method</h2>{" "}
-            <p className='flex gap-16'>
+            <h2 className='font-semibold'>WithDraw Method</h2>
+            <p className='flex justify-start gap-10'>
               {" "}
               <span> :</span>
               {item.method}
@@ -25,7 +25,7 @@ const WithdrawalDetailsScreen = ({ withdraw }) => {
           </span>
           <span className='grid grid-cols-2 border-b border-solid  border-gray-200'>
             <h2 className='font-semibold'>TXID</h2>{" "}
-            <p className='flex gap-16'>
+            <p className='flex justify-start gap-10'>
               {" "}
               <span> :</span>
               {item._id}
@@ -33,7 +33,7 @@ const WithdrawalDetailsScreen = ({ withdraw }) => {
           </span>
           <span className='grid grid-cols-2 border-b border-solid  border-gray-200'>
             <h2 className='font-semibold'>Amount</h2>{" "}
-            <p className='flex gap-16'>
+            <p className='flex justify-start gap-10'>
               {" "}
               <span> :</span>
               {item.amount}
@@ -41,14 +41,14 @@ const WithdrawalDetailsScreen = ({ withdraw }) => {
           </span>
           <span className='grid grid-cols-2 border-b border-solid  border-gray-200'>
             <h2 className='font-semibold'>Fees</h2>{" "}
-            <p className='flex gap-16'>
+            <p className='flex justify-start gap-10'>
               {" "}
               <span>:</span> {(parseInt(item.amount) * 0.003).toFixed(2)}$
             </p>
           </span>
           <span className='grid grid-cols-2 border-b border-solid  border-gray-200'>
             <h2 className='font-semibold'>Status</h2>{" "}
-            <p className='flex gap-16 items-center h-full'>
+            <p className='flex justify-start gap-10 items-center h-full'>
               {" "}
               <span> :</span>
               <span className='bg-orange-500 px-2 py-1 rounded-xl'>
@@ -56,6 +56,14 @@ const WithdrawalDetailsScreen = ({ withdraw }) => {
               </span>
             </p>
           </span>
+        </div>
+        <div>
+          <button
+            className='bg-green-500 rounded-lg px-3 py-1 text-white hover:scale-105 customTransition'
+            onClick={() => router.back()}
+          >
+            Go back
+          </button>
         </div>
       </div>
     </Layout>

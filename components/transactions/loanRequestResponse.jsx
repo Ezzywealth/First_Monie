@@ -26,6 +26,7 @@ const LoanResponse = () => {
       return;
     }
     dispatch(setLoanAmount(amount));
+    dispatch(setLoanFalse());
     router.push("/loans/loanRequestConfirm");
   };
   return (

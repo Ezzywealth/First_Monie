@@ -78,7 +78,15 @@ const WithdrawalScreen = ({ withdraws }) => {
                         prefix={"$"}
                       />
                     </td>
-                    <td>{item.status}</td>
+                    <td
+                      className={`font-semibold ${
+                        item.status === "pending" && "text-orange-500"
+                      } ${item.status === "completed" && "text-green-500"} ${
+                        item.status === "cancelled" && "text-red-500"
+                      }`}
+                    >
+                      {item.status}
+                    </td>
                     <td>
                       <button
                         className='bg-indigo-500 rounded-md px-4 py-2 text-white'

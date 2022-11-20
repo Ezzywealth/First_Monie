@@ -32,6 +32,7 @@
     "react-spinners": "^0.13.6",
     "react-to-print": "^2.14.10",
     "react-toastify": "^9.1.1",
+    "sparkpost": "^2.1.4",
     "swiper": "^8.4.4",
     "tailwindcss-textshadow": "^2.1.3"
   },
