@@ -6,17 +6,29 @@ const handler = async (req, res) => {
     return res.status(401).send({ message: "Unauthorized method" });
   }
 
-  const { id, amount, method } = req.body;
-
+  const { id, amount, method, currentBalance } = req.body;
+  let newBalance = 0;
   try {
     await db.connect();
-    const user = await User.updateOne(
-      { _id: id },
-      { $set: { account_balance: amount } }
-    );
+    if (method === "add_amount") {
+      newBalance = parseInt(currentBalance) + parseInt(amount);
+      const user = await User.updateOne(
+        { _id: id },
+        { $set: { account_balance: newBalance } }
+      );
+    } else if (method === "subtract_amount") {
+      newBalance = parseInt(currentBalance) - parseInt(amount);
+      const user = await User.updateOne(
+        { _id: id },
+        { $set: { account_balance: newBalance } }
+      );
+    }
 
     await db.disconnect();
-    res.status(201).send({ message: "Account balance updated successfully" });
+    res.status(201).send({
+      message: "Account balance updated successfully",
+      data: newBalance,
+    });
   } catch (error) {
     res
       .status(401)

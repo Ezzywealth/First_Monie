@@ -89,10 +89,11 @@ const UserDetails = ({ newUser }) => {
         amount: parseInt(amount),
         method,
         id: newUser[0]._id,
+        currentBalance: newUser[0].account_balance,
       });
-      console.log(data);
+      console.log(data.data);
       toast.success(data.message);
-      setAccountBalance(amount);
+      setAccountBalance(data.data);
       if (data.error) {
         throw new Error(data.error);
       }
