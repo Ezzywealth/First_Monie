@@ -24,7 +24,11 @@ import {
   MdOutlineContactSupport,
   MdOutlineLibraryBooks,
 } from "react-icons/md";
-import { AiOutlineBank } from "react-icons/ai";
+import {
+  AiOutlineBank,
+  AiOutlineInfoCircle,
+  AiOutlineIdcard,
+} from "react-icons/ai";
 import { BiTransferAlt, BiDollar } from "react-icons/bi";
 import { CiWallet } from "react-icons/ci";
 import { CgArrowsExchange } from "react-icons/cg";
@@ -89,7 +93,7 @@ export const navLinks2 = [
     id: 3,
     name: "About",
     link: "/about",
-    icon: <GrMoney />,
+    icon: <AiOutlineInfoCircle />,
   },
 
   {
@@ -102,7 +106,7 @@ export const navLinks2 = [
     id: 5,
     name: "Cards",
     link: "/cards",
-    icon: <GrMoney />,
+    icon: <AiOutlineIdcard />,
   },
   {
     id: 6,

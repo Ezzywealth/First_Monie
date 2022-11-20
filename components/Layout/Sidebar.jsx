@@ -13,6 +13,7 @@ import { MdArrowDropDown } from "react-icons/md";
 import AccountType from "./AccountType";
 import MoreLists from "./MoreLists";
 import { BeatLoader } from "react-spinners";
+import Button2 from "./Button2";
 
 const Sidebar = () => {
   const { data: session } = useSession();
@@ -60,7 +61,7 @@ const Sidebar = () => {
             <AiOutlineArrowLeft className='h-8 w-8 mb-2 text-gray-300' />
           </span>
           <div className='flex flex-col gap-2'>
-            <div className='flex flex-col gap-4'>
+            <div className='flex flex-col items-center gap-4'>
               {session?.user ? (
                 <div className='flex text-white capitalize px-4 items-center z-10 gap-6'>
                   <div className=''>
@@ -77,14 +78,17 @@ const Sidebar = () => {
                   </span>
                 </div>
               ) : (
-                <Button
-                  className='text-white'
-                  title='Online Banking'
-                  onClick={() => {
-                    router.push("/login");
-                    dispatch(closeSidebar());
-                  }}
-                />
+                <div className='w-1/2'>
+                  <Button2
+                    className='text-white'
+                    title='Online Banking'
+                    color='white'
+                    onClick={() => {
+                      router.push("/login");
+                      dispatch(closeSidebar());
+                    }}
+                  />
+                </div>
               )}
             </div>
             <div className='flex flex-col gap-4 mt-8'>

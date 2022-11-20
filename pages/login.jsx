@@ -76,15 +76,15 @@ const LoginScreen = () => {
 
   return (
     <div className='bgRegister h-screen px-4 md:px-8 lg: flex items-center shadow-2xl'>
-      <div className='flex justify-center flex-col items-center mx-auto w-full px-4 '>
+      <div className='flex justify-center flex-col items-center mx-auto w-full '>
         <div className='flex justify-center w-full'>
           <form
-            className='flex flex-col items-center w-[350px] md:w-[450px] mx-auto px-auto my-4 bg-white overflow-auto py-8 pt-3 rounded-lg px-4 '
+            className='flex flex-col items-center w-[380px] md:w-[450px] mx-auto px-auto my-4 bg-white overflow-auto py-8 pt-3 rounded-lg px-4 '
             onSubmit={handleSubmit(onSubmit)}
             mailto=''
           >
             <Link href='/'>
-              <div className='flex w-[250px]  items-center gap-5 border border-black  shadow-xl md:pl-2 '>
+              <div className='flex w-[250px] mb-8 items-center gap-5 border border-black  shadow-xl md:pl-2 '>
                 <div className='h-8 w-8'>
                   <Image
                     src='/logo_pic2.png'
@@ -105,9 +105,6 @@ const LoginScreen = () => {
               </div>
             </Link>
             <div className='grid grid-cols-1 mb-8 gap-4'>
-              <h2 className='text-center font-semibold text-xl text-gray-500'>
-                Account Login
-              </h2>
               <div>
                 <label htmlFor='account' className='text-[#333333] '>
                   Account Number
