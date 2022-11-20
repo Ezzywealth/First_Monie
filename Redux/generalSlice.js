@@ -15,6 +15,7 @@ const initialState = {
   user: {},
   welcomeModal: false,
   loginDetails: {},
+  account_balance: 0,
 };
 
 const generalSlice = createSlice({
@@ -84,11 +85,15 @@ const generalSlice = createSlice({
     setLoginDetails: (state, action) => {
       state.loginDetails = action.payload;
     },
+    setAccountBalance: (state, action) => {
+      state.account_balance = action.payload;
+    },
   },
 });
 
 export default generalSlice.reducer;
 export const {
+  setAccountBalance,
   openSidebar,
   closeSidebar,
   startLoading,

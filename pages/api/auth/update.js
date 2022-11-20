@@ -22,6 +22,8 @@ async function handler(req, res) {
     telephone,
     password,
     occupation,
+    sex,
+    marital_status,
   } = req.body;
 
   if (
@@ -44,6 +46,8 @@ async function handler(req, res) {
   toUpdateUser.country = selectedCountry;
   toUpdateUser.occupation = occupation;
   toUpdateUser.userName = userName;
+  toUpdateUser.sex = sex;
+  toUpdateUser.marital_status = marital_status;
 
   if (password) {
     toUpdateUser.password = bcryptjs.hashSync(password);

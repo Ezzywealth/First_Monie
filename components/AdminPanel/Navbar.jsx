@@ -13,7 +13,7 @@ const Navbar = () => {
     (state) => state.generalSlice.isAdminSidebarOpen
   );
   return (
-    <nav className='p-5 h-[70px] z-40 fixed top-0 right-0 mb-16 bg-indigo-50 w-full'>
+    <nav className='p-5 h-[70px] z-40  right-0 mb-16 bg-indigo-50 w-full'>
       <div className='flex justify-between'>
         <span className='visible cursor-pointer md:invisible'>
           <AiOutlineMenuFold

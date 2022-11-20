@@ -157,52 +157,53 @@ const FirstmonieAdmin = ({ transactions, users }) => {
 
           <section className='flex flex-col mx-2 md:mx-10 space-y-4 mb-16  lg:mx-8 bg-white py-4 border border-gray-300 border-solid'>
             <h2 className='px-4 text-gray-500 font-bold '>Lists of Users</h2>
-
-            <table className='min-w-full overflow-auto md:table-auto'>
-              <thead>
-                <tr className='bg-gray-300 font-semibold text-[16px]'>
-                  <td className='p-2'>No.</td>
-                  <td className='text-center'>Name</td>
-                  <td className='text-center'>Email</td>
-                  <td className='text-center'>Action</td>
-                  <td className='text-center'>Delete</td>
-                </tr>
-              </thead>
-
-              <tbody>
-                {users?.map((user, index) => (
-                  <tr
-                    key={user._id}
-                    className='border-b border-solid border-gray-200 text-[14px] gap-4 '
-                  >
-                    <td className='px-2 py-3'>{index + 1}</td>
-                    <td className='text-center'>{user.name}</td>
-                    <td className='text-center'>{user.email}</td>
-                    <td
-                      className='text-center'
-                      onClick={() => {
-                        setLoading(true);
-                        router.push(`/admin/firstmonie/${user._id}`);
-                      }}
-                    >
-                      <button className='bg-indigo-500 hover:scale-105 hover:bg-indigo-700 customTransition text-white px-3 py-1 rounded-lg'>
-                        Details/edit user
-                      </button>
-                    </td>
-                    <td
-                      className='text-center'
-                      onClick={() => {
-                        handleUserDelete(user._id);
-                      }}
-                    >
-                      <button className='bg-indigo-500 hover:scale-105 hover:bg-indigo-700 customTransition text-white px-3 py-1 rounded-lg'>
-                        Delete
-                      </button>
-                    </td>
+            <section className='overflow-auto'>
+              <table className='min-w-full overflow-auto w-[600px] table-auto'>
+                <thead>
+                  <tr className='bg-gray-300 font-semibold text-[16px]'>
+                    <td className='p-2'>No.</td>
+                    <td className='text-center'>Name</td>
+                    <td className='text-center'>Email</td>
+                    <td className='text-center'>Action</td>
+                    <td className='text-center'>Delete</td>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+
+                <tbody>
+                  {users?.map((user, index) => (
+                    <tr
+                      key={user._id}
+                      className='border-b border-solid border-gray-200 text-[14px] gap-4 '
+                    >
+                      <td className='px-2 py-3'>{index + 1}</td>
+                      <td className='text-center'>{user.name}</td>
+                      <td className='text-center'>{user.email}</td>
+                      <td
+                        className='text-center'
+                        onClick={() => {
+                          setLoading(true);
+                          router.push(`/admin/firstmonie/${user._id}`);
+                        }}
+                      >
+                        <button className='bg-indigo-500 hover:scale-105 hover:bg-indigo-700 customTransition text-white px-3 py-1 rounded-lg'>
+                          Details/edit user
+                        </button>
+                      </td>
+                      <td
+                        className='text-center'
+                        onClick={() => {
+                          handleUserDelete(user._id);
+                        }}
+                      >
+                        <button className='bg-indigo-500 hover:scale-105 hover:bg-indigo-700 customTransition text-white px-3 py-1 rounded-lg'>
+                          Delete
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </section>
           </section>
         </main>
       </div>

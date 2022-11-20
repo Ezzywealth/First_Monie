@@ -13,6 +13,7 @@ import { AiOutlineSetting } from "react-icons/ai";
 import { closeAdminSidebar } from "../../Redux/generalSlice";
 import { useDispatch } from "react-redux";
 import Image from "next/image";
+import { BeatLoader } from "react-spinners";
 
 const links = [
   {
@@ -24,7 +25,7 @@ const links = [
   {
     id: 2,
     title: "Money Transfer",
-    link: "/admin/firstmonie/transfers",
+    link: "/admin/firstmonie/transfer",
     icon: <FaPeopleCarry />,
   },
   {
@@ -54,13 +55,7 @@ const links = [
   {
     id: 7,
     title: "Request Money",
-    link: "/admin/firstmonie/#request",
-    icon: <AiOutlineSetting />,
-  },
-  {
-    id: 8,
-    title: "Update Password",
-    link: "/admin/aztrades-admin/#update",
+    link: "/admin/firstmonie/request",
     icon: <AiOutlineSetting />,
   },
 ];
@@ -83,11 +78,12 @@ const AdminSidebar = () => {
     });
     router.push(data.url);
   };
+
   return (
-    <div className='relative h-screen bg-amber-900 z-50 p-5 pt-4 pb-8 pr-2'>
+    <div className=' h-screen w-full  bg-amber-900 z-50 p-5 pt-4 pb-8 pr-2'>
       <span className='visible flex justify-end cursor-pointer md:invisible'>
         <BsArrowLeftCircle
-          className='text-indigo-500 w-8 h-8 pr-2'
+          className='text-indigo-500 w-8 h-8 mb-8 pr-2'
           onClick={() => {
             dispatch(closeAdminSidebar());
           }}
@@ -117,7 +113,7 @@ const AdminSidebar = () => {
         </Link>
         <br />
         <div>
-          <ul className='flex flex-col gap-4 '>
+          <ul className='flex flex-col gap-4 mb-8'>
             {links.map((item) => (
               <li
                 key={item.id}
@@ -140,7 +136,7 @@ const AdminSidebar = () => {
 
           <div
             className={`flex gap-4 items-center p-1 px-3 cursor-pointer text-xl rounded-lg hover:scale-105 customTransition  
-               hover:bg-indigo-100 text-white absolute bottom-0 mb-8 hover:text-[#333333] font-bold`}
+               hover:bg-indigo-100 text-white absolute bottom-4 mb-8 hover:text-[#333333] font-bold`}
             onClick={() => handleSignOut()}
           >
             <span>

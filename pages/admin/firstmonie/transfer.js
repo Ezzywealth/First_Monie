@@ -20,7 +20,7 @@ const TransferAdminScreen = ({ transfers }) => {
   const dispatch = useDispatch();
   const { data: session } = useSession();
   const [ssr, setSsr] = useState(true);
-
+  const [loading, setLoading] = useState(false);
   // dispatch(stopLoading());
 
   const router = useRouter();
@@ -28,21 +28,6 @@ const TransferAdminScreen = ({ transfers }) => {
   const isAdminSidebarOpen = useSelector(
     (state) => state.generalSlice.isAdminSidebarOpen
   );
-
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
-
-  // function to create a new transaction for the backend
-
-  useEffect(() => {
-    setSsr(false);
-  }, []);
-  if (ssr) {
-    return;
-  }
 
   if (loading) {
     return (
@@ -59,16 +44,21 @@ const TransferAdminScreen = ({ transfers }) => {
   }
 
   return (
-    <div className='relative bg-indigo-50 w-full h-screen gap-4 grid grid-cols-1 md:grid-cols-4 mb-8 '>
+    <div className='relative bg-indigo-50 w-full h-screen gap-4 md:grid grid-cols-1 md:grid-cols-4 mb-8 '>
       <div
-        className={`h-screen md:flex customTransition col-span-1 ${
-          isAdminSidebarOpen ? "" : "hidden"
+        className={`z-50  customTransition col-span-1 ${
+          isAdminSidebarOpen ? "h-screen fixed " : "hidden"
         }`}
       >
         <AdminSidebar />
       </div>
-      <div className='col-span-3 relative overflow-auto h-screen px-4  pb-16 '>
-        <main className='relative '>
+      <div
+        className={`fixed  transition-all duration-500 ease-linear col-span-2 hidden lg:contents  h-screen bottom-0 left-0 z-50 `}
+      >
+        <AdminSidebar />
+      </div>
+      <div className='col-span-3  overflow-auto h-screen px-4  pb-16 '>
+        <main className=''>
           <div>
             <Navbar />
           </div>

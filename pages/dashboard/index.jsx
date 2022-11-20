@@ -16,7 +16,7 @@ import { MdArrowRight } from "react-icons/md";
 import { AiOutlineSetting } from "react-icons/ai";
 import { BsLink45Deg } from "react-icons/bs";
 import Welcome from "../../components/Layout/Welcome";
-import { closeWelcomeModal, openWelcomeModal } from "../../Redux/generalSlice";
+import { closeWelcomeModal, setAccountBalance } from "../../Redux/generalSlice";
 import { useDispatch, useSelector } from "react-redux";
 import Layout from "../../components/Layout/Layout";
 
@@ -34,8 +34,7 @@ const Dashboard = ({ transactions, newUser }) => {
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
 
   useEffect(() => {
-    dispatch(openWelcomeModal());
-
+    dispatch(setAccountBalance());
     setTimeout(() => {
       dispatch(closeWelcomeModal());
     }, 7000);
@@ -130,239 +129,245 @@ const Dashboard = ({ transactions, newUser }) => {
     router.push("/transfer");
   };
   return (
-    <Layout title='dashboard'>
-      <div className='  py-[100px] md:py-4 bgContact  px-4 md:px-10 lg:px-16'>
-        <div
-          className={`transition-all duration-700 ease-in-out ${
-            welcomeModal
-              ? "fixed top-0 left-0 right-0 flex justify-center"
-              : "fixed -top-[500px] left-0 right-0 flex justify-center"
-          } z-50`}
-        >
-          <Welcome />
-        </div>
-        <section className='py-2 border-b border-gray-200 border-solid mb-3'>
-          <div className='flex gap-3 justify-between'>
-            <button
-              className='bg-gray-400 rounded-lg hover:scale-105 customTransition items-center px-3 py-1 flex gap-2 text-white'
-              onClick={() => router.push("/accounts?query=savings")}
-            >
-              <AiOutlineSetting /> Add Account
-            </button>
-            <button
-              className='bg-green-500 rounded-lg hover:scale-105 customTransition items-center px-3 py-1 flex gap-2 text-white'
-              onClick={() => {
-                handleTransfer();
-              }}
-            >
-              <BsLink45Deg /> Transfer Funds
-            </button>
+    <div className='  w-full'>
+      <Layout title='dashboard'>
+        <div className='mt-[90px]  py-16 md:py-4 bgContact  px-4 md:px-10 lg:px-16'>
+          <div
+            className={`transition-all duration-700 ease-in-out ${
+              welcomeModal
+                ? "fixed top-0 left-0 right-0 flex justify-center"
+                : "fixed -top-[500px] left-0 right-0 flex justify-center"
+            } z-50`}
+          >
+            <Welcome />
           </div>
-          <h2 className='flex text-gray-500 my-4 text-xl font-semibold justify-center'>
-            Financial Overview (As of {createdDate} )
-          </h2>
-        </section>
-        <div className='flex flex-col sm:grid  sm:grid-cols-3 mb-8 gap-8 '>
-          <div className='bg-white w-full sm:w-[250px] md:w-full  pb-8 shadow-xl col-span1 hover:scale-105 w customTransition justify-center px-6 border border-indigo-200 py-2 flex flex-col items-center gap-2 '>
-            <h2 className='text-blue-900 text-xl font-bold '>
-              Account Passport
-            </h2>
-            <div className='h-32 md:h-28 w-32 md:w-28 flex justify-center'>
-              <Image
-                src='/profile_fmb.jpeg'
-                height={100}
-                width={100}
-                alt='profile pic'
-                // layout='responsive'
-                className='w-full'
-              />
+          <section className='py-2 border-b border-gray-200 border-solid mb-3'>
+            <div className='flex gap-3 justify-between'>
+              <button
+                className='bg-gray-400 rounded-lg hover:scale-105 customTransition items-center px-3 py-1 flex gap-2 text-white'
+                onClick={() => router.push("/accounts?query=savings")}
+              >
+                <AiOutlineSetting /> Add Account
+              </button>
+              <button
+                className='bg-green-500 rounded-lg hover:scale-105 customTransition items-center px-3 py-1 flex gap-2 text-white'
+                onClick={() => {
+                  handleTransfer();
+                }}
+              >
+                <BsLink45Deg /> Transfer Funds
+              </button>
             </div>
-            <button
-              className='flex justify-start items-center text-blue-600 font-bold underline'
-              onClick={() => {
-                setLoading(true);
-                router.push("/dashboard/userProfile");
-              }}
-            >
-              More Details <MdArrowRight className='scale-150' />
-            </button>
-          </div>
-          <div className='bg-white col-span-2  w-full  md:w-full shadow-xl w hover:scale-105 customTransition justify-start px-2 md:px-6 border border-indigo-200 py-2 flex flex-col gap-2 '>
-            <h2 className='text-blue-900 text-center text-xl font-bold '>
-              Account Summary
+            <h2 className='flex text-gray-500 my-4 text-base md:text-xl font-semibold justify-center'>
+              Financial Overview (As of {createdDate} )
             </h2>
-            <div>
-              {accountSummary.map((item) => (
-                <li
-                  key={item.id}
-                  className='list-none flex justify-between gap-4'
-                >
-                  <span className='text-gray-500 text-sm font-semibold '>
-                    {item.title} :
-                  </span>
-                  <span
-                    className={`font-bold ${
-                      item.title === "Account Number" && "text-blue-900"
-                    }  ${item.title === "Account Number" && "text-blue-900"} ${
-                      item.title === "Account Name" && "text-gray-900"
-                    } ${item.title === "Account Type" && "text-gray-600"} ${
-                      item.title === "Account Status" && "text-green-600"
-                    } ${item.title === "Account Balance" && "text-green-600"} ${
-                      item.title === "Loans and Lines of Credit" &&
-                      "text-gray-600"
-                    }`}
+          </section>
+          <div className='flex flex-col sm:grid  sm:grid-cols-3 mb-8 gap-8 '>
+            <div className='bg-white w-full sm:w-[250px] md:w-full  pb-8 shadow-xl col-span1 hover:scale-105 w customTransition justify-center px-6 border border-indigo-200 py-2 flex flex-col items-center gap-2 '>
+              <h2 className='text-blue-900 text-xl font-bold '>
+                Account Passport
+              </h2>
+              <div className='h-32 md:h-28 w-32 md:w-28 flex justify-center'>
+                <Image
+                  src='/profile_fmb.jpeg'
+                  height={100}
+                  width={100}
+                  alt='profile pic'
+                  // layout='responsive'
+                  className='w-full'
+                />
+              </div>
+              <button
+                className='flex justify-start items-center text-blue-600 font-bold underline'
+                onClick={() => {
+                  setLoading(true);
+                  router.push("/dashboard/userProfile");
+                }}
+              >
+                More Details <MdArrowRight className='scale-150' />
+              </button>
+            </div>
+            <div className='bg-white col-span-2  w-full  md:w-full shadow-xl w hover:scale-105 customTransition justify-start px-2 md:px-6 border border-indigo-200 py-2 flex flex-col gap-2 '>
+              <h2 className='text-blue-900 text-center text-xl font-bold '>
+                Account Summary
+              </h2>
+              <div>
+                {accountSummary.map((item) => (
+                  <li
+                    key={item.id}
+                    className='list-none flex justify-between gap-4'
                   >
-                    {handleAccountSummary(item.title)}
-                  </span>
-                </li>
-              ))}
+                    <span className='text-gray-500 text-sm font-semibold '>
+                      {item.title} :
+                    </span>
+                    <span
+                      className={`font-bold ${
+                        item.title === "Account Number" && "text-blue-900"
+                      }  ${
+                        item.title === "Account Number" && "text-blue-900"
+                      } ${item.title === "Account Name" && "text-gray-900"} ${
+                        item.title === "Account Type" && "text-gray-600"
+                      } ${
+                        item.title === "Account Status" && "text-green-600"
+                      } ${
+                        item.title === "Account Balance" && "text-green-600"
+                      } ${
+                        item.title === "Loans and Lines of Credit" &&
+                        "text-gray-600"
+                      }`}
+                    >
+                      {handleAccountSummary(item.title)}
+                    </span>
+                  </li>
+                ))}
+              </div>
             </div>
           </div>
-        </div>
-        <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3'>
-          {dashboardData.map((data) => (
-            <div
-              key={data.id}
-              className={`bg-white shadow-xl hover:scale-105 customTransition justify-start px-6 border border-indigo-200 py-8 flex gap-4 items-center ${
-                data.title === "ACCOUNT NUMBER" && "col-[1.5_/_span_1.5]"
-              } ${
-                data.title === "AVAILABLE BALANCE" && "col-[1.5_/_span_1.5]"
-              } `}
-            >
-              <span
-                className={`border p-4  rounded-lg text-2xl customTransition ${
-                  data.title === "ACCOUNT NUMBER" &&
-                  "bg-orange-200 text-orange-700 hover:text-white hover:bg-orange-700"
-                }  ${
-                  data.title === "AVAILABLE BALANCE" &&
-                  "bg-purple-200 text-purple-700 hover:text-white hover:bg-purple-700"
-                }  ${
-                  data.title === "Deposits" &&
-                  "bg-green-200 text-green-700 hover:text-white hover:bg-green-700"
-                }  ${
-                  data.title === "Withdraws" &&
-                  "bg-red-200 text-red-700 hover:text-white hover:bg-red-700"
-                }  ${
-                  data.title === "Transactions" &&
-                  "bg-indigo-200 text-indigo-700 hover:text-white hover:bg-indigo-700"
-                }  ${
-                  data.title === "Loan" &&
-                  "bg-orange-200 text-orange-700 hover:text-white hover:bg-orange-700"
-                }  ${
-                  data.title === "DPS" &&
-                  "bg-purple-200 text-purple-700 hover:text-white hover:bg-purple-700"
-                }  ${
-                  data.title === "FDR" &&
-                  "bg-green-200 text-green-700 hover:text-white hover:bg-green-700"
-                }
+          <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3'>
+            {dashboardData.map((data) => (
+              <div
+                key={data.id}
+                className={`bg-white shadow-xl hover:scale-105 customTransition justify-start px-6 border border-indigo-200 py-8 flex gap-4 items-center ${
+                  data.title === "ACCOUNT NUMBER" && "col-[1.5_/_span_1.5]"
+                } ${
+                  data.title === "AVAILABLE BALANCE" && "col-[1.5_/_span_1.5]"
+                } `}
+              >
+                <span
+                  className={`border p-4  rounded-lg text-2xl customTransition ${
+                    data.title === "ACCOUNT NUMBER" &&
+                    "bg-orange-200 text-orange-700 hover:text-white hover:bg-orange-700"
+                  }  ${
+                    data.title === "AVAILABLE BALANCE" &&
+                    "bg-purple-200 text-purple-700 hover:text-white hover:bg-purple-700"
+                  }  ${
+                    data.title === "Deposits" &&
+                    "bg-green-200 text-green-700 hover:text-white hover:bg-green-700"
+                  }  ${
+                    data.title === "Withdraws" &&
+                    "bg-red-200 text-red-700 hover:text-white hover:bg-red-700"
+                  }  ${
+                    data.title === "Transactions" &&
+                    "bg-indigo-200 text-indigo-700 hover:text-white hover:bg-indigo-700"
+                  }  ${
+                    data.title === "Loan" &&
+                    "bg-orange-200 text-orange-700 hover:text-white hover:bg-orange-700"
+                  }  ${
+                    data.title === "DPS" &&
+                    "bg-purple-200 text-purple-700 hover:text-white hover:bg-purple-700"
+                  }  ${
+                    data.title === "FDR" &&
+                    "bg-green-200 text-green-700 hover:text-white hover:bg-green-700"
+                  }
                  ${
                    data.title === "Download Account Statement" &&
                    "bg-green-200 text-green-700 hover:text-white  hover:bg-green-700"
                  }
                 `}
-                onClick={() =>
-                  data.title === "Download Account Statement" &&
-                  handleDownload()
-                }
-              >
-                {data.icons}
-              </span>
-              <span
-                className={`flex flex-col ${
-                  data.title === "ACCOUNT NUMBER" &&
-                  data.title === "AVAILABLE BALANCE" &&
-                  "flex-col-reverse"
-                }  ${
-                  data.title === "Download Account Statement" &&
-                  "text-xl font-bold"
-                }`}
-              >
-                <span className='font-semibold text-xl'>
-                  {handleDashboardData(data.title)}
+                  onClick={() =>
+                    data.title === "Download Account Statement" &&
+                    handleDownload()
+                  }
+                >
+                  {data.icons}
                 </span>
-                <span className='text-sm text-[#333333]'>{data.title}</span>
-              </span>
-            </div>
-          ))}
-        </div>
-
-        <section>
-          <div className=' border shadow-2xl p-4 my-8'>
-            <h2 className='font-semibold'>Your Referral Link</h2>
-
-            <div className='relative'>
-              <input
-                type='text'
-                id='myLink'
-                value={`https://firstmonie.com/${session?.user.name}`}
-                readOnly
-                className='relative text-sm md:text-base dashboard w-full p-3 rounded-lg focus:outline-none tracking-widest border border-indigo-500 border-solid'
-              />
-              <span
-                className='absolute rounded-2xl p-2 top-[10%] mr-2 md:mr-4 bg-indigo-400 right-0'
-                onClick={() => copyContent()}
-              >
-                <MdContentCopy className='md:h-6 h-4 md:w-6 w-4 text-white hover:scale-105 customTransition cursor-pointer' />
-              </span>
-            </div>
+                <span
+                  className={`flex flex-col ${
+                    data.title === "ACCOUNT NUMBER" &&
+                    data.title === "AVAILABLE BALANCE" &&
+                    "flex-col-reverse"
+                  }  ${
+                    data.title === "Download Account Statement" &&
+                    "text-xl font-bold"
+                  }`}
+                >
+                  <span className='font-semibold text-xl'>
+                    {handleDashboardData(data.title)}
+                  </span>
+                  <span className='text-sm text-[#333333]'>{data.title}</span>
+                </span>
+              </div>
+            ))}
           </div>
-        </section>
 
-        <section
-          ref={tableRef}
-          className='flex flex-col border border-gray-300 border-solid'
-        >
-          <h2 className='p-4 font-semibold tracking-wide text-gray-500 text-xl'>
-            Recent Transactions
-          </h2>
-          <div className='px-auto overflow-auto'>
-            <table className='table-auto w-[600px] min-w-full px-8 '>
-              <thead>
-                <tr className='bg-gray-100 font-semibold text-[16px]'>
-                  <td className='p-2'>No</td>
-                  <td>TYPE</td>
-                  <td>TXNID</td>
-                  <td>AMOUNT</td>
-                  <td> DATE</td>
-                </tr>
-              </thead>
-              <tbody>
-                {transactions
-                  ?.slice(indexOfFirstItem, indexOfLastItem)
-                  .map((data, index) => (
-                    <tr
-                      key={data._id}
-                      className='border-b border-solid border-gray-200 text-[13px] gap-4'
-                    >
-                      <td className='p-2'>{index + 1}</td>
-                      <td>{data.type}</td>
-                      <td>{data._id}</td>
-                      <td
-                        className={` tracking-wider font-semibold ${
-                          data.type === "Deposit" ||
-                          data.type === "deposit" ||
-                          data.type === "Stock Investment-CR" ||
-                          data.type === "Motor Repair-CR"
-                            ? "text-green-500"
-                            : "text-red-500"
-                        }`}
+          <section>
+            <div className=' border shadow-2xl p-4 my-8'>
+              <h2 className='font-semibold'>Your Referral Link</h2>
+
+              <div className='relative'>
+                <input
+                  type='text'
+                  id='myLink'
+                  value={`https://firstmonie.com/${session?.user.name}`}
+                  readOnly
+                  className='relative text-sm md:text-base dashboard w-full p-3 rounded-lg focus:outline-none tracking-widest border border-indigo-500 border-solid'
+                />
+                <span
+                  className='absolute rounded-2xl p-2 top-[10%] mr-2 md:mr-4 bg-indigo-400 right-0'
+                  onClick={() => copyContent()}
+                >
+                  <MdContentCopy className='md:h-6 h-4 md:w-6 w-4 text-white hover:scale-105 customTransition cursor-pointer' />
+                </span>
+              </div>
+            </div>
+          </section>
+
+          <section
+            ref={tableRef}
+            className='flex flex-col border border-gray-300 border-solid'
+          >
+            <h2 className='p-4 font-semibold tracking-wide text-gray-500 text-xl'>
+              Recent Transactions
+            </h2>
+            <div className='px-auto overflow-auto'>
+              <table className='table-auto w-[600px] min-w-full px-8 '>
+                <thead>
+                  <tr className='bg-gray-100 font-semibold text-[16px]'>
+                    <td className='p-2'>No</td>
+                    <td>TYPE</td>
+                    <td>TXNID</td>
+                    <td>AMOUNT</td>
+                    <td> DATE</td>
+                  </tr>
+                </thead>
+                <tbody>
+                  {transactions
+                    ?.slice(indexOfFirstItem, indexOfLastItem)
+                    .map((data, index) => (
+                      <tr
+                        key={data._id}
+                        className='border-b border-solid border-gray-200 text-[13px] gap-4'
                       >
-                        <CurrencyFormat
-                          value={parseInt(data.amount)}
-                          displayType={"text"}
-                          thousandSeparator={true}
-                          prefix={"$"}
-                        />
-                      </td>
-                      <td>{data.date}</td>
-                    </tr>
-                  ))}
-              </tbody>
-            </table>
-          </div>
-        </section>
-      </div>
-    </Layout>
+                        <td className='p-2'>{index + 1}</td>
+                        <td>{data.type}</td>
+                        <td>{data._id}</td>
+                        <td
+                          className={` tracking-wider font-semibold ${
+                            data.type === "Deposit" ||
+                            data.type === "deposit" ||
+                            data.type === "Stock Investment-CR" ||
+                            data.type === "Motor Repair-CR"
+                              ? "text-green-500"
+                              : "text-red-500"
+                          }`}
+                        >
+                          <CurrencyFormat
+                            value={parseInt(data.amount)}
+                            displayType={"text"}
+                            thousandSeparator={true}
+                            prefix={"$"}
+                          />
+                        </td>
+                        <td>{data.date}</td>
+                      </tr>
+                    ))}
+                </tbody>
+              </table>
+            </div>
+          </section>
+        </div>
+      </Layout>
+    </div>
   );
 };
 

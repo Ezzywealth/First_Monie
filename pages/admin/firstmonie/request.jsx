@@ -6,18 +6,17 @@ import { useForm } from "react-hook-form";
 
 import { useRouter } from "next/router";
 
-import { useDispatch, useSelector } from "react-redux";
-
 import { useEffect } from "react";
 
 import CurrencyFormat from "react-currency-format";
 
 import { useSession } from "next-auth/react";
 import { BeatLoader } from "react-spinners";
-import Wire from "../../../components/Models/Wire";
+import Receive from "../../../components/Models/ReceiveRequest";
+import Request from "../../../components/Models/RequestMoney";
+import { useSelector } from "react-redux";
 
-const WireAdminScreen = ({ wires }) => {
-  const dispatch = useDispatch();
+const RequestAdminScreen = ({ receive, requests }) => {
   const { data: session } = useSession();
   const [ssr, setSsr] = useState(true);
   const [loading, setLoading] = useState(false);
@@ -57,7 +56,7 @@ const WireAdminScreen = ({ wires }) => {
       </div>
     );
   }
-  console.log(wires);
+  const requestssss = [...receive, ...requests];
   return (
     <div className='relative bg-indigo-50 w-full h-screen gap-4 md:grid grid-cols-1 md:grid-cols-4 mb-8 '>
       <div
@@ -84,7 +83,7 @@ const WireAdminScreen = ({ wires }) => {
           <div className='flex justify-between mt-[90px] mb-4 items-center h-[2.5rem]'>
             <h2 className='font-semibold text-xl flex flex-col'>
               <span className='text-[#333333] text-[12px]'>Overview</span> All
-              Wires
+              Requests
             </h2>
           </div>
           <div className='  overflow-auto'>
@@ -99,18 +98,18 @@ const WireAdminScreen = ({ wires }) => {
                 </tr>
               </thead>
               <tbody>
-                {wires?.map((item) => (
+                {requestssss?.map((item) => (
                   <tr
-                    key={item._id}
+                    key={item?._id}
                     className='border-b border-solid border-gray-200 text-[13px] gap-4'
                   >
-                    <td className='p-4'>{item.date}</td>
+                    <td className='p-4'>{item?.date}</td>
 
                     <td>{session?.user.email}</td>
                     <td>
                       {" "}
                       <CurrencyFormat
-                        value={parseInt(item.amount)}
+                        value={parseInt(item?.amount)}
                         displayType={"text"}
                         thousandSeparator={true}
                         prefix={"$"}
@@ -118,10 +117,10 @@ const WireAdminScreen = ({ wires }) => {
                     </td>
                     <td
                       className={`${
-                        item.status === "pending" && "text-orange-500"
-                      } ${item.status === "completed" && "text-green-500"}`}
+                        item?.status === "pending" && "text-orange-500"
+                      } ${item?.status === "completed" && "text-green-500"}`}
                     >
-                      {item.status}
+                      {item?.status}
                     </td>
                   </tr>
                 ))}
@@ -134,17 +133,19 @@ const WireAdminScreen = ({ wires }) => {
   );
 };
 
-WireAdminScreen.auth = { adminOnly: true };
-export default WireAdminScreen;
+RequestAdminScreen.auth = { adminOnly: true };
+export default RequestAdminScreen;
 
 export async function getServerSideProps() {
   await db.connect();
-  const data = await Wire.find().lean();
+  const receive = await Receive.find().lean();
+  const request = await Request.find().lean();
   await db.disconnect();
 
   return {
     props: {
-      wires: data.map(db.convertDocToObj).reverse(),
+      receive: receive.map(db.convertDocToObj),
+      requests: request.map(db.convertDocToObj).reverse(),
     },
   };
 }

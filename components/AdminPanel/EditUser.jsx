@@ -21,6 +21,8 @@ const EditUser = () => {
     userName,
     telephone,
     password,
+    sex,
+    marital_status,
     occupation,
   }) => {
     document.getElementById("myForm").reset();
@@ -33,6 +35,8 @@ const EditUser = () => {
         telephone,
         password,
         occupation,
+        sex,
+        marital_status,
       });
       console.log(data);
       dispatch(setUserDetails(data.toUpdateUser));
@@ -137,6 +141,45 @@ const EditUser = () => {
                 <span className='text-red-500'>
                   {errors.selectedCountry.message}
                 </span>
+              )}
+            </div>
+            <div>
+              <label htmlFor='country' className='text-[#333333] '>
+                Marital status
+              </label>
+              <select
+                className='w-full p-2 focus:outline-none border rounded-lg'
+                {...register("marital_status", {
+                  required: "Please select your status",
+                })}
+              >
+                <option value='married'>Married</option>
+                <option value='single'>Single</option>
+                <option value='divorced'>Divorced</option>
+                <option value='widow'>Widow</option>
+                <option value='widower'>Widower</option>
+              </select>
+              {errors.marital_status && (
+                <span className='text-red-500'>
+                  {errors.marital_status.message}
+                </span>
+              )}
+            </div>
+            <div>
+              <label htmlFor='country' className='text-[#333333] '>
+                Gender
+              </label>
+              <select
+                className='w-full p-2 focus:outline-none border rounded-lg'
+                {...register("sex", {
+                  required: "Please select your gender",
+                })}
+              >
+                <option value='male'>Male</option>
+                <option value='female'>Female</option>
+              </select>
+              {errors.sex && (
+                <span className='text-red-500'>{errors.sex.message}</span>
               )}
             </div>
 

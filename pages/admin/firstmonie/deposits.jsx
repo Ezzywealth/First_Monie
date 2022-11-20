@@ -59,11 +59,16 @@ const DepositAdminScreen = ({ deposits }) => {
   }
   console.log(deposits);
   return (
-    <div className='relative bg-indigo-50 w-full h-screen gap-4 grid grid-cols-1 md:grid-cols-4 mb-8 '>
+    <div className='relative bg-indigo-50 w-full h-screen gap-4 md:grid grid-cols-1 md:grid-cols-4 mb-8 '>
       <div
-        className={`h-screen md:flex customTransition col-span-1 ${
-          isAdminSidebarOpen ? "" : "hidden"
+        className={`z-50 fixed  customTransition col-span-1 ${
+          isAdminSidebarOpen ? "h-screen" : "hidden"
         }`}
+      >
+        <AdminSidebar />
+      </div>
+      <div
+        className={`fixed  transition-all duration-500 ease-linear col-span-2 hidden lg:contents  h-screen bottom-0 left-0 z-50 `}
       >
         <AdminSidebar />
       </div>
@@ -72,11 +77,10 @@ const DepositAdminScreen = ({ deposits }) => {
           <div>
             <Navbar />
           </div>
-
           <div className='flex justify-between mt-[90px] mb-4 items-center h-[2.5rem]'>
             <h2 className='font-semibold text-xl flex flex-col'>
               <span className='text-[#333333] text-[12px]'>Overview</span> All
-              Wires
+              Deposits
             </h2>
           </div>
           <div className='  overflow-auto'>

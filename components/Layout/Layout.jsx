@@ -4,8 +4,8 @@ import Navbar from "./Navbar";
 import Head from "next/head";
 import { useSelector } from "react-redux";
 import Sidebar from "./Sidebar";
-
-const Layout = ({ children, title, priceList = true }) => {
+import DashboardHeader from "./DashboardHeader";
+const Layout = ({ children, title }) => {
   const [height, setHeight] = useState(0);
   const [navbarColor, setNavbarColor] = useState(false);
   const isSidebarOpen = useSelector(
@@ -38,7 +38,12 @@ const Layout = ({ children, title, priceList = true }) => {
         <title>{title}</title>
         <link rel='icon' href='/favicon.ico' />
       </Head>
-      <div className={`fixed bg-gray-200   z-40  top-0 w-full`}>
+      <div
+        className={`fixed bg-gray-200 ${
+          title === "dashboards" && "mb-40"
+        }   z-40  top-0 w-full`}
+      >
+        {title === "dashboards" && <DashboardHeader />}
         <Navbar />
       </div>
       <main className=' lg:mt-[90px] relative'>{children}</main>

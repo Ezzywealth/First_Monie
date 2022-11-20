@@ -59,17 +59,22 @@ const TransactionAdminScreen = ({ transactions }) => {
   }
   console.log(transactions);
   return (
-    <div className='relative bg-indigo-50 w-full h-screen gap-4 grid grid-cols-1 md:grid-cols-4 mb-8 '>
+    <div className='relative bg-indigo-50 w-full  gap-4 md:grid grid-cols-1 md:grid-cols-4 mb-8 '>
       <div
-        className={`h-screen md:flex customTransition col-span-1 ${
-          isAdminSidebarOpen ? "" : "hidden"
+        className={`z-50 fixed   customTransition col-span-1 ${
+          isAdminSidebarOpen ? "h-screen" : "hidden -left-[1000px]"
         }`}
       >
         <AdminSidebar />
       </div>
-      <div className='col-span-3 relative overflow-auto h-screen px-4  pb-16 '>
-        <main className='relative '>
-          <div>
+      <div
+        className={`fixed  transition-all duration-500 ease-linear col-span-2 hidden lg:contents  h-screen bottom-0 left-0 z-50 `}
+      >
+        <AdminSidebar />
+      </div>
+      <div className='col-span-3 px-4  pb-16 '>
+        <main className=' '>
+          <div className=''>
             <Navbar />
           </div>
 
@@ -80,7 +85,7 @@ const TransactionAdminScreen = ({ transactions }) => {
             </h2>
           </div>
           <div className='  overflow-auto'>
-            <table className='table-auto w-[700px] min-w-full px-8 border border-solid border-gray-200 '>
+            <table className='table-auto w-[700px] lg:w-full min-w-full px-8 border border-solid border-gray-200 '>
               <thead>
                 <tr className='bg-gray-100 font-semibold text-[16px]'>
                   <td className='p-4'>Date</td>
