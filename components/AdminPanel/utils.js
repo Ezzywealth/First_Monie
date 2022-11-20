@@ -108,3 +108,42 @@ export const userLists = [
     title: "Date Joined",
   },
 ];
+
+export const userLists2 = [
+  {
+    id: 1,
+    title: "User ID",
+  },
+  {
+    id: 2,
+    title: "Name",
+  },
+  {
+    id: 3,
+    title: "Account Number",
+  },
+  {
+    id: 4,
+    title: "Email",
+  },
+  {
+    id: 5,
+    title: "Telephone",
+  },
+  {
+    id: 6,
+    title: "Marital Status",
+  },
+  {
+    id: 7,
+    title: "Country",
+  },
+  {
+    id: 8,
+    title: "Sex",
+  },
+  {
+    id: 9,
+    title: "Occupation",
+  },
+];

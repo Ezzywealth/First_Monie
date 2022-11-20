@@ -8,6 +8,7 @@ import {
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { BsLink45Deg, BsPlus } from "react-icons/bs";
 
 const TransferResponse = () => {
   const dispatch = useDispatch();
@@ -15,7 +16,7 @@ const TransferResponse = () => {
   const {
     register,
     handleSubmit,
-    getValues,
+
     formState: { errors },
   } = useForm();
 
@@ -52,8 +53,8 @@ const TransferResponse = () => {
   };
 
   return (
-    <div className='w-full flex  justify-center h-screen bg-'>
-      <div className='w-[80%] md:w-[70%] rounded-lg bg-gray-400 py-8 pt-4 px-4 lg:w-[50%] h-[30%] border-indigo-300 border-solid border'>
+    <div className='w-full  flex  justify-center h-screen bg-'>
+      <div className='w-full md:w-[70%] rounded-lg bg-gray-100 py-8 pt-4 px-4 lg:w-[50%] h-[40%] border-indigo-300 border-solid border'>
         <div className='flex justify-end'>
           <button
             onClick={() => dispatch(closeOtpModal())}
@@ -62,26 +63,39 @@ const TransferResponse = () => {
             X
           </button>
         </div>
+        <div className='mb-8 mt-4'>
+          <h2 className='text-xl text-gray-500 font-bold'>Transfer Funds</h2>
+          <p>
+            A One Time Password (OTP) has been sent to your email. Place below
+            to activate Transfer
+          </p>
+        </div>
         <form
           onSubmit={handleSubmit(handleForm)}
           className='flex flex-col gap-4'
         >
           <div>
-            <label htmlFor='otp' className='text-sm text-white font-semibold'>
-              Enter the otp code sent to the registered Email Address to
-              continue
+            <label
+              htmlFor='otp'
+              className='text-sm text-gray-500 font-semibold'
+            >
+              One-Time Password (OTP)
             </label>
             <input
               type='text'
-              className='transaferResponse bg-gray-50 focus:outline-none w-full py-2 px-3 rounded-lg'
+              className='transaferResponse bg-gray-50 border border-gray-400 border-solid focus:outline-none w-full py-2 px-3 rounded-lg'
               id='otp'
               {...register("code", { required: "Please enter Otp code" })}
             />
           </div>
 
           <div className='flex gap-3 text-sm'>
-            <button className=' px-5 py-1 bg-indigo-500 text-white rounded-lg'>
-              Ok
+            <button
+              type='submit'
+              className='bg-indigo-800 text-[12px] hover:scale-105 customTransition rounded-lg items-center px-3 py-2 flex gap-3 text-gray-200'
+            >
+              <BsLink45Deg className='text-2xl' />
+              Transfer Money
             </button>
           </div>
         </form>

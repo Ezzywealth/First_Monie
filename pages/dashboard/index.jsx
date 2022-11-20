@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
-import Layout from "../components/Layout/Layout";
-import { accountSummary, dashboardData } from "../utils/constants";
+
+import { accountSummary, dashboardData } from "../../utils/constants";
 import { useSession, getSession } from "next-auth/react";
 import { MdContentCopy } from "react-icons/md";
 import { toast } from "react-toastify";
-import Transaction from "../components/Models/Transactions";
-import db from "../utils/db";
-import User from "../components/Models/User";
+import Transaction from "../../components/Models/Transactions";
+import db from "../../utils/db";
+import User from "../../components/Models/User";
 import CurrencyFormat from "react-currency-format";
 import { useRef } from "react";
 import { useRouter } from "next/router";
@@ -15,24 +15,31 @@ import Image from "next/image";
 import { MdArrowRight } from "react-icons/md";
 import { AiOutlineSetting } from "react-icons/ai";
 import { BsLink45Deg } from "react-icons/bs";
-import Welcome from "../components/Layout/Welcome";
-import { closeWelcomeModal, openWelcomeModal } from "../Redux/generalSlice";
+import Welcome from "../../components/Layout/Welcome";
+import { closeWelcomeModal, openWelcomeModal } from "../../Redux/generalSlice";
 import { useDispatch, useSelector } from "react-redux";
+import Layout from "../../components/Layout/Layout";
 
 const Dashboard = ({ transactions, newUser }) => {
   const router = useRouter();
   const tableRef = useRef(null);
+  const welcomeModal = useSelector((state) => state.generalSlice.welcomeModal);
   const dispatch = useDispatch();
-
   const { data: session } = useSession();
-
   const [loading, setLoading] = useState(false);
-
   const [curPage, setCurPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const numOfPage = Math.ceil(transactions.length / itemsPerPage);
   const indexOfLastItem = curPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+
+  useEffect(() => {
+    dispatch(openWelcomeModal());
+
+    setTimeout(() => {
+      dispatch(closeWelcomeModal());
+    }, 7000);
+  }, [session?.user.name]);
 
   const handleDashboardData = (name) => {
     if (name === "AVAILABLE BALANCE") {
@@ -118,15 +125,10 @@ const Dashboard = ({ transactions, newUser }) => {
 
   const createdDate = new Date().toLocaleString("en-US", options);
 
-  const welcomeModal = useSelector((state) => state.generalSlice.welcomeModal);
-
-  useEffect(() => {
-    dispatch(openWelcomeModal());
-
-    setTimeout(() => {
-      dispatch(closeWelcomeModal());
-    }, 7000);
-  }, [session?.user.name]);
+  const handleTransfer = () => {
+    setLoading(true);
+    router.push("/transfer");
+  };
   return (
     <Layout title='dashboard'>
       <div className='  py-[100px] md:py-4 bgContact  px-4 md:px-10 lg:px-16'>
@@ -150,8 +152,7 @@ const Dashboard = ({ transactions, newUser }) => {
             <button
               className='bg-green-500 rounded-lg hover:scale-105 customTransition items-center px-3 py-1 flex gap-2 text-white'
               onClick={() => {
-                setLoading(true);
-                router.push("/transfer");
+                handleTransfer();
               }}
             >
               <BsLink45Deg /> Transfer Funds
@@ -176,7 +177,13 @@ const Dashboard = ({ transactions, newUser }) => {
                 className='w-full'
               />
             </div>
-            <button className='flex justify-start items-center text-blue-600 font-bold underline'>
+            <button
+              className='flex justify-start items-center text-blue-600 font-bold underline'
+              onClick={() => {
+                setLoading(true);
+                router.push("/dashboard/userProfile");
+              }}
+            >
               More Details <MdArrowRight className='scale-150' />
             </button>
           </div>

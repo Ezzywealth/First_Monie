@@ -23,8 +23,8 @@ const links = [
   },
   {
     id: 2,
-    title: "Manage Transactions",
-    link: "/admin/firstmonie/#transactions",
+    title: "Money Transfer",
+    link: "/admin/firstmonie/transfers",
     icon: <FaPeopleCarry />,
   },
   {

@@ -6,9 +6,11 @@ import db from "../../utils/db";
 import { useRouter } from "next/router";
 import Transfers from "../../components/Models/Transfers";
 import CurrencyFormat from "react-currency-format";
+import { BeatLoader } from "react-spinners";
 
 const TransferScreen = ({ transfers }) => {
   const { data: session } = useSession();
+  const [loading, setLoading] = useState();
   const router = useRouter();
   const [activeNumb, setActiveNumb] = useState(1);
   const [curPage, setCurPage] = useState(1);
@@ -19,6 +21,23 @@ const TransferScreen = ({ transfers }) => {
 
   const reversed = transfers.slice(indexOfFirstItem, indexOfLastItem);
 
+  if (loading) {
+    return (
+      <div className='flex justify-center bg-indigo-50 items-center h-screen w-full'>
+        <BeatLoader
+          color='indigo'
+          loading={loading}
+          size={10}
+          aria-label='Loading Spinner'
+          data-testid='loader'
+        />
+      </div>
+    );
+  }
+
+  const handleTransferOtp = () => {
+    router.push("/transfer/createTransfer");
+  };
   return (
     <Layout title='transfers'>
       <div className='py-20 mt-[90px] px-4 md:px-8 lg:px-16 bgContact'>
@@ -28,7 +47,7 @@ const TransferScreen = ({ transfers }) => {
             Transfers Logs
           </h2>
           <button
-            onClick={() => router.push("/transfer/createTransfer")}
+            onClick={() => handleTransferOtp()}
             className='bg-indigo-800 text-[12px] hover:scale-105 customTransition rounded-lg items-center px-3 py-2 flex gap-3 text-gray-200'
           >
             <BsPlus className='text-2xl' />
