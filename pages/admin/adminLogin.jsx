@@ -71,11 +71,11 @@ export default function Component() {
       <ToastContainer position='top-center' limit={1} />
       <div className='flex justify-center items-center flex-col-reverse h-screen mx-auto w-full md:w-[450px] p-4 md:p-10'>
         <form
-          className='w-full my-4 bg-white md:h-screen mt-32 pt-4 rounded-lg px-4 space-y-8'
+          className='w-full flex flex-col items-center  mx-auto my-4 bg-white md:h-screen mt-32 pt-4 py-8 rounded-lg px-4 space-y-8'
           onSubmit={handleSubmit(formHandler)}
         >
           <Link href='/'>
-            <div className='flex md:w-full  items-center gap-5 border border-black pr-2 mx-2 md:pr-16 shadow-xl md:pl-2 py-1 justify-start'>
+            <div className='flex w-[250px]  items-center gap-5 border border-black  shadow-xl md:pl-2 '>
               <div className='h-8 w-8'>
                 <Image
                   src='/logo_pic2.png'
@@ -86,7 +86,7 @@ export default function Component() {
                 />
               </div>
               <div className='flex font-extrabold flex-col tracking-wider text-sm'>
-                <span className=' text-base md:text-3xl  text-indigo-900'>
+                <span className=' text-xl md:text-3xl  text-indigo-900'>
                   First Monie
                 </span>
                 <span className='font-bold italic text-center'>
