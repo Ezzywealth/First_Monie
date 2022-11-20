@@ -4,24 +4,30 @@ import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import emailjs from "emailjs-com";
 import Link from "next/link";
 import { BeatLoader } from "react-spinners";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Image from "next/image";
 import ButtonBack from "../components/Layout/ButtonBack";
-import { openWelcomeModal, startLoading } from "../Redux/generalSlice";
+import {
+  openOtpModal,
+  openWelcomeModal,
+  setLoginDetails,
+  setOtpCode,
+} from "../Redux/generalSlice";
 
-const LoginScreen = () => {
-  const [loading, setLoading] = useState(false);
+import LoginReply from "../components/transactions/loginResponse";
+
+const LoginInterface = () => {
+  const dispatch = useDispatch();
   const [accountNumber, setAccountNumber] = useState("");
   const [password, setPassword] = useState("");
-  const dispatch = useDispatch();
-
   const { data: session } = useSession();
-
+  const otpModal = useSelector((state) => state.generalSlice.otpModal);
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
-  console.log(session);
+
   const {
     register,
     handleSubmit,
@@ -31,32 +37,63 @@ const LoginScreen = () => {
 
   useEffect(() => {
     if (session?.user) {
-      // setCalledRouter(true);
-      // dispatch(fetchTransactions(session?.user.email));
       toast.success(`${session?.user.name} welcome to First Monie`);
       router.push("/dashboard");
+      setLoading(false);
       dispatch(openWelcomeModal());
     }
   }, [session?.user]);
 
   const onSubmit = async () => {
-    document.querySelector("form").reset();
-    dispatch(startLoading());
-    try {
-      setLoading(true);
-      const result = await signIn("credentials", {
-        redirect: false,
-        accountNumber,
-        password,
-      });
+    setLoading(true);
+    dispatch(setLoginDetails({ accountNumber, password }));
+    const min = 135699;
+    const max = 999999;
+    const randomNumb = Math.floor(Math.random() * (max - min) + min);
+    const templateParams = {
+      subject: "Account Login",
+      message: `Your one time Password (OTP) for First Monie login is ${randomNumb}`,
+    };
 
-      if (result.error) {
-        toast.error(result.error);
-        setLoading(false);
+    dispatch(openOtpModal());
+    setTimeout(() => {
+      setLoading(false);
+    }, 3000);
+    setTimeout(() => {}, 4000);
+    if (randomNumb) {
+      dispatch(setOtpCode(randomNumb));
+
+      // emailjs
+      //   .send(
+      //     "service_ct8x3bf",
+      //     "template_lv24jqs",
+      //     templateParams,
+      //     "vngt2iIdOB55EqdDp"
+      //   )
+      //   .then(
+      //     (response) => {
+      //       console.log(`SUCCESS, Your query was sent successfully`);
+      //       document.getElementById("myForm").reset();
+      //     },
+      //     (err) => {
+      //       console.log("FAILED...", err);
+      //     }
+      //   );
+
+      try {
+        const result = await signIn("credentials", {
+          redirect: false,
+          accountNumber,
+          password,
+        });
+
+        if (result.error) {
+          toast.error(result.error);
+        }
+      } catch (error) {
+        console.log(error);
+        toast.error(error);
       }
-    } catch (error) {
-      console.log(error);
-      toast.error(error);
     }
   };
 
@@ -73,12 +110,21 @@ const LoginScreen = () => {
       </div>
     );
   }
-
   return (
-    <div className='bgRegister h-screen px-4 md:px-8 lg: flex items-center shadow-2xl'>
+    <div className=' bgRegister h-screen px-4 md:px-8 lg: flex items-center shadow-2xl'>
+      <div
+        className={`customTransition z-50 ${
+          otpModal
+            ? "fixed left-0 right-0 top-[90px]"
+            : "fixed left-0 right-0 -top-[1000px]"
+        }`}
+      >
+        <LoginReply />
+      </div>
       <div className='flex justify-center flex-col items-center mx-auto w-full '>
         <div className='flex justify-center w-full'>
           <form
+            id='myForm'
             className='flex flex-col items-center w-[380px] md:w-[450px] mx-auto px-auto my-4 bg-white overflow-auto py-8 pt-3 rounded-lg px-4 '
             onSubmit={handleSubmit(onSubmit)}
             mailto=''
@@ -115,9 +161,6 @@ const LoginScreen = () => {
                   id='account'
                   required
                   className='w-full focus:outline-none border '
-                  // {...register("account", {
-                  //   required: "Please enter your Account Number",
-                  // })}
                 />
                 {errors.account && (
                   <span className='text-red-500'>{errors.account.message}</span>
@@ -134,13 +177,6 @@ const LoginScreen = () => {
                   id='password'
                   className='w-full p-2 focus:outline-none border '
                   required
-                  // {...register("password", {
-                  //   required: "Please enter your password",
-                  //   minLength: {
-                  //     value: 6,
-                  //     message: "password chars shoukd be greater than 5",
-                  //   },
-                  // })}
                 />
                 {errors.password && (
                   <span className='text-red-500'>
@@ -191,4 +227,4 @@ const LoginScreen = () => {
   );
 };
 
-export default LoginScreen;
+export default LoginInterface;

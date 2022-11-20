@@ -14,9 +14,9 @@ import CurrencyFormat from "react-currency-format";
 
 import { useSession } from "next-auth/react";
 import { BeatLoader } from "react-spinners";
-import Deposits from "../../../components/Models/Deposits";
+import Transaction from "../../../components/Models/Transactions";
 
-const DepositAdminScreen = ({ deposits }) => {
+const TransactionAdminScreen = ({ transactions }) => {
   const dispatch = useDispatch();
   const { data: session } = useSession();
   const [ssr, setSsr] = useState(true);
@@ -57,7 +57,7 @@ const DepositAdminScreen = ({ deposits }) => {
       </div>
     );
   }
-  console.log(deposits);
+  console.log(transactions);
   return (
     <div className='relative bg-indigo-50 w-full h-screen gap-4 grid grid-cols-1 md:grid-cols-4 mb-8 '>
       <div
@@ -76,30 +76,32 @@ const DepositAdminScreen = ({ deposits }) => {
           <div className='flex justify-between mt-[90px] mb-4 items-center h-[2.5rem]'>
             <h2 className='font-semibold text-xl flex flex-col'>
               <span className='text-[#333333] text-[12px]'>Overview</span> All
-              Wires
+              Transactions
             </h2>
           </div>
           <div className='  overflow-auto'>
-            <table className='table-auto w-[600px] min-w-full px-8 border border-solid border-gray-200 '>
+            <table className='table-auto w-[700px] min-w-full px-8 border border-solid border-gray-200 '>
               <thead>
                 <tr className='bg-gray-100 font-semibold text-[16px]'>
                   <td className='p-4'>Date</td>
 
-                  <td>Account</td>
-                  <td>Method</td>
+                  <td>TXNID</td>
+                  <td>Type</td>
                   <td>Amount</td>
-                  <td>Status</td>
+                  <td>Customer Email</td>
                 </tr>
               </thead>
               <tbody>
-                {deposits?.map((item) => (
+                {transactions?.map((item) => (
                   <tr
                     key={item._id}
                     className='border-b border-solid border-gray-200 text-[13px] gap-4'
                   >
                     <td className='p-4'>{item.date}</td>
+                    <td>{item.TXNID}</td>
 
-                    <td>{session?.user.email}</td>
+                    <td> {item.type}</td>
+
                     <td>
                       {" "}
                       <CurrencyFormat
@@ -109,16 +111,8 @@ const DepositAdminScreen = ({ deposits }) => {
                         prefix={"$"}
                       />
                     </td>
-                    <td>{item.method}</td>
-                    <td
-                      className={`${
-                        item.status === "pending" && "text-orange-500"
-                      } ${item.status === "Pending" && "text-orange-500"} ${
-                        item.status === "completed" && "text-green-500"
-                      }`}
-                    >
-                      {item.status}
-                    </td>
+
+                    <td>{session?.user.email}</td>
                   </tr>
                 ))}
               </tbody>
@@ -130,17 +124,17 @@ const DepositAdminScreen = ({ deposits }) => {
   );
 };
 
-DepositAdminScreen.auth = { adminOnly: true };
-export default DepositAdminScreen;
+TransactionAdminScreen.auth = { adminOnly: true };
+export default TransactionAdminScreen;
 
 export async function getServerSideProps() {
   await db.connect();
-  const data = await Deposits.find().lean();
+  const data = await Transaction.find().lean();
   await db.disconnect();
 
   return {
     props: {
-      deposits: data.map(db.convertDocToObj).reverse(),
+      transactions: data.map(db.convertDocToObj).reverse(),
     },
   };
 }

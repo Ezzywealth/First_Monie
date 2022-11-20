@@ -42,13 +42,13 @@ const links = [
   {
     id: 5,
     title: "Wire Transfer",
-    link: "/admin/firstmonie/#wire",
+    link: "/admin/firstmonie/wires",
     icon: <BsWallet />,
   },
   {
     id: 6,
-    title: "Manage Code",
-    link: "/admin/firstmonie/#code",
+    title: "Transactions",
+    link: "/admin/firstmonie/transactions",
     icon: <AiOutlineSetting />,
   },
   {
@@ -66,11 +66,13 @@ const links = [
 ];
 const AdminSidebar = () => {
   const [activeLink, setActiveLink] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const router = useRouter();
   const dispatch = useDispatch();
 
   const handleLink = (title) => {
+    setLoading(true);
     setActiveLink(title);
   };
 
@@ -82,7 +84,7 @@ const AdminSidebar = () => {
     router.push(data.url);
   };
   return (
-    <div className='relative w-full h-screen bg-amber-900 z-50 p-5 pt-4 pb-8 pr-2'>
+    <div className='relative h-screen bg-amber-900 z-50 p-5 pt-4 pb-8 pr-2'>
       <span className='visible flex justify-end cursor-pointer md:invisible'>
         <BsArrowLeftCircle
           className='text-indigo-500 w-8 h-8 pr-2'

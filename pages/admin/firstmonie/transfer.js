@@ -12,15 +12,15 @@ import { useEffect } from "react";
 
 import CurrencyFormat from "react-currency-format";
 
+import Transfers from "../../../components/Models/Transfers";
 import { useSession } from "next-auth/react";
 import { BeatLoader } from "react-spinners";
-import Deposits from "../../../components/Models/Deposits";
 
-const DepositAdminScreen = ({ deposits }) => {
+const TransferAdminScreen = ({ transfers }) => {
   const dispatch = useDispatch();
   const { data: session } = useSession();
   const [ssr, setSsr] = useState(true);
-  const [loading, setLoading] = useState(false);
+
   // dispatch(stopLoading());
 
   const router = useRouter();
@@ -57,7 +57,7 @@ const DepositAdminScreen = ({ deposits }) => {
       </div>
     );
   }
-  console.log(deposits);
+
   return (
     <div className='relative bg-indigo-50 w-full h-screen gap-4 grid grid-cols-1 md:grid-cols-4 mb-8 '>
       <div
@@ -76,7 +76,7 @@ const DepositAdminScreen = ({ deposits }) => {
           <div className='flex justify-between mt-[90px] mb-4 items-center h-[2.5rem]'>
             <h2 className='font-semibold text-xl flex flex-col'>
               <span className='text-[#333333] text-[12px]'>Overview</span> All
-              Wires
+              Transfers
             </h2>
           </div>
           <div className='  overflow-auto'>
@@ -86,13 +86,12 @@ const DepositAdminScreen = ({ deposits }) => {
                   <td className='p-4'>Date</td>
 
                   <td>Account</td>
-                  <td>Method</td>
                   <td>Amount</td>
                   <td>Status</td>
                 </tr>
               </thead>
               <tbody>
-                {deposits?.map((item) => (
+                {transfers?.map((item) => (
                   <tr
                     key={item._id}
                     className='border-b border-solid border-gray-200 text-[13px] gap-4'
@@ -109,13 +108,10 @@ const DepositAdminScreen = ({ deposits }) => {
                         prefix={"$"}
                       />
                     </td>
-                    <td>{item.method}</td>
                     <td
                       className={`${
                         item.status === "pending" && "text-orange-500"
-                      } ${item.status === "Pending" && "text-orange-500"} ${
-                        item.status === "completed" && "text-green-500"
-                      }`}
+                      } ${item.status === "completed" && "text-green-500"}`}
                     >
                       {item.status}
                     </td>
@@ -130,17 +126,17 @@ const DepositAdminScreen = ({ deposits }) => {
   );
 };
 
-DepositAdminScreen.auth = { adminOnly: true };
-export default DepositAdminScreen;
+TransferAdminScreen.auth = { adminOnly: true };
+export default TransferAdminScreen;
 
 export async function getServerSideProps() {
   await db.connect();
-  const data = await Deposits.find().lean();
+  const data = await Transfers.find().lean();
   await db.disconnect();
 
   return {
     props: {
-      deposits: data.map(db.convertDocToObj).reverse(),
+      transfers: data.map(db.convertDocToObj).reverse(),
     },
   };
 }

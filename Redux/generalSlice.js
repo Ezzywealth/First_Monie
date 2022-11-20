@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   isSidebarOpen: false,
   loadingState: false,
-  userCode: 0,
+  otpCode: 0,
   otpModal: false,
   transactionDetails: {},
   activeNavLink: "",
@@ -14,6 +14,7 @@ const initialState = {
   supportModal: false,
   user: {},
   welcomeModal: false,
+  loginDetails: {},
 };
 
 const generalSlice = createSlice({
@@ -38,8 +39,8 @@ const generalSlice = createSlice({
     stopLoading: (state) => {
       state.loadingState = false;
     },
-    setUserCode: (state, action) => {
-      state.userCode = action.payload;
+    setOtpCode: (state, action) => {
+      state.otpCode = action.payload;
     },
     setTransactionDetails: (state, action) => {
       state.transactionDetails = action.payload;
@@ -80,6 +81,9 @@ const generalSlice = createSlice({
     closeWelcomeModal: (state, action) => {
       state.welcomeModal = false;
     },
+    setLoginDetails: (state, action) => {
+      state.loginDetails = action.payload;
+    },
   },
 });
 
@@ -89,7 +93,7 @@ export const {
   closeSidebar,
   startLoading,
   stopLoading,
-  setUserCode,
+  setLoginDetails,
   openOtpModal,
   closeOtpModal,
   setTransactionDetails,
@@ -105,4 +109,5 @@ export const {
   setUserDetails,
   closeWelcomeModal,
   openWelcomeModal,
+  setOtpCode,
 } = generalSlice.actions;

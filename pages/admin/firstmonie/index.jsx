@@ -13,7 +13,7 @@ import { useRouter } from "next/router";
 
 const FirstmonieAdmin = ({ transactions, users }) => {
   const router = useRouter();
-  const [newUsers, setNewUsers] = useState(users);
+  const [newUsers, setNewUsers] = useState([]);
   const { data: session, status } = useSession();
   const isAdminSidebarOpen = useSelector(
     (state) => state.generalSlice.isAdminSidebarOpen
@@ -36,7 +36,7 @@ const FirstmonieAdmin = ({ transactions, users }) => {
     const randNum = Math.ceil(Math.random() * (max - min) + min);
 
     const typesMin = 1;
-    const typesMax = 5;
+    const typesMax = 14;
 
     const typesRand = Math.ceil(
       Math.random() * (typesMax - typesMin) + typesMin
@@ -53,12 +53,16 @@ const FirstmonieAdmin = ({ transactions, users }) => {
       "withdrawals",
       "Dpr",
       "Fdr",
+      "deposit",
       "Wire Transfer",
       "Money Request",
+      "deposit",
       "Medicine-Transfer Update",
+      "Stock Investment-CR",
       "Stock Investment-CR",
       "Motor Repair-CR",
       "Walmart-DR",
+      "deposit",
     ];
 
     const names = [
@@ -90,9 +94,9 @@ const FirstmonieAdmin = ({ transactions, users }) => {
     }
   };
 
-  setInterval(() => {
-    createTransaction();
-  }, 864000);
+  // setInterval(() => {
+  //   createTransaction();
+  // }, 86400);
 
   if (loading) {
     return (
@@ -107,6 +111,13 @@ const FirstmonieAdmin = ({ transactions, users }) => {
       </div>
     );
   }
+
+  const handleUserDelete = async (id) => {
+    const { data } = await axios.post(`/api/transactions/deleteUser`, { id });
+    console.log(data);
+    const filteredUsers = newUsers.filter((item) => item._id !== id);
+    setNewUsers(filteredUsers);
+  };
 
   return (
     <div className='relative h-screen overflow-auto bg-indigo-50 w-full  gap-0  grid grid-cols-1 md:grid-cols-4 '>
@@ -154,6 +165,7 @@ const FirstmonieAdmin = ({ transactions, users }) => {
                   <td className='text-center'>Name</td>
                   <td className='text-center'>Email</td>
                   <td className='text-center'>Action</td>
+                  <td className='text-center'>Delete</td>
                 </tr>
               </thead>
 
@@ -174,7 +186,17 @@ const FirstmonieAdmin = ({ transactions, users }) => {
                       }}
                     >
                       <button className='bg-indigo-500 hover:scale-105 hover:bg-indigo-700 customTransition text-white px-3 py-1 rounded-lg'>
-                        Details
+                        Details/edit user
+                      </button>
+                    </td>
+                    <td
+                      className='text-center'
+                      onClick={() => {
+                        handleUserDelete(user._id);
+                      }}
+                    >
+                      <button className='bg-indigo-500 hover:scale-105 hover:bg-indigo-700 customTransition text-white px-3 py-1 rounded-lg'>
+                        Delete
                       </button>
                     </td>
                   </tr>

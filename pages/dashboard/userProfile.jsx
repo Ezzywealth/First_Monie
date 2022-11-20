@@ -136,6 +136,7 @@ export async function getServerSideProps(ctx) {
       birthday: user[0]?.birthday,
       sex: user[0]?.sex,
       marital_status: user[0]?.marital_status,
+      country: user[0]?.country,
       occupation: user[0]?.occupation,
       account_number: user[0]?.account_number,
       createdAt: user[0]?.createdAt,

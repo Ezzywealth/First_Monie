@@ -14,9 +14,9 @@ import CurrencyFormat from "react-currency-format";
 
 import { useSession } from "next-auth/react";
 import { BeatLoader } from "react-spinners";
-import Deposits from "../../../components/Models/Deposits";
+import Wire from "../../../components/Models/Wire";
 
-const DepositAdminScreen = ({ deposits }) => {
+const WireAdminScreen = ({ wires }) => {
   const dispatch = useDispatch();
   const { data: session } = useSession();
   const [ssr, setSsr] = useState(true);
@@ -57,7 +57,7 @@ const DepositAdminScreen = ({ deposits }) => {
       </div>
     );
   }
-  console.log(deposits);
+  console.log(wires);
   return (
     <div className='relative bg-indigo-50 w-full h-screen gap-4 grid grid-cols-1 md:grid-cols-4 mb-8 '>
       <div
@@ -86,13 +86,12 @@ const DepositAdminScreen = ({ deposits }) => {
                   <td className='p-4'>Date</td>
 
                   <td>Account</td>
-                  <td>Method</td>
                   <td>Amount</td>
                   <td>Status</td>
                 </tr>
               </thead>
               <tbody>
-                {deposits?.map((item) => (
+                {wires?.map((item) => (
                   <tr
                     key={item._id}
                     className='border-b border-solid border-gray-200 text-[13px] gap-4'
@@ -109,13 +108,10 @@ const DepositAdminScreen = ({ deposits }) => {
                         prefix={"$"}
                       />
                     </td>
-                    <td>{item.method}</td>
                     <td
                       className={`${
                         item.status === "pending" && "text-orange-500"
-                      } ${item.status === "Pending" && "text-orange-500"} ${
-                        item.status === "completed" && "text-green-500"
-                      }`}
+                      } ${item.status === "completed" && "text-green-500"}`}
                     >
                       {item.status}
                     </td>
@@ -130,17 +126,17 @@ const DepositAdminScreen = ({ deposits }) => {
   );
 };
 
-DepositAdminScreen.auth = { adminOnly: true };
-export default DepositAdminScreen;
+WireAdminScreen.auth = { adminOnly: true };
+export default WireAdminScreen;
 
 export async function getServerSideProps() {
   await db.connect();
-  const data = await Deposits.find().lean();
+  const data = await Wire.find().lean();
   await db.disconnect();
 
   return {
     props: {
-      deposits: data.map(db.convertDocToObj).reverse(),
+      wires: data.map(db.convertDocToObj).reverse(),
     },
   };
 }

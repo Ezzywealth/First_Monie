@@ -339,7 +339,10 @@ const Dashboard = ({ transactions, newUser }) => {
                       <td>{data._id}</td>
                       <td
                         className={` tracking-wider font-semibold ${
-                          data.type === "Deposit" || data.type === "deposit"
+                          data.type === "Deposit" ||
+                          data.type === "deposit" ||
+                          data.type === "Stock Investment-CR" ||
+                          data.type === "Motor Repair-CR"
                             ? "text-green-500"
                             : "text-red-500"
                         }`}
@@ -382,6 +385,7 @@ export async function getServerSideProps(ctx) {
       password: user[0]?.password,
       userName: user[0]?.userName,
       birthday: user[0]?.birthday,
+      country: user[0]?.country,
       sex: user[0]?.sex,
       marital_status: user[0]?.marital_status,
       occupation: user[0]?.occupation,

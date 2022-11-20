@@ -11,6 +11,7 @@ import { BeatLoader } from "react-spinners";
 import { CountryDropdown } from "react-country-region-selector";
 import { useEffect } from "react";
 import TransferResponse from "../../components/transactions/transferResponse";
+import Currencies from "list-of-currencies";
 
 const CreateWire = () => {
   const [error, setError] = useState(false);
@@ -116,14 +117,20 @@ const CreateWire = () => {
               </div>
               <div className='flex flex-col font-semibold space-y-2 mb-2'>
                 <label htmlFor='currency'>Currency</label>
-                <input
+                <select
                   id='currency'
                   placeholder='Enter Currency'
-                  className='font-normal text-sm'
+                  className='font-normal text-sm py-3 px-2 focus:outline-none rounded-lg border border-gray-300 border-solid'
                   {...register("currency", {
                     required: "please enter a currency",
                   })}
-                />
+                >
+                  {Currencies.map((item) => (
+                    <option value={item} key={item}>
+                      {item}
+                    </option>
+                  ))}
+                </select>
 
                 {errors.currency && (
                   <span className='text-red-500'>

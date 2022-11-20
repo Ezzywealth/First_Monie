@@ -29,32 +29,34 @@ const Contact = () => {
 
     emailjs
       .send(
-        "<YOUR SERVICE ID>",
-        "<YOUR TEMPLATE ID>",
+        process.env.NEXT_EMAILJS_SERVICE_ID,
+        process.env.NEXT_EMAILJS_TEMPLATE_ID,
         templateParams,
-        "<YOUR USER ID>"
+        process.env.NEXT_EMAILJS_PUBLIC_KEY
       )
       .then(
         (response) => {
-          console.log("SUCCESS!", response.status, response.text);
+          toast.success(`SUCCESS, Your query was sent successfully`);
         },
         (err) => {
-          console.log("FAILED...", err);
+          toast.error(
+            `Sorry, there was an error sending your query,try again later`
+          );
         }
       );
 
-    try {
-      const { data } = await axios.post(`/api/support`, {
-        name,
-        email,
-        phone,
-        message,
-        subject,
-      });
-      toast.success(data.message);
-    } catch (error) {
-      toast.error(error);
-    }
+    // try {
+    //   const { data } = await axios.post(`/api/support`, {
+    //     name,
+    //     email,
+    //     phone,
+    //     message,
+    //     subject,
+    //   });
+    //   toast.success(data.message);
+    // } catch (error) {
+    //   toast.error(error);
+    // }
   };
 
   return (

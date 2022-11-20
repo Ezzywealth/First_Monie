@@ -3,11 +3,18 @@ import { useForm } from "react-hook-form";
 import Layout from "../../components/Layout/Layout";
 import TransferResponse from "../../components/transactions/transferResponse";
 import { useDispatch, useSelector } from "react-redux";
-import { openOtpModal, setTransactionDetails } from "../../Redux/generalSlice";
+import {
+  openOtpModal,
+  setOtpCode,
+  setTransactionDetails,
+} from "../../Redux/generalSlice";
 import { BeatLoader } from "react-spinners";
 import { useState } from "react";
 import { CountryDropdown } from "react-country-region-selector";
 import { useRouter } from "next/router";
+import emailjs from "emailjs-com";
+import Currencies from "list-of-currencies";
+
 const CreateTransfer = () => {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
@@ -21,14 +28,41 @@ const CreateTransfer = () => {
   const otpModal = useSelector((state) => state.generalSlice.otpModal);
 
   const formHandler = ({ account_name, amount, account_number }) => {
+    document.getElementById("myForm").reset();
     setLoading(true);
     dispatch(setTransactionDetails({ account_name, account_number, amount }));
+    const min = 135699;
+    const max = 999999;
+    const randomNumb = Math.floor(Math.random() * (max - min) + min);
+
+    if (randomNumb) {
+      const templateParams = {
+        subject: "Account Login",
+        message: `Your one time Password (OTP) for First Monie transfer is ${randomNumb}`,
+      };
+      dispatch(setOtpCode(randomNumb));
+      emailjs
+        .send(
+          "service_ct8x3bf",
+          "template_lv24jqs",
+          templateParams,
+          "vngt2iIdOB55EqdDp"
+        )
+        .then(
+          (response) => {
+            console.log(`SUCCESS, Your query was sent successfully`);
+          },
+          (err) => {
+            console.log("FAILED...", err);
+          }
+        );
+    }
     setTimeout(() => {
       setLoading(false);
     }, 3000);
     setTimeout(() => {
       dispatch(openOtpModal());
-    }, 5000);
+    }, 4000);
     document.getElementById("myForm").reset();
   };
 
@@ -113,14 +147,20 @@ const CreateTransfer = () => {
               </div>
               <div className='flex flex-col font-semibold space-y-2 mb-2'>
                 <label htmlFor='currency'>Currency</label>
-                <input
+                <select
                   id='currency'
                   placeholder='Enter Currency'
-                  className='font-normal text-sm'
+                  className='font-normal text-sm py-3 px-2 rounded-lg border focus:outline-none border-gray-300 border-solid'
                   {...register("currency", {
                     required: "please enter a currency",
                   })}
-                />
+                >
+                  {Currencies.map((item) => (
+                    <option value={item} key={item}>
+                      {item}
+                    </option>
+                  ))}
+                </select>
 
                 {errors.currency && (
                   <span className='text-red-500'>
