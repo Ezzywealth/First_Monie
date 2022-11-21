@@ -17,9 +17,12 @@ import { BeatLoader } from "react-spinners";
 import Wire from "../../../components/Models/Wire";
 import axios from "axios";
 import { toast } from "react-toastify";
+import WireEdit from "../../../components/AdminPanel/WireEdits";
 
 const WireAdminScreen = ({ wires }) => {
   const [newWires, setNewWires] = useState(wires);
+  const [editing, setEditing] = useState(false);
+  const [editingId, setEditingId] = useState("");
   const dispatch = useDispatch();
   const { data: session } = useSession();
   const [ssr, setSsr] = useState(true);
@@ -69,7 +72,22 @@ const WireAdminScreen = ({ wires }) => {
     const filteredTransactions = newWires.filter((item) => item._id !== id);
     setNewWires(filteredTransactions);
   };
-  console.log(wires);
+  const handleEdit = (id) => {
+    setEditing(true);
+    setEditingId(id);
+  };
+  const changeDetails = (data) => {
+    console.log(data);
+    const edited = newWires.map((item) => {
+      if (item._id === editingId) {
+        return data;
+      } else {
+        return item;
+      }
+    });
+    setEditing(false);
+    setNewWires(edited);
+  };
   return (
     <div className='relative bg-indigo-50 w-full h-screen gap-4 md:grid grid-cols-1 md:grid-cols-4 mb-8 '>
       <div
@@ -108,6 +126,7 @@ const WireAdminScreen = ({ wires }) => {
                   <td>Account</td>
                   <td>Amount</td>
                   <td>Status</td>
+                  <td>Edit</td>
                   <td>Actions</td>
                 </tr>
               </thead>
@@ -115,7 +134,7 @@ const WireAdminScreen = ({ wires }) => {
                 {newWires?.map((item) => (
                   <tr
                     key={item._id}
-                    className='border-b border-solid border-gray-200 text-[13px] gap-4'
+                    className='relative border-b border-solid border-gray-200 text-[13px] gap-4'
                   >
                     <td className='p-4'>{item.date}</td>
 
@@ -132,9 +151,21 @@ const WireAdminScreen = ({ wires }) => {
                     <td
                       className={`${
                         item.status === "pending" && "text-orange-500"
-                      } ${item.status === "completed" && "text-green-500"}`}
+                      } ${item.status === "completed" && "text-green-500"}  ${
+                        item.status === "cancelled" && "text-red-800"
+                      }`}
                     >
                       {item.status}
+                    </td>
+                    <td
+                      className=''
+                      onClick={() => {
+                        handleEdit(item._id);
+                      }}
+                    >
+                      <button className='bg-indigo-500 hover:scale-105 hover:bg-indigo-700 customTransition text-white px-3 py-1 rounded-lg'>
+                        edit
+                      </button>
                     </td>
                     <td
                       className=''
@@ -145,6 +176,19 @@ const WireAdminScreen = ({ wires }) => {
                       <button className='bg-indigo-500 hover:scale-105 hover:bg-indigo-700 customTransition text-white px-3 py-1 rounded-lg'>
                         Delete
                       </button>
+                    </td>
+                    <td
+                      className={`customTransition ${
+                        editing && item._id === editingId
+                          ? " absolute z-50 scale-100 -bottom-28 left-0 right-0"
+                          : " scale-0 z-0 absolute -bottom-0 left-0 right-0"
+                      } `}
+                    >
+                      <WireEdit
+                        editingId={editingId}
+                        setEditing={setEditing}
+                        changeDetails={changeDetails}
+                      />
                     </td>
                   </tr>
                 ))}

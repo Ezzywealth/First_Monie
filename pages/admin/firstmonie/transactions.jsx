@@ -185,6 +185,7 @@ const TransactionAdminScreen = ({ transactions }) => {
                     >
                       <TransactionEdit
                         editingId={editingId}
+                        setEditing={setEditing}
                         changeDetails={changeDetails}
                       />
                     </td>

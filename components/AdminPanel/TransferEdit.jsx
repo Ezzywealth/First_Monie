@@ -3,7 +3,7 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 
-const TransferEdit = ({ editingId, changeDetails }) => {
+const TransferEdit = ({ editingId, changeDetails, setEditing }) => {
   const {
     register,
     handleSubmit,
@@ -33,6 +33,14 @@ const TransferEdit = ({ editingId, changeDetails }) => {
   };
   return (
     <div className='border border-solid border-gray-300 bg-gray-800 py-3 px-2 rounded-lg backdrop-blur-sm'>
+      <span
+        className='flex justify-start mb-2 text-xl  text-white px-4'
+        onClick={() => setEditing(false)}
+      >
+        <span className='rounded-full flex h-8 justify-center items-center w-8 bg-red-500'>
+          X
+        </span>
+      </span>
       <form
         id='myForm'
         onSubmit={handleSubmit(formHandler)}

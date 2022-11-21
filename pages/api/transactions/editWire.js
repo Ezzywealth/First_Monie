@@ -1,6 +1,6 @@
 import { getSession } from "next-auth/react";
 import db from "../../../utils/db";
-import Transaction from "../../../components/Models/Transactions";
+import Wire from "../../../components/Models/Wire";
 
 async function handler(req, res) {
   if (req.method !== "PUT") {
@@ -11,22 +11,22 @@ async function handler(req, res) {
   if (!session) {
     return res.status(401).send({ message: "signin required" });
   }
-  const { amount, type, editingId, date, email } = req.body;
+  const { amount, editingId, date, email, status } = req.body;
 
   await db.connect();
 
   try {
-    const toUpdateTransaction = await Transaction.findById(editingId);
-    toUpdateTransaction.amount = amount;
-    toUpdateTransaction.type = type;
-    toUpdateTransaction.date = date;
-    toUpdateTransaction.email = email;
+    const toUpdateWire = await Wire.findById(editingId);
+    toUpdateWire.amount = amount;
+    toUpdateWire.date = date;
+    toUpdateWire.email = email;
+    toUpdateWire.status = status;
 
-    await toUpdateTransaction.save();
+    await toUpdateWire.save();
     await db.disconnect();
     res.status(201).send({
       message: "Transaction updated successfully",
-      toUpdateTransaction,
+      toUpdateWire,
     });
   } catch (error) {
     res.status(401).send({

@@ -3,7 +3,7 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 
-const TransactionEdit = ({ editingId, changeDetails, setEditing }) => {
+const RequestEdit = ({ editingId, changeDetails, setEditing }) => {
   const {
     register,
     handleSubmit,
@@ -11,24 +11,25 @@ const TransactionEdit = ({ editingId, changeDetails, setEditing }) => {
     formState: { errors },
   } = useForm();
 
-  const formHandler = async ({ date, amount, email, type }) => {
-    console.log(date, amount, email, type);
+  const formHandler = async ({ amount, date, email, status }) => {
     console.log(editingId);
     document.getElementById("myForm").reset();
 
     try {
-      const { data } = await axios.put(`/api/transactions/editTransactions`, {
+      const { data } = await axios.put(`/api/transactions/editRequest`, {
         amount,
-        type,
         editingId,
         date,
         email,
+        status,
       });
       toast.success(data.message);
       console.log(data);
-      changeDetails(data.toUpdateTransaction);
+      changeDetails(data.toUpdateRequest);
+
+      if (data.error) throw new Error(data.message);
     } catch (error) {
-      console.log(error);
+      toast.error(error);
     }
   };
   return (
@@ -44,7 +45,7 @@ const TransactionEdit = ({ editingId, changeDetails, setEditing }) => {
       <form
         id='myForm'
         onSubmit={handleSubmit(formHandler)}
-        className='flex gap-2 justify-between px-2 py-1'
+        className='flex gap-2 justify-between overflow-auto px-2 py-1'
       >
         <input
           type=''
@@ -55,8 +56,8 @@ const TransactionEdit = ({ editingId, changeDetails, setEditing }) => {
         />
         <input
           type='text'
-          placeholder='type of transaction'
-          {...register("type")}
+          placeholder='email'
+          {...register("email")}
           required
           className='admin bg-gray-100 py-1 px-2 borderflex-1  border-gray-400 border-solid rounded-lg focus:outline-none'
         />
@@ -69,8 +70,8 @@ const TransactionEdit = ({ editingId, changeDetails, setEditing }) => {
         />
         <input
           type='text'
-          placeholder='email'
-          {...register("email")}
+          placeholder='status'
+          {...register("status")}
           required
           className='admin bg-gray-100 py-1 px-2 borderflex-1  border-gray-400 border-solid rounded-lg focus:outline-none'
         />
@@ -82,4 +83,4 @@ const TransactionEdit = ({ editingId, changeDetails, setEditing }) => {
   );
 };
 
-export default TransactionEdit;
+export default RequestEdit;

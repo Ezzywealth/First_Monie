@@ -14,19 +14,19 @@ async function handler(req, res) {
   const { amount, status, editingId, date, email } = req.body;
 
   await db.connect();
-  const toUpdateTransfer = await Transfers.findById(editingId);
-  toUpdateTransfer.amount = amount;
-  toUpdateTransfer.status = status;
-  toUpdateTransfer.date = date;
-  toUpdateTransfer.email = email;
 
-  await toUpdateTransfer.save();
-  await db.disconnect();
-  res.status(201).send({
-    message: "Transaction updated successfully",
-    toUpdateTransfer,
-  });
   try {
+    const toUpdateTransfer = await Transfers.findById(editingId);
+    toUpdateTransfer.amount = amount;
+    toUpdateTransfer.status = status;
+    toUpdateTransfer.date = date;
+    toUpdateTransfer.email = email;
+    await toUpdateTransfer.save();
+    await db.disconnect();
+    res.status(201).send({
+      message: "Transaction updated successfully",
+      toUpdateTransfer,
+    });
   } catch (error) {
     res.status(401).send({
       message: "Transaction could not be updated, try again later",

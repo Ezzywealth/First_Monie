@@ -127,9 +127,11 @@ const TransferAdminScreen = ({ transfers }) => {
                     </td>
                     <td
                       className={`${
-                        item.status === "pending" && "text-orange-500"
+                        item.status.toLowerCase() === "pending" &&
+                        "text-orange-500"
                       } ${item.status === "completed" && "text-green-500"}
-                       ${item.status === "cancelled" && "text-red-500"}`}
+                       ${item.status === "cancelled" && "text-red-500"}
+                        `}
                     >
                       {item.status}
                     </td>
@@ -161,6 +163,7 @@ const TransferAdminScreen = ({ transfers }) => {
                       } `}
                     >
                       <TransferEdit
+                        setEditing={setEditing}
                         editingId={editingId}
                         changeDetails={changeDetails}
                       />
