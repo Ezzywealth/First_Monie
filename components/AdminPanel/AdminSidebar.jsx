@@ -13,6 +13,8 @@ import { AiOutlineSetting } from "react-icons/ai";
 import { closeAdminSidebar } from "../../Redux/generalSlice";
 import { useDispatch } from "react-redux";
 import Image from "next/image";
+import { BeatLoader } from "react-spinners";
+import { useEffect } from "react";
 
 const links = [
   {
@@ -65,6 +67,10 @@ const AdminSidebar = () => {
   const router = useRouter();
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    dispatch(closeAdminSidebar());
+    setLoading(false);
+  }, []);
   const handleLink = (title) => {
     setLoading(true);
     setActiveLink(title);
@@ -77,6 +83,20 @@ const AdminSidebar = () => {
     });
     router.push(data.url);
   };
+
+  if (loading) {
+    return (
+      <div className='fixed top-0 right-0 left-0 flex  justify-center bg-indigo-50 items-center h-screen w-full'>
+        <BeatLoader
+          color='indigo'
+          loading={loading}
+          size={10}
+          aria-label='Loading Spinner'
+          data-testid='loader'
+        />
+      </div>
+    );
+  }
 
   return (
     <div className=' h-screen w-full  bg-amber-900 z-50 p-5 pt-4 pb-8 pr-2'>

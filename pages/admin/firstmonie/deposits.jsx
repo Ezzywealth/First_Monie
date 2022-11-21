@@ -177,7 +177,7 @@ const DepositAdminScreen = ({ deposits }) => {
                     <td
                       className={`customTransition ${
                         editing && item._id === editingId
-                          ? " absolute z-50 scale-100 -bottom-16 left-0 right-0"
+                          ? " absolute z-50 scale-100 -bottom-28 left-0 right-0"
                           : " scale-0 z-0 absolute -bottom-0 left-0 right-0"
                       } `}
                     >

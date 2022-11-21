@@ -32,7 +32,7 @@ const DepositEdit = ({ editingId, changeDetails, setEditing }) => {
     }
   };
   return (
-    <div className='border border-solid border-gray-300 bg-gray-800 py-3 px-2 rounded-lg backdrop-blur-sm'>
+    <div className='border overflow-auto border-solid border-gray-300 bg-gray-800 py-3 px-2 rounded-lg backdrop-blur-sm'>
       <span
         className='flex justify-start mb-2 text-xl  text-white px-4'
         onClick={() => setEditing(false)}
