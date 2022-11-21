@@ -13,15 +13,14 @@ import { useRouter } from "next/router";
 
 const FirstmonieAdmin = ({ transactions, users }) => {
   const router = useRouter();
-  const [newUsers, setNewUsers] = useState([]);
+  const [newUsers, setNewUsers] = useState(users);
   const { data: session, status } = useSession();
   const isAdminSidebarOpen = useSelector(
     (state) => state.generalSlice.isAdminSidebarOpen
   );
 
   const [loading, setLoading] = useState(false);
-  const loadingState = useSelector((state) => state.generalSlice.loadingState);
-  console.log(users);
+
   if (status === "loading") {
     return (
       <div className='h-screen w-full flex justify-center items-center'>
@@ -113,10 +112,12 @@ const FirstmonieAdmin = ({ transactions, users }) => {
   }
 
   const handleUserDelete = async (id) => {
+    setLoading(true);
     const { data } = await axios.post(`/api/transactions/deleteUser`, { id });
     console.log(data);
     const filteredUsers = newUsers.filter((item) => item._id !== id);
     setNewUsers(filteredUsers);
+    setLoading(false);
   };
 
   return (
@@ -156,7 +157,15 @@ const FirstmonieAdmin = ({ transactions, users }) => {
           </section>
 
           <section className='flex flex-col mx-2 md:mx-10 space-y-4 mb-16  lg:mx-8 bg-white py-4 border border-gray-300 border-solid'>
-            <h2 className='px-4 text-gray-500 font-bold '>Lists of Users</h2>
+            <div className='flex justify-between items-center px-4'>
+              <h2 className='px-4 text-gray-500 font-bold '>Lists of Users</h2>
+              <button
+                className='bg-green-500 px-3 py-1 rounded-lg text-white hover:scale-105 customTransition'
+                onClick={() => router.push("/admin/firstmonie/createNewUser")}
+              >
+                Add User
+              </button>
+            </div>
             <section className='overflow-auto'>
               <table className='min-w-full overflow-auto w-[600px] table-auto'>
                 <thead>
@@ -170,7 +179,7 @@ const FirstmonieAdmin = ({ transactions, users }) => {
                 </thead>
 
                 <tbody>
-                  {users?.map((user, index) => (
+                  {newUsers?.map((user, index) => (
                     <tr
                       key={user._id}
                       className='border-b border-solid border-gray-200 text-[14px] gap-4 '
