@@ -49,7 +49,7 @@ async function handler(req, res) {
   toUpdateUser.sex = sex;
   toUpdateUser.marital_status = marital_status;
 
-  if (password) {
+  if (password && toUpdateUser.isAdmin === false) {
     toUpdateUser.password = bcryptjs.hashSync(password);
   }
 
