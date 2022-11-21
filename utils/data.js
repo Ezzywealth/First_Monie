@@ -5,7 +5,7 @@ const userData = {
     {
       name: "First Monie",
       email: "testemail@gmail.com",
-      password: hashSync("1234567"),
+      password: hashSync("@Firstmonie@"),
       isAdmin: "true",
       telephone: "08034567862",
       userName: "stanley",
