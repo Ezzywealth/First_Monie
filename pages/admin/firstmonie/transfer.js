@@ -2,27 +2,21 @@ import React, { useState } from "react";
 import db from "../../../utils/db";
 import AdminSidebar from "../../../components/AdminPanel/AdminSidebar";
 import Navbar from "../../../components/AdminPanel/Navbar";
-import { useForm } from "react-hook-form";
-
 import { useRouter } from "next/router";
-
 import { useDispatch, useSelector } from "react-redux";
-
-import { useEffect } from "react";
-
 import CurrencyFormat from "react-currency-format";
-
 import Transfers from "../../../components/Models/Transfers";
 import { useSession } from "next-auth/react";
 import { BeatLoader } from "react-spinners";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 const TransferAdminScreen = ({ transfers }) => {
   const dispatch = useDispatch();
   const { data: session } = useSession();
+  const [newTransfers, setNewTransfers] = useState(transfers);
   const [ssr, setSsr] = useState(true);
   const [loading, setLoading] = useState(false);
-  // dispatch(stopLoading());
-
   const router = useRouter();
   const client = router.query;
   const isAdminSidebarOpen = useSelector(
@@ -42,6 +36,17 @@ const TransferAdminScreen = ({ transfers }) => {
       </div>
     );
   }
+
+  const handleDelete = async (id) => {
+    const { data } = await axios.post(`/api/transactions/deleteTransfers`, {
+      id,
+    });
+
+    console.log(data);
+    toast.success(data.message);
+    const filteredTransactions = newTransfers.filter((item) => item._id !== id);
+    setNewTransfers(filteredTransactions);
+  };
 
   return (
     <div className='relative bg-indigo-50 w-full h-screen gap-4 md:grid grid-cols-1 md:grid-cols-4 mb-8 '>
@@ -78,10 +83,11 @@ const TransferAdminScreen = ({ transfers }) => {
                   <td>Account</td>
                   <td>Amount</td>
                   <td>Status</td>
+                  <td>Actions</td>
                 </tr>
               </thead>
               <tbody>
-                {transfers?.map((item) => (
+                {newTransfers?.map((item) => (
                   <tr
                     key={item._id}
                     className='border-b border-solid border-gray-200 text-[13px] gap-4'
@@ -104,6 +110,16 @@ const TransferAdminScreen = ({ transfers }) => {
                       } ${item.status === "completed" && "text-green-500"}`}
                     >
                       {item.status}
+                    </td>
+                    <td
+                      className=''
+                      onClick={() => {
+                        handleDelete(item._id);
+                      }}
+                    >
+                      <button className='bg-indigo-500 hover:scale-105 hover:bg-indigo-700 customTransition text-white px-3 py-1 rounded-lg'>
+                        Delete
+                      </button>
                     </td>
                   </tr>
                 ))}

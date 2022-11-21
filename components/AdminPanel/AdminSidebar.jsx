@@ -13,7 +13,6 @@ import { AiOutlineSetting } from "react-icons/ai";
 import { closeAdminSidebar } from "../../Redux/generalSlice";
 import { useDispatch } from "react-redux";
 import Image from "next/image";
-import { BeatLoader } from "react-spinners";
 
 const links = [
   {
@@ -31,7 +30,7 @@ const links = [
   {
     id: 3,
     title: "Users",
-    link: "/admin/firstmonie/#users",
+    link: "/admin/firstmonie#users",
     icon: <BsPeopleFill />,
   },
   {

@@ -15,11 +15,14 @@ import { BeatLoader } from "react-spinners";
 import Receive from "../../../components/Models/ReceiveRequest";
 import Request from "../../../components/Models/RequestMoney";
 import { useSelector } from "react-redux";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 const RequestAdminScreen = ({ receive, requests }) => {
   const { data: session } = useSession();
   const [ssr, setSsr] = useState(true);
   const [loading, setLoading] = useState(false);
+  const [newRequests, setNewRequests] = useState(receive);
   // dispatch(stopLoading());
 
   const router = useRouter();
@@ -56,7 +59,16 @@ const RequestAdminScreen = ({ receive, requests }) => {
       </div>
     );
   }
-  const requestssss = [...receive, ...requests];
+  console.log(receive);
+
+  const handleDelete = async (id) => {
+    const { data } = await axios.post(`/api/transactions/deleteRequests`, {
+      id,
+    });
+    toast.success(data.message);
+    const filteredTransactions = newRequests.filter((item) => item._id !== id);
+    setNewRequests(filteredTransactions);
+  };
   return (
     <div className='relative bg-indigo-50 w-full h-screen gap-4 md:grid grid-cols-1 md:grid-cols-4 mb-8 '>
       <div
@@ -95,10 +107,11 @@ const RequestAdminScreen = ({ receive, requests }) => {
                   <td>Account</td>
                   <td>Amount</td>
                   <td>Status</td>
+                  <td>Actions</td>
                 </tr>
               </thead>
               <tbody>
-                {requestssss?.map((item) => (
+                {newRequests?.map((item) => (
                   <tr
                     key={item?._id}
                     className='border-b border-solid border-gray-200 text-[13px] gap-4'
@@ -121,6 +134,16 @@ const RequestAdminScreen = ({ receive, requests }) => {
                       } ${item?.status === "completed" && "text-green-500"}`}
                     >
                       {item?.status}
+                    </td>
+                    <td
+                      className=''
+                      onClick={() => {
+                        handleDelete(item._id);
+                      }}
+                    >
+                      <button className='bg-indigo-500 hover:scale-105 hover:bg-indigo-700 customTransition text-white px-3 py-1 rounded-lg'>
+                        Delete
+                      </button>
                     </td>
                   </tr>
                 ))}

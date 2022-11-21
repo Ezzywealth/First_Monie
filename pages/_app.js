@@ -11,7 +11,7 @@ import { useRouter } from "next/router";
 import { useSelector, useDispatch } from "react-redux";
 import { stopLoading } from "../Redux/generalSlice";
 import Script from "next/script";
-import { AnimatePresence } from "framer-motion";
+
 function MyApp({ Component, pageProps: { session, ...pageProps } }) {
   const [ssr, setSsr] = useState(true);
   const [showTopBtn, setShowTopBtn] = useState(false);
@@ -35,10 +35,9 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
 
   return (
     <SessionProvider session={session}>
-      <AnimatePresence>
-        <Script
-          dangerouslySetInnerHTML={{
-            __html: `
+      <Script
+        dangerouslySetInnerHTML={{
+          __html: `
 var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
 (function(){
 var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
@@ -48,29 +47,28 @@ s1.charset='UTF-8';
 s1.setAttribute('crossorigin','*');
 s0.parentNode.insertBefore(s1,s0);
 })();`,
-          }}
-        />
+        }}
+      />
 
-        <ToastContainer position='top-center' />
+      <ToastContainer position='top-center' />
 
-        <Provider store={store}>
-          {Component.auth ? (
-            <Auth adminOnly={Component.auth.adminOnly}>
-              <Component {...pageProps} />
-            </Auth>
-          ) : (
+      <Provider store={store}>
+        {Component.auth ? (
+          <Auth adminOnly={Component.auth.adminOnly}>
             <Component {...pageProps} />
-          )}
-        </Provider>
-        {showTopBtn && (
-          <div
-            onClick={() => handleTop()}
-            className='fixed  bottom-32 right-8 bg-indigo-600 rounded-full p-3 cursor-pointer'
-          >
-            <BsArrowUpShort className='text-white text-3xl' />
-          </div>
+          </Auth>
+        ) : (
+          <Component {...pageProps} />
         )}
-      </AnimatePresence>
+      </Provider>
+      {showTopBtn && (
+        <div
+          onClick={() => handleTop()}
+          className='fixed  bottom-32 right-8 bg-indigo-600 rounded-full p-3 cursor-pointer'
+        >
+          <BsArrowUpShort className='text-white text-3xl' />
+        </div>
+      )}
     </SessionProvider>
   );
 }

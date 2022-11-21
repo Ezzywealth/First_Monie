@@ -15,10 +15,13 @@ import CurrencyFormat from "react-currency-format";
 import { useSession } from "next-auth/react";
 import { BeatLoader } from "react-spinners";
 import Transaction from "../../../components/Models/Transactions";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 const TransactionAdminScreen = ({ transactions }) => {
   const dispatch = useDispatch();
   const { data: session } = useSession();
+  const [newTransactions, setNewTransactions] = useState(transactions);
   const [ssr, setSsr] = useState(true);
   const [loading, setLoading] = useState(false);
   // dispatch(stopLoading());
@@ -57,28 +60,39 @@ const TransactionAdminScreen = ({ transactions }) => {
       </div>
     );
   }
-  console.log(transactions);
+  const handleDelete = async (id) => {
+    const { data } = await axios.post(`/api/transactions/deleteTransaction`, {
+      id,
+    });
+
+    console.log(data);
+    toast.success(data.message);
+    const filteredTransactions = newTransactions.filter(
+      (item) => item._id !== id
+    );
+    setNewTransactions(filteredTransactions);
+  };
   return (
-    <div className='relative bg-indigo-50 w-full  gap-4 md:grid grid-cols-1 md:grid-cols-4 mb-8 '>
+    <div className='relative bg-indigo-50 w-full h-screen overflow-auto gap-4 md:grid grid-cols-1 md:grid-cols-4 mb-8 '>
       <div
-        className={`z-50 fixed   customTransition col-span-1 ${
+        className={`z-50 fixed  customTransition col-span-1 ${
           isAdminSidebarOpen ? "h-screen" : "hidden -left-[1000px]"
         }`}
       >
         <AdminSidebar />
       </div>
       <div
-        className={`fixed  transition-all duration-500 ease-linear col-span-2 hidden lg:contents  h-screen bottom-0 left-0 z-50 `}
+        className={`fixed overflow-auto transition-all duration-500 ease-linear col-span-2 hidden lg:contents  h-screen bottom-0 left-0 z-50 `}
       >
         <AdminSidebar />
       </div>
-      <div className='col-span-3 px-4  pb-16 '>
+      <div className='col-span-3 px-4 h-screen overflow-auto  pb-16 '>
         <main className=' '>
           <div className=''>
             <Navbar />
           </div>
 
-          <div className='flex justify-between mt-[90px] mb-4 items-center h-[2.5rem]'>
+          <div className='flex justify-between mt-[30px] mb-4 items-center h-[2.5rem]'>
             <h2 className='font-semibold text-xl flex flex-col'>
               <span className='text-[#333333] text-[12px]'>Overview</span> All
               Transactions
@@ -94,10 +108,12 @@ const TransactionAdminScreen = ({ transactions }) => {
                   <td>Type</td>
                   <td>Amount</td>
                   <td>Customer Email</td>
+                  {/* <td>edit</td> */}
+                  <td>Delete</td>
                 </tr>
               </thead>
               <tbody>
-                {transactions?.map((item) => (
+                {newTransactions?.map((item) => (
                   <tr
                     key={item._id}
                     className='border-b border-solid border-gray-200 text-[13px] gap-4'
@@ -108,7 +124,6 @@ const TransactionAdminScreen = ({ transactions }) => {
                     <td> {item.type}</td>
 
                     <td>
-                      {" "}
                       <CurrencyFormat
                         value={parseInt(item.amount)}
                         displayType={"text"}
@@ -118,6 +133,29 @@ const TransactionAdminScreen = ({ transactions }) => {
                     </td>
 
                     <td>{session?.user.email}</td>
+                    {/* <td
+                      className='text-center'
+                      onClick={() => {
+                        setLoading(true);
+                        router.push(
+                          `/admin/firstmonie/transaction/${item._id}`
+                        );
+                      }}
+                    >
+                      <button className='bg-indigo-500 hover:scale-105 hover:bg-indigo-700 customTransition text-white px-3 py-1 rounded-lg'>
+                        edit
+                      </button>
+                    </td> */}
+                    <td
+                      className='text-center'
+                      onClick={() => {
+                        handleDelete(item._id);
+                      }}
+                    >
+                      <button className='bg-indigo-500 hover:scale-105 hover:bg-indigo-700 customTransition text-white px-3 py-1 rounded-lg'>
+                        Delete
+                      </button>
+                    </td>
                   </tr>
                 ))}
               </tbody>
