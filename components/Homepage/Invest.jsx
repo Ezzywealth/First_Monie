@@ -6,7 +6,7 @@ import { invest } from "../../utils/constants";
 
 const Invest = () => {
   return (
-    <div className='bg-gray-50 pt-20 md:pt-40 px-4 md:px-16'>
+    <div className='bg-gray-50 lg:pt-20 px-4 md:px-16'>
       <div className='grid grid-cols-1 md:grid-cols-2'>
         <div className='md:space-y-8 space-y-4 text-center md:px-4 py-8'>
           <h2 className='text-4xl text-[#333333] font-bold md:mb-12'>

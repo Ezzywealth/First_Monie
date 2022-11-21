@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 
 import Link from "next/link";
-import { BsPersonCheckFill } from "react-icons/bs";
 import { HiOutlineMenuAlt1 } from "react-icons/hi";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
@@ -11,11 +10,7 @@ import Image from "next/image";
 import { MdArrowDropDown } from "react-icons/md";
 import AccountType from "../../components/Layout/AccountType";
 import MoreLists from "../../components/Layout/MoreLists";
-import {
-  openSidebar,
-  setActiveNavLink,
-  startLoading,
-} from "../../Redux/generalSlice";
+import { openSidebar, setActiveNavLink } from "../../Redux/generalSlice";
 import Button2 from "./Button2";
 import { BeatLoader } from "react-spinners";
 
@@ -30,6 +25,8 @@ const Navbar = () => {
   const activeNavLink = useSelector(
     (state) => state.generalSlice.activeNavLink
   );
+  console.log(activeNavLink);
+  const query = router;
 
   useEffect(() => {
     setLoading(false);
@@ -40,6 +37,12 @@ const Navbar = () => {
     // dispatch(startLoading());
     router.push("/login");
   };
+
+  useEffect(() => {
+    console.log(query.asPath.split("/")[1]);
+
+    dispatch(setActiveNavLink(query.asPath.split("/")[1]));
+  }, []);
 
   const handleNavLink = (name) => {
     dispatch(setActiveNavLink(name));
@@ -100,12 +103,12 @@ const Navbar = () => {
               className={`hover:text-indigo-500 focus:text-indigo-500 customTransition cursor-pointer tracking-widest hover:scale-105 font-semibold  ${
                 activeLink === link.name && "text-indigo-500"
               }`}
-              onClick={() => handleNavLink(link.name)}
+              onClick={() => handleNavLink(link.link)}
             >
               <Link href={link.link} legacyBehavior>
                 <a
                   className={`cursor-pointer text-sm ${
-                    link.name === activeNavLink &&
+                    link.link.split("/")[1] === activeNavLink &&
                     "border-b-4 pb-4 border-solid border-blue-600"
                   } `}
                 >
