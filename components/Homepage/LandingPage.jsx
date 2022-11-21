@@ -53,7 +53,7 @@ const LandingPage = () => {
 
   const changeBg = () => {
     if (imageNo === 8) {
-      setImageNo(6);
+      setImageNo(5);
     }
     setTimeout(() => {
       setImageNo(imageNo + 1);
@@ -62,7 +62,7 @@ const LandingPage = () => {
 
   return (
     <div
-      className='slider w-full h-[600px] relative bg-no-repeat bg-[center_50%] bg-cover'
+      className='slider w-full h-[600px] relative bg-no-repeat bg-[center_1rem] lg:bg-[center_10%] bg-cover'
       id='landing'
       style={{ backgroundImage: `url(/hero${imageNo}.jpg)` }}
     >
@@ -78,7 +78,7 @@ const LandingPage = () => {
                 Bank smarter with us now and browse <br /> personal and consumer
                 banking services
               </p>
-              <div>
+              <div className='flex '>
                 <Button2
                   title='Get Started'
                   px={5}
@@ -97,7 +97,7 @@ const LandingPage = () => {
                 Bank smarter with us now and browse <br /> personal and consumer
                 banking services
               </p>
-              <div>
+              <div className='flex '>
                 <Button2
                   title='Get Started'
                   px={5}
@@ -117,7 +117,7 @@ const LandingPage = () => {
               <p className='font-bold text-gray-100 text-lg'>
                 Customer Satisfactions is <br /> our priority
               </p>
-              <div>
+              <div className='flex '>
                 <Button2
                   title='Get Started'
                   px={5}
