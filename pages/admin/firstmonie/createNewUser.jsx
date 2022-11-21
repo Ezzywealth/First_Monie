@@ -113,13 +113,13 @@ const CreateNewUser = () => {
           onSubmit={handleSubmit(formHandler)}
         >
           <div className='mb-8 flex justify-center'>
-            <Link href='/'>
+            <Link href='/admin/firstmonie'>
               <div className='flex w-  items-center gap-5 border border-black pr-2 mx-2 md:pr-16 shadow-xl md:pl-2 py-1 justify-start'>
                 <div className='h-8 w-8'>
                   <Image
                     src='/logo_pic2.png'
                     alt='logo'
-                    className='cursor-pointer h-8 w-8 shadow-2xl md:scale-150 ml-2'
+                    className='cursor-pointer h-8 w-8 shadow-2xl md:scale-150 ml-2 animate-pulse'
                     width={80}
                     height={80}
                   />
@@ -361,7 +361,7 @@ const CreateNewUser = () => {
             </div>
 
             <div className='mb-4'>
-              <Button2 type='submit' title='Register' />
+              <Button2 type='submit' title='Create User' />
             </div>
           </div>
         </form>

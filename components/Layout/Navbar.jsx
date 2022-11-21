@@ -74,7 +74,7 @@ const Navbar = () => {
               <Image
                 src='/logo_pic2.png'
                 alt='logo'
-                className='cursor-pointer h-8 w-8 shadow-2xl md:scale-150 ml-2'
+                className='cursor-pointer animate-pulse h-8 w-8 shadow-2xl md:scale-150 ml-2'
                 width={80}
                 height={80}
               />
