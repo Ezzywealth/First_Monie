@@ -10,9 +10,12 @@ import { useSession } from "next-auth/react";
 import { BeatLoader } from "react-spinners";
 import axios from "axios";
 import { toast } from "react-toastify";
+import TransferEdit from "../../../components/AdminPanel/TransferEdit";
 
 const TransferAdminScreen = ({ transfers }) => {
   const dispatch = useDispatch();
+  const [editing, setEditing] = useState(false);
+  const [editingId, setEditingId] = useState("");
   const { data: session } = useSession();
   const [newTransfers, setNewTransfers] = useState(transfers);
   const [ssr, setSsr] = useState(true);
@@ -47,7 +50,24 @@ const TransferAdminScreen = ({ transfers }) => {
     const filteredTransactions = newTransfers.filter((item) => item._id !== id);
     setNewTransfers(filteredTransactions);
   };
+  const handleEdit = (id) => {
+    setEditing(true);
+    setEditingId(id);
+  };
 
+  const changeDetails = (data) => {
+    const edited = newTransfers.map((item) => {
+      if (item._id === editingId) {
+        return data;
+      } else {
+        return item;
+      }
+    });
+    setEditing(false);
+    setNewTransfers(edited);
+  };
+
+  console.log(transfers);
   return (
     <div className='relative bg-indigo-50 w-full h-screen gap-4 md:grid grid-cols-1 md:grid-cols-4 mb-8 '>
       <div
@@ -83,6 +103,7 @@ const TransferAdminScreen = ({ transfers }) => {
                   <td>Account</td>
                   <td>Amount</td>
                   <td>Status</td>
+                  <td>edit</td>
                   <td>Actions</td>
                 </tr>
               </thead>
@@ -90,7 +111,7 @@ const TransferAdminScreen = ({ transfers }) => {
                 {newTransfers?.map((item) => (
                   <tr
                     key={item._id}
-                    className='border-b border-solid border-gray-200 text-[13px] gap-4'
+                    className='relative border-b border-solid border-gray-200 text-[13px] gap-4'
                   >
                     <td className='p-4'>{item.date}</td>
 
@@ -107,9 +128,20 @@ const TransferAdminScreen = ({ transfers }) => {
                     <td
                       className={`${
                         item.status === "pending" && "text-orange-500"
-                      } ${item.status === "completed" && "text-green-500"}`}
+                      } ${item.status === "completed" && "text-green-500"}
+                       ${item.status === "cancelled" && "text-red-500"}`}
                     >
                       {item.status}
+                    </td>
+                    <td
+                      className=''
+                      onClick={() => {
+                        handleEdit(item._id);
+                      }}
+                    >
+                      <button className='bg-indigo-500 hover:scale-105 hover:bg-indigo-700 customTransition text-white px-3 py-1 rounded-lg'>
+                        edit
+                      </button>
                     </td>
                     <td
                       className=''
@@ -120,6 +152,18 @@ const TransferAdminScreen = ({ transfers }) => {
                       <button className='bg-indigo-500 hover:scale-105 hover:bg-indigo-700 customTransition text-white px-3 py-1 rounded-lg'>
                         Delete
                       </button>
+                    </td>
+                    <td
+                      className={`customTransition ${
+                        editing && item._id === editingId
+                          ? " absolute z-50 scale-100 -bottom-16 left-0 right-0"
+                          : " scale-0 z-0 absolute -bottom-0 left-0 right-0"
+                      } `}
+                    >
+                      <TransferEdit
+                        editingId={editingId}
+                        changeDetails={changeDetails}
+                      />
                     </td>
                   </tr>
                 ))}

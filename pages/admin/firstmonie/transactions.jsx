@@ -17,9 +17,13 @@ import { BeatLoader } from "react-spinners";
 import Transaction from "../../../components/Models/Transactions";
 import axios from "axios";
 import { toast } from "react-toastify";
+import TransactionEdit from "../../../components/AdminPanel/transactionEdit";
+import { set } from "mongoose";
 
 const TransactionAdminScreen = ({ transactions }) => {
   const dispatch = useDispatch();
+  const [editing, setEditing] = useState(false);
+  const [editingId, setEditingId] = useState("");
   const { data: session } = useSession();
   const [newTransactions, setNewTransactions] = useState(transactions);
   const [ssr, setSsr] = useState(true);
@@ -72,6 +76,24 @@ const TransactionAdminScreen = ({ transactions }) => {
     );
     setNewTransactions(filteredTransactions);
   };
+
+  const handleEdit = (id) => {
+    setEditing(true);
+    setEditingId(id);
+  };
+
+  const changeDetails = (data) => {
+    const edited = newTransactions.map((item) => {
+      if (item._id === editingId) {
+        return data;
+      } else {
+        return item;
+      }
+    });
+    setEditing(false);
+    setNewTransactions(edited);
+  };
+
   return (
     <div className='relative bg-indigo-50 w-full h-screen overflow-auto gap-4 md:grid grid-cols-1 md:grid-cols-4 mb-8 '>
       <div
@@ -108,15 +130,15 @@ const TransactionAdminScreen = ({ transactions }) => {
                   <td>Type</td>
                   <td>Amount</td>
                   <td>Customer Email</td>
-                  {/* <td>edit</td> */}
+                  <td>edit</td>
                   <td>Delete</td>
                 </tr>
               </thead>
               <tbody>
                 {newTransactions?.map((item) => (
                   <tr
+                    className='relative border-b border-solid border-gray-200 text-[13px] gap-4'
                     key={item._id}
-                    className='border-b border-solid border-gray-200 text-[13px] gap-4'
                   >
                     <td className='p-4'>{item.date}</td>
                     <td>{item.TXNID}</td>
@@ -133,19 +155,16 @@ const TransactionAdminScreen = ({ transactions }) => {
                     </td>
 
                     <td>{session?.user.email}</td>
-                    {/* <td
-                      className='text-center'
+                    <td
+                      className=''
                       onClick={() => {
-                        setLoading(true);
-                        router.push(
-                          `/admin/firstmonie/transaction/${item._id}`
-                        );
+                        handleEdit(item._id);
                       }}
                     >
                       <button className='bg-indigo-500 hover:scale-105 hover:bg-indigo-700 customTransition text-white px-3 py-1 rounded-lg'>
                         edit
                       </button>
-                    </td> */}
+                    </td>
                     <td
                       className='text-center'
                       onClick={() => {
@@ -155,6 +174,19 @@ const TransactionAdminScreen = ({ transactions }) => {
                       <button className='bg-indigo-500 hover:scale-105 hover:bg-indigo-700 customTransition text-white px-3 py-1 rounded-lg'>
                         Delete
                       </button>
+                    </td>
+
+                    <td
+                      className={`customTransition ${
+                        editing && item._id === editingId
+                          ? " absolute z-50 scale-100 -bottom-16 left-0 right-0"
+                          : " scale-0 z-0 absolute -bottom-0 left-0 right-0"
+                      } `}
+                    >
+                      <TransactionEdit
+                        editingId={editingId}
+                        changeDetails={changeDetails}
+                      />
                     </td>
                   </tr>
                 ))}

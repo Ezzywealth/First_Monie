@@ -27,20 +27,6 @@ html {
   .link {
     @apply relative cursor-pointer text-lg font-medium before:absolute before:inset-x-0 before:-bottom-1.5 before:h-0.5 before:origin-left before:scale-x-0 before:transform before:rounded-bl before:bg-black before:transition before:duration-300 before:ease-in-out hover:before:scale-x-100;
   }
-  /* 
-  .logoGradient {
-    @apply bg-clip-text capitalize px-3 text-shadow-xl italic text-transparent bg-gradient-to-r from-blue-400 to-violet-500 text-3xl font-extrabold;
-  }
-  .logoGradient2 {
-    @apply bg-clip-text text-sm italic  text-transparent rounded-full  text-shadow-lg bg-gradient-to-r to-pink-500  from-violet-500 font-extrabold;
-  }
-  .logoGradient3 {
-    @apply bg-clip-text text-sm italic   text-transparent text-shadow-lg bg-gradient-to-r to-pink-500  from-violet-500 font-extrabold;
-  }
-
-  .customTransition {
-    @apply transition-all duration-300 ease-in-out;
-  } */
 
   .bgLanding {
     background-image: url("../public/hero6.jpg");
@@ -97,7 +83,7 @@ html {
     @apply flex flex-col gap-1 items-start;
   }
 
-  input:not(.checkbox, .dashboard, .action_edit, .transaferResponse),
+  input:not(.checkbox, .dashboard, .action_edit, .transaferResponse, .admin),
   textarea {
     @apply rounded-lg bg-white border border-gray-200 px-3 py-3 w-full focus:outline-none;
   }
