@@ -92,7 +92,7 @@ const UpdateProfile = () => {
             {lists.map((item) => (
               <li
                 key={item.id}
-                className='flex font-semibold cursor-pointer items-center text-xl gap-3 '
+                className='flex text-gray-600 cursor-pointer items-center text-lg gap-3 '
                 onClick={() => handleClick(item.title)}
               >
                 <span>{item.icon}</span>
