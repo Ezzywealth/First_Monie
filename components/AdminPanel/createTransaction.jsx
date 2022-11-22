@@ -58,7 +58,7 @@ const CreateTransaction = () => {
           amount,
           email,
           category,
-          TXNID: `FMT88642423${randNum}`,
+          TXNID: `FMB23642423${randNum}`,
           description,
           status,
           date,

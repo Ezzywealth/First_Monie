@@ -33,11 +33,11 @@ const CreateNewUser = () => {
   } = useForm();
 
   const generateSecretPin = () => {
-    const min = 13569935629;
-    const max = 99999999999;
+    const min = 13569935;
+    const max = 99999999;
     const randomNumb = Math.floor(Math.random() * (max - min) + min);
 
-    setAccountNumber(randomNumb);
+    setAccountNumber(`444${randomNumb}`);
   };
   const generateOtp = () => {
     const min = 135699;

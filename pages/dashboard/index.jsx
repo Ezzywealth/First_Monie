@@ -386,10 +386,25 @@ export async function getServerSideProps(ctx) {
   const session = await getSession({ ctx });
   const { user } = session;
   const data = await Transaction.find({ user: user._id }).lean();
-  const currentUser = await User.find({ email: session.user.email });
-  console.log(user);
-  console.log(session);
   await db.disconnect();
+  const currentUser = await User.find({ email: session.user.email });
+  if (!currentUser) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: "/login",
+      },
+    };
+  }
+
+  // if (!data) {
+  //   return {
+  //     redirect: {
+  //       permanent: false,
+  //       destination: "/500",
+  //     },
+  //   };
+  // }
   const newUser = [
     {
       _id: currentUser[0]?._id,
