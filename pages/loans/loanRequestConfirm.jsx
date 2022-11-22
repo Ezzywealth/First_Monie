@@ -32,6 +32,7 @@ const data = [
 
 const LoanRequestConfirm = () => {
   const loanDetails = useSelector((state) => state.generalSlice.loanDetails);
+  const user = useSelector((state) => state.generalSlice.user);
   const loanAmount = useSelector((state) => state.generalSlice.loanAmount);
   const [loading, setLoading] = useState(false);
   const router = useRouter();
@@ -75,6 +76,12 @@ const LoanRequestConfirm = () => {
   };
 
   const handleSubmit = async () => {
+    if (user.account_status === "hold") {
+      toast.error(
+        "Your account is on hold temporarily, kindly contact our customer service to resolve this issue"
+      );
+      return;
+    }
     setLoading(true);
     const max = 9999993486;
     const min = 1428794822;

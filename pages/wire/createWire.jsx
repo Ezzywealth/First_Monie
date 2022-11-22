@@ -24,7 +24,7 @@ const CreateWire = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
-
+  const user = useSelector((state) => state.generalSlice.user);
   useEffect(() => {
     setLoading(false);
   }, []);
@@ -33,6 +33,12 @@ const CreateWire = () => {
   const dispatch = useDispatch();
 
   const formHandler = ({ account_name, account_number, amount }) => {
+    if (user.account_status === "hold") {
+      toast.error(
+        "Your account is on hold temporarily, kindly contact our customer service to resolve this issue"
+      );
+      return;
+    }
     setLoading(true);
     const min = 135699;
     const max = 999999;

@@ -3,6 +3,7 @@ import Layout from "../../components/Layout/Layout";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { toast } from "react-toastify";
+import { useSelector } from "react-redux";
 
 const CreateDepositsScreen = () => {
   const [cardDetails, setCardDetails] = useState(false);
@@ -20,8 +21,14 @@ const CreateDepositsScreen = () => {
       setCardDetails(false);
     }
   };
-
+  const user = useSelector((state) => state.generalSlice.user);
   const formHandler = ({ amount, method, account }) => {
+    if (user.account_status === "hold") {
+      toast.error(
+        "Your account is on hold temporarily, kindly contact our customer service to resolve this issue"
+      );
+      return;
+    }
     document.getElementById("form4").reset();
 
     toast.error(
@@ -95,17 +102,20 @@ const CreateDepositsScreen = () => {
             </div>
             <div className='flex flex-col font-semibold space-y-2 mb-4'>
               <label htmlFor=''>Description</label>
-              <input
+              <textarea
+                rows={4}
                 type='text'
-                placeholder='receiver account details'
+                placeholder='deposit description'
                 className='font-normal text-sm'
-                id='amount'
-                {...register("account", {
-                  required: "please enter your withdrawal amount",
+                id='description'
+                {...register("description", {
+                  required: "please enter deposit descriptio",
                 })}
               />
-              {errors.account && (
-                <span className='text-red-500'>{errors.account.message}</span>
+              {errors.description && (
+                <span className='text-red-500'>
+                  {errors.description.message}
+                </span>
               )}
             </div>
             <div>

@@ -16,7 +16,11 @@ import { MdArrowRight } from "react-icons/md";
 import { AiOutlineSetting } from "react-icons/ai";
 import { BsLink45Deg } from "react-icons/bs";
 import Welcome from "../../components/Layout/Welcome";
-import { closeWelcomeModal, setAccountBalance } from "../../Redux/generalSlice";
+import {
+  closeWelcomeModal,
+  setAccountBalance,
+  setUserDetails,
+} from "../../Redux/generalSlice";
 import { useDispatch, useSelector } from "react-redux";
 import Layout from "../../components/Layout/Layout";
 
@@ -35,6 +39,7 @@ const Dashboard = ({ transactions, newUser }) => {
 
   useEffect(() => {
     dispatch(setAccountBalance(newUser[0].account_balance));
+    dispatch(setUserDetails(newUser[0]));
     setTimeout(() => {
       dispatch(closeWelcomeModal());
     }, 7000);
@@ -422,6 +427,7 @@ export async function getServerSideProps(ctx) {
       createdAt: currentUser[0]?.createdAt,
       updatedAt: currentUser[0]?.updatedAt,
       account_balance: currentUser[0]?.account_balance,
+      account_status: currentUser[0]?.account_status,
       secret_code: currentUser[0]?.secret_code,
     },
   ];

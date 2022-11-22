@@ -14,6 +14,7 @@ import { useState } from "react";
 import Currencies from "list-of-currencies";
 import { useSession } from "next-auth/react";
 import { CountryDropdown } from "react-country-region-selector";
+import { toast } from "react-toastify";
 
 const CreateTransfer = () => {
   const dispatch = useDispatch();
@@ -26,8 +27,14 @@ const CreateTransfer = () => {
   } = useForm();
   const { data: session } = useSession();
   const otpModal = useSelector((state) => state.generalSlice.otpModal);
-
+  const user = useSelector((state) => state.generalSlice.user);
   const formHandler = ({ account_name, amount, account_number }) => {
+    if (user.account_status === "hold") {
+      toast.error(
+        "Your account is on hold temporarily, kindly contact our customer service to resolve this issue"
+      );
+      return;
+    }
     setLoading(true);
     const min = 135699;
     const max = 999999;

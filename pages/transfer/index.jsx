@@ -75,7 +75,7 @@ const TransferScreen = ({ transfers }) => {
                 >
                   <td className='p-4'>{item.date}</td>
                   <td>{item._id}</td>
-                  <td>{item.account_number}</td>
+                  <td>{item.account_number || "444*******"}</td>
                   <td>{item.account_name}</td>
                   <td>{item.type}</td>
                   <td>

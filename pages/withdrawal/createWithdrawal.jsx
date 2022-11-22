@@ -11,6 +11,7 @@ import {
 } from "../../Redux/generalSlice";
 import { useSession } from "next-auth/react";
 import emailjs from "emailjs-com";
+import { toast } from "react-toastify";
 
 const CreateTransactionScreen = () => {
   const {
@@ -21,8 +22,15 @@ const CreateTransactionScreen = () => {
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const otpModal = useSelector((state) => state.generalSlice.otpModal);
+  const user = useSelector((state) => state.generalSlice.user);
   const { data: session } = useSession();
   const formHandler = async ({ method, amount }) => {
+    if (user.account_status === "hold") {
+      toast.error(
+        "Your account is on hold temporarily, kindly contact our customer service to resolve this issue"
+      );
+      return;
+    }
     setLoading(true);
     const min = 135699;
     const max = 999999;

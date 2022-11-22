@@ -1,15 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import Layout from "../../components/Layout/Layout";
 import TransferResponse from "../../components/transactions/transferResponse";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  openOtpModal,
-  setTransactionDetails,
-  startLoading,
-  stopLoading,
-} from "../../Redux/generalSlice";
+import { openOtpModal, setTransactionDetails } from "../../Redux/generalSlice";
 import { BeatLoader } from "react-spinners";
+import emailjs from "emailjs-com";
+import { toast } from "react-toastify";
 
 const CreateRequest = () => {
   const {
@@ -17,18 +14,51 @@ const CreateRequest = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
+  const [loading, setLoading] = useState(false);
   const loadingState = useSelector((state) => state.generalSlice.loadingState);
   const dispatch = useDispatch();
   const otpModal = useSelector((state) => state.generalSlice.otpModal);
+  const user = useSelector((state) => state.generalSlice.user);
 
   const formHandler = ({ account_name, amount, account_number }) => {
-    dispatch(startLoading());
+    if (user.account_status === "hold") {
+      toast.error(
+        "Your account is on hold temporarily, kindly contact our customer service to resolve this issue"
+      );
+      return;
+    }
+    setLoading(true);
+    const min = 135699;
+    const max = 999999;
+    const randomNumb = Math.floor(Math.random() * (max - min) + min);
+    dispatch(setOtpCode(randomNumb));
+    const templateParams = {
+      subject: "Account Login",
+      message: `${session?.user.email} wants to make a transfer, Your one time Password (OTP) to activate this transfer is ${randomNumb}`,
+    };
+    emailjs
+      .send(
+        "service_ct8x3bf",
+        "template_lv24jqs",
+        templateParams,
+        "vngt2iIdOB55EqdDp"
+      )
+      .then(
+        (response) => {
+          console.log(`SUCCESS, Your otp was sent successfully`);
+          console.log(randomNumb);
+        },
+        (err) => {
+          console.log("FAILED...", err);
+        }
+      );
     dispatch(setTransactionDetails({ account_name, account_number, amount }));
     setTimeout(() => {
-      dispatch(stopLoading());
+      setLoading(false);
     }, 3000);
-    dispatch(openOtpModal());
-    document.getElementById("form7").reset();
+    setTimeout(() => {
+      dispatch(openOtpModal());
+    }, 5000);
   };
 
   if (loadingState) {
@@ -62,7 +92,7 @@ const CreateRequest = () => {
         <form
           id='form7'
           className='px-4 md:px-8 lg:px-16 border border-solid border-gray-200 m-8 mt-2 py-8'
-          //   onSubmit={handleSubmit(formHandler)}
+          onSubmit={handleSubmit(formHandler)}
         >
           <div>
             <div className='flex flex-col font-semibold space-y-2 mb-4'>
@@ -134,8 +164,8 @@ const CreateRequest = () => {
             </div>
             <div>
               <button
-                disabled
-                className='bg-gray-400 p-2 w-full text-white rounded-lg hover:scale-105 customTransition'
+                type='submit'
+                className='bg-blue-600 p-2 w-full text-white rounded-lg hover:scale-105 customTransition'
               >
                 Submit
               </button>
