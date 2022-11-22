@@ -34,7 +34,7 @@ const Layout = ({ children, title }) => {
             <div
               className={`fixed w-full transition-all duration-500 ease-linear lg:hidden  ${
                 isSidebarOpen
-                  ? "left-[0vh] z-40 top-[160px] transition-all duration-500 ease-linear"
+                  ? "left-[0vh] z-40 top-[90px] transition-all duration-500 ease-linear"
                   : " -top-[1000px]"
               }`}
             >
