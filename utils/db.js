@@ -44,11 +44,19 @@ function convertUsersDocToObj(doc) {
   doc.updatedAt = doc.updatedAt.toString();
   return doc;
 }
+function convertTransactionDocToObj(doc) {
+  doc._id = doc._id.toString();
+  doc.user = doc.user?.toString();
+  doc.createdAt = doc.createdAt.toString();
+  doc.updatedAt = doc.updatedAt.toString();
+  return doc;
+}
 
 const db = {
   connect,
   disconnect,
   convertDocToObj,
   convertUsersDocToObj,
+  convertTransactionDocToObj,
 };
 export default db;

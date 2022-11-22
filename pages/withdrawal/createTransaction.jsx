@@ -46,7 +46,7 @@ const CreateTransactionScreen = () => {
   }
   return (
     <Layout title='createTransaction'>
-      <div className='pt-16 px-16 mt-32 md:mt-8 '>
+      <div className='pt-16 px-16 mt-[160px]  '>
         <h2 className='px-8 font-semibold text-2xl'>Withdraw Now</h2>
         <form
           id='myForm'

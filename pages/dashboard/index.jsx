@@ -34,7 +34,7 @@ const Dashboard = ({ transactions, newUser }) => {
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
 
   useEffect(() => {
-    dispatch(setAccountBalance());
+    dispatch(setAccountBalance(newUser[0].account_balance));
     setTimeout(() => {
       dispatch(closeWelcomeModal());
     }, 7000);
@@ -129,9 +129,9 @@ const Dashboard = ({ transactions, newUser }) => {
     router.push("/transfer");
   };
   return (
-    <div className='  w-full'>
+    <div className='w-full'>
       <Layout title='dashboard'>
-        <div className='mt-[90px]  py-16 md:py-4 bgContact  px-4 md:px-10 lg:px-16'>
+        <div className='md:mt-[150px] py-12 md:py-8 bgContact  px-4 md:px-10 lg:px-16'>
           <div
             className={`transition-all duration-700 ease-in-out ${
               welcomeModal
@@ -324,9 +324,10 @@ const Dashboard = ({ transactions, newUser }) => {
                 <thead>
                   <tr className='bg-gray-100 font-semibold text-[16px]'>
                     <td className='p-2'>No</td>
-                    <td>TYPE</td>
+                    <td>Description</td>
                     <td>TXNID</td>
                     <td>AMOUNT</td>
+                    <td>Category</td>
                     <td> DATE</td>
                   </tr>
                 </thead>
@@ -340,13 +341,10 @@ const Dashboard = ({ transactions, newUser }) => {
                       >
                         <td className='p-2'>{index + 1}</td>
                         <td>{data.type}</td>
-                        <td>{data._id}</td>
+                        <td>{data.TXNID}</td>
                         <td
                           className={` tracking-wider font-semibold ${
-                            data.type === "Deposit" ||
-                            data.type === "deposit" ||
-                            data.type === "Stock Investment-CR" ||
-                            data.type === "Motor Repair-CR"
+                            data.category === "deposit"
                               ? "text-green-500"
                               : "text-red-500"
                           }`}
@@ -357,6 +355,15 @@ const Dashboard = ({ transactions, newUser }) => {
                             thousandSeparator={true}
                             prefix={"$"}
                           />
+                        </td>
+                        <td
+                          className={`${
+                            data.category === "deposit"
+                              ? "text-green-500"
+                              : "text-red-500"
+                          }`}
+                        >
+                          {data.category}
                         </td>
                         <td>{data.date}</td>
                       </tr>
@@ -377,34 +384,36 @@ export default Dashboard;
 export async function getServerSideProps(ctx) {
   await db.connect();
   const session = await getSession({ ctx });
-
-  const data = await Transaction.find().lean();
-  const user = await User.find({ email: session.user.email });
+  const { user } = session;
+  const data = await Transaction.find({ user: user._id }).lean();
+  const currentUser = await User.find({ email: session.user.email });
+  console.log(user);
+  console.log(session);
   await db.disconnect();
   const newUser = [
     {
-      _id: user[0]?._id,
-      name: user[0]?.name,
-      email: user[0]?.email,
-      telephone: user[0]?.telephone,
-      password: user[0]?.password,
-      userName: user[0]?.userName,
-      birthday: user[0]?.birthday,
-      country: user[0]?.country,
-      sex: user[0]?.sex,
-      marital_status: user[0]?.marital_status,
-      occupation: user[0]?.occupation,
-      account_number: user[0]?.account_number,
-      createdAt: user[0]?.createdAt,
-      updatedAt: user[0]?.updatedAt,
-      account_balance: user[0]?.account_balance,
-      secret_code: user[0]?.secret_code,
+      _id: currentUser[0]?._id,
+      name: currentUser[0]?.name,
+      email: currentUser[0]?.email,
+      telephone: currentUser[0]?.telephone,
+      password: currentUser[0]?.password,
+      userName: currentUser[0]?.userName,
+      birthday: currentUser[0]?.birthday,
+      country: currentUser[0]?.country,
+      sex: currentUser[0]?.sex,
+      marital_status: currentUser[0]?.marital_status,
+      occupation: currentUser[0]?.occupation,
+      account_number: currentUser[0]?.account_number,
+      createdAt: currentUser[0]?.createdAt,
+      updatedAt: currentUser[0]?.updatedAt,
+      account_balance: currentUser[0]?.account_balance,
+      secret_code: currentUser[0]?.secret_code,
     },
   ];
 
   return {
     props: {
-      transactions: data.map(db.convertDocToObj).reverse(),
+      transactions: data.map(db.convertTransactionDocToObj).reverse(),
       newUser: newUser.map(db.convertUsersDocToObj),
     },
   };

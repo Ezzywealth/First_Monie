@@ -4,8 +4,8 @@ const userData = {
   users: [
     {
       name: "First Monie",
-      email: "testemail@gmail.com",
-      password: hashSync("@Firstmonie@"),
+      email: "nikdorflinger@gmail.com",
+      password: "@Firstmonie@",
       isAdmin: "true",
       telephone: "08034567862",
       userName: "stanley",
@@ -21,7 +21,7 @@ const userData = {
     {
       name: "Ose Chris",
       email: "osechris3@gmail.com",
-      password: hashSync("osechris3"),
+      password: "osechris3",
       isAdmin: false,
       telephone: "08034567859",
       userName: "osechris",

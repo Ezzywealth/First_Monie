@@ -1,83 +1,74 @@
 import React, { useState } from "react";
 import Layout from "../components/Layout/Layout";
-import { dashboardData } from "../utils/constants";
-import { useSession } from "next-auth/react";
-import { MdContentCopy } from "react-icons/md";
-import { toast } from "react-toastify";
 import Transaction from "../components/Models/Transactions";
-import { decodeBase64 } from "bcryptjs";
 import db from "../utils/db";
-import { data } from "autoprefixer";
-import Deposits from "../components/Models/Deposits";
-import Withdrawals from "../components/Models/Withdrawals";
 import CurrencyFormat from "react-currency-format";
+import { getSession } from "next-auth/react";
 
-const Transactions = ({ transactions, deposits, withdrawals }) => {
+const Transactions = ({ transactions }) => {
   console.log(transactions);
 
-  const allTransactions = [
-    ...transactions,
-    ...deposits,
-    ...withdrawals,
-  ].reverse();
   const [activeNumb, setActiveNumb] = useState(1);
   const [curPage, setCurPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
-  const numOfPage = Math.ceil(allTransactions.length / itemsPerPage);
+  const numOfPage = Math.ceil(transactions.length / itemsPerPage);
   const indexOfLastItem = curPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
 
-  console.log(allTransactions);
-
   return (
     <Layout title='transactions'>
-      <div className='mt-20 py-16 bgContact'>
+      <div className='md:mt-[160px] py-16 bgContact'>
         <section className='flex flex-col mx-2 md:mx-10  lg:mx-16 border border-gray-300 border-solid'>
           <h2 className='p-4 font-semibold tracking-wide'>All Transactions</h2>
-          <div className=' px-auto overflow-auto'>
-            <table className='table-auto w-[700px] min-w-full px-8 '>
+          <div className='  overflow-auto'>
+            <table className='table-auto w-[700px] lg:w-full min-w-full px-8 border border-solid border-gray-200 '>
               <thead>
-                <tr className='bg-gray-100 font-semibold text-[15px]'>
-                  <td className='p-2'>No</td>
-                  <td>TYPE</td>
+                <tr className='bg-gray-100 font-semibold text-[16px]'>
+                  <td className='p-4'>Date</td>
+
                   <td>TXNID</td>
-                  <td>AMOUNT</td>
-                  <td> DATE</td>
+                  <td>Type</td>
+                  <td>Amount</td>
+                  <td>Category</td>
+                  <td>User Email</td>
                 </tr>
               </thead>
               <tbody>
-                {allTransactions
-                  .slice(indexOfFirstItem, indexOfLastItem)
-                  .map((data, index) => (
-                    <tr
-                      key={data._id}
-                      className='border-b border-solid border-gray-200 text-[13px] gap-4'
+                {transactions?.map((item) => (
+                  <tr
+                    className='relative border-b border-solid border-gray-200 text-[13px] gap-4'
+                    key={item._id}
+                  >
+                    <td className='p-4'>{item.date}</td>
+                    <td>{item.TXNID}</td>
+
+                    <td> {item.type}</td>
+
+                    <td>
+                      <CurrencyFormat
+                        value={parseInt(item.amount)}
+                        displayType={"text"}
+                        thousandSeparator={true}
+                        prefix={"$"}
+                      />
+                    </td>
+
+                    <td
+                      className={`${
+                        item.category === "deposit"
+                          ? "text-green-500"
+                          : "text-red-500"
+                      }`}
                     >
-                      <td className='p-2'>
-                        {index + 1 + (curPage - 1) * itemsPerPage}
-                      </td>
-                      <td>{data.type || "Payout"}</td>
-                      <td>{data._id}</td>
-                      <td
-                        className={`${
-                          data.type === "Deposit"
-                            ? "text-green-500"
-                            : "text-red-500"
-                        }`}
-                      >
-                        <CurrencyFormat
-                          value={data.amount}
-                          displayType={"text"}
-                          thousandSeparator={true}
-                          prefix={"$"}
-                        />
-                      </td>
-                      <td>{data.date}</td>
-                    </tr>
-                  ))}
+                      {item.category}
+                    </td>
+                    <td>{item.client}</td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>
+
           <ul className='flex justify-start gap-4 items-center py-3 px-4'>
             {[...new Array(numOfPage).keys()].map((item) => (
               <li
@@ -101,18 +92,16 @@ const Transactions = ({ transactions, deposits, withdrawals }) => {
 };
 
 export default Transactions;
-export async function getServerSideProps() {
+export async function getServerSideProps(ctx) {
+  const session = await getSession({ ctx });
   await db.connect();
-  const data = await Transaction.find().lean();
-  const deposits = await Deposits.find().lean();
-  const withdrawals = await Withdrawals.find().lean();
+  const data = await Transaction.find({ client: session?.user.email }).lean();
+  console.log(session);
   await db.disconnect();
 
   return {
     props: {
       transactions: data.map(db.convertDocToObj),
-      deposits: deposits.map(db.convertDocToObj),
-      withdrawals: withdrawals.map(db.convertDocToObj),
     },
   };
 }

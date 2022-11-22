@@ -93,6 +93,12 @@ const TransferAdminScreen = ({ transfers }) => {
               <span className='text-[#333333] text-[12px]'>Overview</span> All
               Transfers
             </h2>
+            <button
+              className='bg-green-500 px-3 py-1 rounded-lg text-white hover:scale-105 customTransition'
+              onClick={() => router.push("/admin/firstmonie/createTransfer")}
+            >
+              Add User
+            </button>
           </div>
           <div className='  overflow-auto'>
             <table className='table-auto w-[600px] min-w-full px-8 border border-solid border-gray-200 '>

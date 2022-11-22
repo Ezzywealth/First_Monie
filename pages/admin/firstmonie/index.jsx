@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useSession } from "next-auth/react";
+import { getSession, useSession } from "next-auth/react";
 import axios from "axios";
 import db from "../../../utils/db";
 import AdminSidebar from "../../../components/AdminPanel/AdminSidebar";
@@ -10,14 +10,24 @@ import { adminDashboardLists } from "../../../components/AdminPanel/utils";
 import User from "../../../components/Models/User";
 import Transaction from "../../../components/Models/Transactions";
 import { useRouter } from "next/router";
+import { useLayoutEffect } from "react";
 
-const FirstmonieAdmin = ({ transactions, users }) => {
+const FirstmonieAdmin = ({ users, isAdmin }) => {
   const router = useRouter();
   const [newUsers, setNewUsers] = useState(users);
   const { data: session, status } = useSession();
   const isAdminSidebarOpen = useSelector(
     (state) => state.generalSlice.isAdminSidebarOpen
   );
+
+  useLayoutEffect(() => {
+    setLoading(true);
+    if (session?.user.isAdmin === false) {
+      router.push("/");
+    } else {
+      setLoading(false);
+    }
+  }, []);
 
   const [loading, setLoading] = useState(false);
 
@@ -29,69 +39,69 @@ const FirstmonieAdmin = ({ transactions, users }) => {
     );
   }
 
-  const createTransaction = async () => {
-    const max = 1500;
-    const min = 50;
-    const randNum = Math.ceil(Math.random() * (max - min) + min);
+  // const createTransaction = async () => {
+  //   const max = 1500;
+  //   const min = 50;
+  //   const randNum = Math.ceil(Math.random() * (max - min) + min);
 
-    const typesMin = 1;
-    const typesMax = 14;
+  //   const typesMin = 1;
+  //   const typesMax = 14;
 
-    const typesRand = Math.ceil(
-      Math.random() * (typesMax - typesMin) + typesMin
-    );
-    const namesMin = 1;
-    const namesMax = 5;
+  //   const typesRand = Math.ceil(
+  //     Math.random() * (typesMax - typesMin) + typesMin
+  //   );
+  //   const namesMin = 1;
+  //   const namesMax = 5;
 
-    const namesRand = Math.ceil(
-      Math.random() * (namesMax - namesMin) + namesMin
-    );
+  //   const namesRand = Math.ceil(
+  //     Math.random() * (namesMax - namesMin) + namesMin
+  //   );
 
-    const types = [
-      "deposit",
-      "withdrawals",
-      "Dpr",
-      "Fdr",
-      "deposit",
-      "Wire Transfer",
-      "Money Request",
-      "deposit",
-      "Medicine-Transfer Update",
-      "Stock Investment-CR",
-      "Stock Investment-CR",
-      "Motor Repair-CR",
-      "Walmart-DR",
-      "deposit",
-    ];
+  //   const types = [
+  //     "deposit",
+  //     "withdrawals",
+  //     "Dpr",
+  //     "Fdr",
+  //     "deposit",
+  //     "Wire Transfer",
+  //     "Money Request",
+  //     "deposit",
+  //     "Medicine-Transfer Update",
+  //     "Stock Investment-CR",
+  //     "Stock Investment-CR",
+  //     "Motor Repair-CR",
+  //     "Walmart-DR",
+  //     "deposit",
+  //   ];
 
-    const names = [
-      "Anita",
-      "Eunice",
-      "Arnold",
-      "Mr Johnson",
-      "Peter",
-      "Stevenson",
-      "Monica",
-      "Hannity",
-      "Justice",
-      "Reedston",
-    ];
+  //   const names = [
+  //     "Anita",
+  //     "Eunice",
+  //     "Arnold",
+  //     "Mr Johnson",
+  //     "Peter",
+  //     "Stevenson",
+  //     "Monica",
+  //     "Hannity",
+  //     "Justice",
+  //     "Reedston",
+  //   ];
 
-    try {
-      const { data } = await axios.post(
-        `/api/transactions/createTransactions`,
-        {
-          amount: randNum,
-          client: names[namesRand],
-          type: types[typesRand],
-          TXNID: `FMT886423${randNum}`,
-        }
-      );
-      console.log(data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  //   try {
+  //     const { data } = await axios.post(
+  //       `/api/transactions/createTransactions`,
+  //       {
+  //         amount: randNum,
+  //         client: names[namesRand],
+  //         type: types[typesRand],
+  //         TXNID: `FMT886423${randNum}`,
+  //       }
+  //     );
+  //     console.log(data);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   // setInterval(() => {
   //   createTransaction();
@@ -120,13 +130,17 @@ const FirstmonieAdmin = ({ transactions, users }) => {
     setLoading(false);
   };
 
+  console.log(session?.user);
+
   return (
     <div className='relative h-screen overflow-auto bg-indigo-50 w-full  gap-0  grid grid-cols-1 md:grid-cols-4 '>
-      {isAdminSidebarOpen && (
-        <div className='absolute top-0 z-50 left-0 col-span-1'>
-          <AdminSidebar />
-        </div>
-      )}
+      <div
+        className={`fixed z-50 customTransition col-span-1 ${
+          isAdminSidebarOpen ? "h-screen" : "hidden -left-[1000px]"
+        }`}
+      >
+        <AdminSidebar />
+      </div>
       <div className='hidden md:contents h-screen col-span-1'>
         <AdminSidebar />
       </div>
@@ -223,16 +237,17 @@ const FirstmonieAdmin = ({ transactions, users }) => {
 FirstmonieAdmin.auth = { adminOnly: true };
 export default FirstmonieAdmin;
 
-export async function getServerSideProps(context) {
+export async function getServerSideProps(ctx) {
   await db.connect();
+  const session = await getSession({ ctx });
   const data = await Transaction.find().lean();
   const users = await User.find().lean();
-  console.log(users);
-  await db.disconnect();
+
+  const loggedInUser = users.find((item) => item.email === session?.user.email);
 
   return {
     props: {
-      transactions: data.map(db.convertDocToObj),
+      transactions: data.map(db.convertTransactionDocToObj),
       users: users.map(db.convertUsersDocToObj),
     },
   };

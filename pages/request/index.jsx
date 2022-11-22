@@ -10,7 +10,7 @@ const RequestScreen = ({ receive_req, send_req }) => {
   const [receive, setReceive] = useState(false);
   return (
     <Layout title='request Money'>
-      <div className='md:border borer-solid border-gray-500 pt-8 my-32 mx-3 md:mx-8 lg:mx-16 space-y-8 px-2 md:px-8 customTransition'>
+      <div className='md:border borer-solid border-gray-300 py-8 lg:mt-[180px] mx-3 md:mx-8 lg:mx-16 space-y-8 px-2 md:px-8 customTransition'>
         <div className='w-full  grid grid-cols-2 font-semibold  '>
           <h2
             className={`flex justify-center items-center bg-indigo-50  customTransition text-gray-500 text-xl font-semibold cursor-pointer hover:scale-105 ${

@@ -9,8 +9,7 @@ import {
   BsCloudDownload,
 } from "react-icons/bs";
 import { GrMoney } from "react-icons/gr";
-
-import { AiOutlineHome } from "react-icons/ai";
+import { AiOutlineHome, AiOutlinePullRequest } from "react-icons/ai";
 import { FiFacebook, FiTwitter, FiInstagram, FiLinkedin } from "react-icons/fi";
 import { TbShieldCheck, TbCashBanknote } from "react-icons/tb";
 import {
@@ -23,6 +22,7 @@ import {
   MdOutlineSavings,
   MdOutlineContactSupport,
   MdOutlineLibraryBooks,
+  MdMoreTime,
 } from "react-icons/md";
 import {
   AiOutlineBank,
@@ -34,38 +34,32 @@ import { CiWallet } from "react-icons/ci";
 import { CgArrowsExchange } from "react-icons/cg";
 import { FaMoneyBillWave } from "react-icons/fa";
 import { GiPayMoney, GiReceiveMoney } from "react-icons/gi";
-
+import { RiLuggageDepositLine, RiDashboardLine } from "react-icons/ri";
 export const navLinks = [
-  {
-    id: 1,
-    name: "Home",
-    link: "/",
-    icon: <AiOutlineHome />,
-  },
   {
     id: 2,
     name: "Dashboard",
     link: "/dashboard",
-    icon: <MdSpaceDashboard />,
+    icon: <RiDashboardLine />,
   },
   {
     id: 3,
     name: "Request Money",
     link: "/request",
-    icon: <GrMoney />,
+    icon: <AiOutlinePullRequest />,
   },
 
   {
     id: 4,
     name: "Transfers",
     link: "/transfer",
-    icon: <MdOutlineContactSupport />,
+    icon: <BiTransferAlt />,
   },
   {
     id: 5,
     name: "Deposits",
     link: "/deposits",
-    icon: <GrMoney />,
+    icon: <RiLuggageDepositLine />,
   },
 
   {
@@ -73,6 +67,12 @@ export const navLinks = [
     name: "Withdrawal",
     link: "/withdrawals",
     icon: <MdOutlineContactSupport />,
+  },
+  {
+    id: 7,
+    name: "More",
+    link: "",
+    icon: <MdMoreTime />,
   },
 ];
 

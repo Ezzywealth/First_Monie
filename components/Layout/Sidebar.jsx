@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import { AiOutlineArrowLeft } from "react-icons/ai";
-import { BsPersonCheckFill } from "react-icons/bs";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Button from "./Button";
 import { useRouter } from "next/router";
 import { signOut, useSession } from "next-auth/react";
@@ -14,6 +12,7 @@ import AccountType from "./AccountType";
 import MoreLists from "./MoreLists";
 import { BeatLoader } from "react-spinners";
 import Button2 from "./Button2";
+import CurrencyFormat from "react-currency-format";
 
 const Sidebar = () => {
   const { data: session } = useSession();
@@ -27,9 +26,13 @@ const Sidebar = () => {
     setLoading(false);
   }, []);
 
+  const account_balance = useSelector(
+    (state) => state.generalSlice.account_balance
+  );
+
   if (loading) {
     return (
-      <div className='flex fixed justify-center bg-indigo-50 items-center h-screen w-full'>
+      <div className='flex  fixed top-0 right-0 left-0 justify-center bg-indigo-50 items-center h-screen w-full'>
         <BeatLoader
           color='indigo'
           loading={loading}
@@ -47,35 +50,40 @@ const Sidebar = () => {
       return;
     }
     setLoading(true);
-    dispatch(closeSidebar());
+
     router.push(link.link);
   };
   return (
     <div className='bg-[rgba(0,0,0,0.2)]'>
-      <div className='bg-gray-900 text-white w-[360px] md:w-[60%]  lg:w-[50%] h-screen px-8 py-2 pr-2'>
+      <div className='bg-indigo-900 text-white w-full h-full px-8 py-8 pr-2'>
         <div>
-          <span
-            onClick={() => dispatch(closeSidebar())}
-            className='flex justify-end '
-          >
-            <AiOutlineArrowLeft className='h-8 w-8 mb-2 text-gray-300' />
-          </span>
           <div className='flex flex-col gap-2'>
-            <div className='flex flex-col items-center gap-4'>
+            <div className='flex flex-col  gap-4'>
               {session?.user ? (
-                <div className='flex text-white capitalize px-4 items-center z-10 gap-6'>
-                  <div className=''>
-                    <Image
-                      src='/profile_fmb.jpeg'
-                      alt='logo'
-                      className='cursor-pointer rounded-full h-12 w-12 shadow-2xl scale-150 hover:h-20 hover:w-20 customTransition ml-2'
-                      width={80}
-                      height={80}
-                    />
-                  </div>
-                  <span className='text-gray-300 text-xl font-bold'>
-                    {session?.user.name}
-                  </span>
+                <div>
+                  <h5 className='flex items-center gap-4 relative text-sm font-semibold italic'>
+                    <div className=''>
+                      <Image
+                        src='/profile_fmb.jpeg'
+                        alt='logo'
+                        className='cursor-pointer rounded-full h-8 w-8 shadow-2xl scale-150  customTransition ml-2'
+                        width={80}
+                        height={80}
+                      />
+                    </div>
+                    <div className='flex flex-col text-gray-300'>
+                      <h3>{session?.user.name}</h3>
+                      <h3>
+                        {" "}
+                        <CurrencyFormat
+                          value={account_balance}
+                          displayType={"text"}
+                          thousandSeparator={true}
+                          prefix={"$"}
+                        />
+                      </h3>
+                    </div>
+                  </h5>
                 </div>
               ) : (
                 <div className='w-1/2'>
@@ -91,7 +99,7 @@ const Sidebar = () => {
                 </div>
               )}
             </div>
-            <div className='flex flex-col gap-4 mt-8'>
+            <div className='flex flex-col gap-4 mt-4'>
               <ul className='flex flex-col gap-4 mt-2 mb-4'>
                 {newLinks.map((link) => (
                   <li
@@ -146,15 +154,14 @@ const Sidebar = () => {
                             </span>
                             <span
                               className='relative flex items-center'
-                              onClick={() => setMore(true)}
-                              onMouseLeave={() => setMore(false)}
+                              onClick={() => setMore(!more)}
                             >
                               <MdArrowDropDown />
 
                               <div
                                 className={`customTransition z-50 cursor-pointer flex items-center w-[200px] mt-8 rounded-2xl border border-solid border-indigo-500 bg-white ${
                                   more
-                                    ? "absolute -bottom-[6rem] left-2 z-50 customTransition "
+                                    ? "absolute bottom-[0rem] left-12 z-50 customTransition "
                                     : "hidden customTransition "
                                 }`}
                               >

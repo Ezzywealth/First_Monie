@@ -34,14 +34,12 @@ export default NextAuth({
           account_number: req.body.accountNumber,
         });
         await db.disconnect();
-        if (user && bcryptjs.compareSync(credentials.password, user.password)) {
+        if (user && credentials.password === user.password) {
           return {
             _id: user._id,
             name: user.userName,
             email: user.email,
             isAdmin: user.isAdmin,
-            telephone: user.telephone,
-            userName: user.userName,
           };
         }
         throw new Error("Invalid account number or password");

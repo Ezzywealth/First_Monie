@@ -21,7 +21,7 @@ const DepositScreen = ({ deposits }) => {
 
   return (
     <Layout title='deposits'>
-      <div className='py-20 px-4 md:px-8 lg:px-16 bgContact mt-[90px]'>
+      <div className='py-20 px-4 md:px-8 lg:px-16 bgContact md:mt-[160px]'>
         <div className='flex justify-between mb-4 items-center h-[2.5rem]'>
           <h2 className='font-semibold text-xl flex flex-col'>
             <span className='text-[#333333] text-[12px]'>Overview</span>{" "}

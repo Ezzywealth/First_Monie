@@ -91,7 +91,7 @@ const DepositAdminScreen = ({ deposits }) => {
   return (
     <div className='relative bg-indigo-50 w-full h-screen gap-4 md:grid grid-cols-1 md:grid-cols-4 mb-8 '>
       <div
-        className={`z-50 fixed  customTransition col-span-1 ${
+        className={` fixed  z-50 customTransition col-span-1 ${
           isAdminSidebarOpen ? "h-screen" : "hidden"
         }`}
       >

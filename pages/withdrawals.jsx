@@ -32,7 +32,7 @@ const WithdrawalScreen = ({ withdraws }) => {
 
   return (
     <Layout title='withdrawals'>
-      <div className='py-20 mt-[60px] px-2 md:px-8 lg:px-16'>
+      <div className='py-20 md:mt-[160px] px-2 md:px-8 lg:px-16'>
         <div className='flex justify-between mb-4 items-center h-[2.5rem]'>
           <h2 className='font-semibold text-sm md:text-xl flex flex-col'>
             <span className='text-[#333333] text-[12px]'>Overview</span>{" "}

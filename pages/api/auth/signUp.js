@@ -50,7 +50,7 @@ async function handler(req, res) {
     telephone,
     userName,
     email,
-    password: bcryptjs.hashSync(password),
+    password,
     isAdmin: false,
     telephone,
     birthday,

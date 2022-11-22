@@ -18,7 +18,7 @@ const RequestLoan = () => {
   };
   return (
     <Layout title='Request Loan'>
-      <div className='bg-gray-50 mt-[90px] py-16'>
+      <div className='bg-gray-50 mt-[160px] py-16'>
         {loanResponse && (
           <div className='fixed top-0 bottom-0 left-0 right-0 bg-slate-100 bg-opacity-50'>
             <LoanResponse />

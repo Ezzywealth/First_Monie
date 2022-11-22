@@ -3,10 +3,9 @@ import Layout from "../components/Layout/Layout";
 import { GoLocation } from "react-icons/go";
 import { BsTelephoneInbound } from "react-icons/bs";
 import { useForm } from "react-hook-form";
-import Button from "../components/Layout/Button";
-import axios from "axios";
 import { toast } from "react-toastify";
 import emailjs from "emailjs-com";
+import Button2 from "../components/Layout/Button2";
 
 const Contact = () => {
   const {
@@ -17,9 +16,6 @@ const Contact = () => {
   } = useForm();
 
   const formHandler = async ({ name, email, phone, message, subject }) => {
-    // document.getElementById('myForm').reset()
-    console.log(name, phone, subject, message);
-
     const templateParams = {
       name: "James",
       phone,
@@ -61,7 +57,7 @@ const Contact = () => {
 
   return (
     <Layout>
-      <div className='px-4 md:px-8 lg:px-16 py-16 mt-[90px] bgContact'>
+      <div className='px-4 md:px-8 lg:px-16 py-16  md:mt-[160px] bgContact'>
         <h2 className='text-center font-bold text-[#333333] mb-8 text-3xl'>
           Drop a Message for our support team
         </h2>
@@ -172,7 +168,7 @@ const Contact = () => {
                 )}
               </div>
               <div>
-                <Button type='submit' title='Submit' />
+                <Button2 type='submit' title='Submit' />
               </div>
             </form>
           </div>

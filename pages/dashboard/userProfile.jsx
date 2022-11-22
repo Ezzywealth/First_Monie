@@ -60,7 +60,7 @@ const UserProfile = ({ user }) => {
   }
   return (
     <Layout title={session?.user.name}>
-      <main className='mt-[90px] py-16 px-4 bg-gray-50 border border-solid border-gray-300 md:px-8 lg:px-16'>
+      <main className='md:mt-[160px] py-16 px-4 bg-gray-50 border border-solid border-gray-300 md:px-8 lg:px-16'>
         <div className='flex justify-end mb-8'>
           <button
             className='bg-green-500 rounded-lg hover:scale-105 customTransition items-center px-3 py-1 flex gap-2 text-white'

@@ -18,7 +18,6 @@ import Transaction from "../../../components/Models/Transactions";
 import axios from "axios";
 import { toast } from "react-toastify";
 import TransactionEdit from "../../../components/AdminPanel/transactionEdit";
-import { set } from "mongoose";
 
 const TransactionAdminScreen = ({ transactions }) => {
   const dispatch = useDispatch();
@@ -28,7 +27,6 @@ const TransactionAdminScreen = ({ transactions }) => {
   const [newTransactions, setNewTransactions] = useState(transactions);
   const [ssr, setSsr] = useState(true);
   const [loading, setLoading] = useState(false);
-  // dispatch(stopLoading());
 
   const router = useRouter();
   const client = router.query;
@@ -97,7 +95,7 @@ const TransactionAdminScreen = ({ transactions }) => {
   return (
     <div className='relative bg-indigo-50 w-full h-screen overflow-auto gap-4 md:grid grid-cols-1 md:grid-cols-4 mb-8 '>
       <div
-        className={`z-50 fixed  customTransition col-span-1 ${
+        className={`fixed z-50 customTransition col-span-1 ${
           isAdminSidebarOpen ? "h-screen" : "hidden -left-[1000px]"
         }`}
       >
@@ -129,7 +127,8 @@ const TransactionAdminScreen = ({ transactions }) => {
                   <td>TXNID</td>
                   <td>Type</td>
                   <td>Amount</td>
-                  <td>Customer Email</td>
+                  <td>Category</td>
+                  <td>User Email</td>
                   <td>edit</td>
                   <td>Delete</td>
                 </tr>
@@ -154,7 +153,16 @@ const TransactionAdminScreen = ({ transactions }) => {
                       />
                     </td>
 
-                    <td>{session?.user.email}</td>
+                    <td
+                      className={`${
+                        item.category === "deposit"
+                          ? "text-green-500"
+                          : "text-red-500"
+                      }`}
+                    >
+                      {item.category}
+                    </td>
+                    <td>{item.client}</td>
                     <td
                       className=''
                       onClick={() => {
@@ -210,7 +218,7 @@ export async function getServerSideProps() {
 
   return {
     props: {
-      transactions: data.map(db.convertDocToObj).reverse(),
+      transactions: data.map(db.convertTransactionDocToObj).reverse(),
     },
   };
 }

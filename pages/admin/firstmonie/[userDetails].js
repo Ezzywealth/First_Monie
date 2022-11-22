@@ -16,6 +16,7 @@ import { toast } from "react-toastify";
 import CurrencyFormat from "react-currency-format";
 
 import EditUsers from "../../../components/AdminPanel/EditUser";
+import CreateTransaction from "../../../components/AdminPanel/createTransaction";
 
 const UserDetails = ({ newUser }) => {
   const dispatch = useDispatch();
@@ -71,6 +72,8 @@ const UserDetails = ({ newUser }) => {
       return user.account_number;
     } else if (name === "Otp Code") {
       return user.secret_code;
+    } else if (name === "Password") {
+      return user.password;
     }
   };
 
@@ -82,14 +85,14 @@ const UserDetails = ({ newUser }) => {
   }
 
   const formHandler = async ({ amount, method }) => {
-    document.getElementById("form3").reset();
+    // document.getElementById("balanceform").reset();
     console.log(amount, method);
     try {
       const { data } = await axios.post(`/api/transactions/changeBalance`, {
         amount: parseInt(amount),
         method,
         id: newUser[0]._id,
-        currentBalance: newUser[0].account_balance,
+        currentBalance: accountBalance,
       });
       console.log(data.data);
       toast.success(data.message);
@@ -150,7 +153,7 @@ const UserDetails = ({ newUser }) => {
                 </h2>
                 <h3 className='text-2xl text-gray-500 font-bold'>
                   <CurrencyFormat
-                    value={accountBalance || "20000"}
+                    value={accountBalance}
                     displayType={"text"}
                     thousandSeparator={true}
                     prefix={"$"}
@@ -159,7 +162,7 @@ const UserDetails = ({ newUser }) => {
               </div>
 
               <form
-                id='form3'
+                id='balanceform'
                 className='space-y-6'
                 onSubmit={handleSubmit(formHandler)}
               >
@@ -190,6 +193,7 @@ const UserDetails = ({ newUser }) => {
                   </label>
                   <select
                     className=' p-2 rounded-lg focus:outline-none border border-solid border-gray-400'
+                    value=''
                     id='action'
                     {...register("method", {
                       required: "Please select a method",
@@ -219,6 +223,10 @@ const UserDetails = ({ newUser }) => {
           </section>
 
           <EditUsers />
+
+          <section>
+            <CreateTransaction />
+          </section>
         </main>
       </div>
     </div>

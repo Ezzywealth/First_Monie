@@ -56,7 +56,7 @@ const CreateWire = () => {
 
   return (
     <Layout title='createTransaction'>
-      <div className='pt-16 px-3 md:px-8 lg:px-16 mt-[90px] md:mt-8 bgContact'>
+      <div className='pt-16 px-3 md:px-8 lg:px-16 mt-[160px]  bgContact'>
         <div
           className={`customTransition ${
             otpModal

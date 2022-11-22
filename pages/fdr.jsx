@@ -15,10 +15,10 @@ const FdrScreen = ({ fdr }) => {
   };
   return (
     <Layout title='fdr'>
-      <div className='py-12 mt-[90px] border-b border-solid border-gray-300 px-4 md:px-8 lg:px-16 bg-indigo-50'>
+      <div className='py-12 md:mt-[160px] border-b border-solid border-gray-300 px-4 md:px-8 lg:px-16 bg-indigo-50'>
         <div className='flex justify-between mb-4 items-center h-[2.5rem]'>
           <h2 className='font-semibold text-xl flex flex-col'>
-            <span className='text-[#333333] text-[12px]'>Overview</span> DPS
+            <span className='text-[#333333] text-[12px]'>Overview</span> FDR
             Manage
           </h2>
         </div>

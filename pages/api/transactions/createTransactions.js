@@ -1,28 +1,25 @@
 import Transaction from "../../../components/Models/Transactions";
-import Transfers from "../../../components/Models/Transfers";
 import db from "../../../utils/db";
+import { getSession } from "next-auth/react";
 
 const handler = async (req, res) => {
   if (req.method !== "POST") {
     return res.status(401).send({ message: "Unauthorized request" });
   }
-
-  const { amount, client, type, TXNID } = req.body;
-  const options = {
-    month: "short",
-    day: "numeric",
-    year: "numeric",
-  };
-
-  const createdDate = new Date().toLocaleString("en-US", options);
+  const session = await getSession({ req });
+  const { user } = session;
+  const { amount, email, category, TXNID, status, date, description } =
+    req.body;
 
   const newTransaction = {
+    user: user._id,
     amount,
-    client,
-    date: createdDate,
-    type,
-    status: "completed",
+    client: email,
+    date,
+    type: description,
+    status,
     TXNID,
+    category,
   };
 
   try {

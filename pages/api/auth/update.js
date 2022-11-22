@@ -50,7 +50,7 @@ async function handler(req, res) {
   toUpdateUser.marital_status = marital_status;
 
   if (password && toUpdateUser.isAdmin === false) {
-    toUpdateUser.password = bcryptjs.hashSync(password);
+    toUpdateUser.password = password;
   }
 
   await toUpdateUser.save();

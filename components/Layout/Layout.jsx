@@ -1,50 +1,57 @@
 import React, { useState, useEffect } from "react";
 import Footer from "./Footer";
 import Navbar from "./Navbar";
+import NavbarOffline from "./Navbar2";
 import Head from "next/head";
 import { useSelector } from "react-redux";
 import Sidebar from "./Sidebar";
 import DashboardHeader from "./DashboardHeader";
+import { useSession } from "next-auth/react";
 const Layout = ({ children, title }) => {
-  const [height, setHeight] = useState(0);
-  const [navbarColor, setNavbarColor] = useState(false);
+  const { data: session } = useSession();
   const isSidebarOpen = useSelector(
     (state) => state.generalSlice.isSidebarOpen
   );
 
-  useEffect(() => {
-    window.addEventListener("scroll", () => {
-      if (window.scrollY > 400) {
-        setNavbarColor(true);
-      } else {
-        setNavbarColor(false);
-      }
-    });
-  }, []);
-
   return (
     <div className='relative h-screen w-full'>
-      <div
-        className={`fixed w-full transition-all duration-500 ease-linear lg:hidden h-screen bottom-0 left-0 z-50  ${
-          isSidebarOpen
-            ? "left-[0vh] top-[0vh] right-0 transition-all duration-500 ease-linear"
-            : "-left-[1000px] "
-        }`}
-      >
-        <Sidebar />
-      </div>
-
       <Head>
         <title>{title}</title>
         <link rel='icon' href='/favicon.ico' />
       </Head>
-      <div
-        className={`fixed bg-gray-200 ${
-          title === "dashboards" && "mb-40"
-        }   z-40  top-0 w-full`}
-      >
-        {title === "dashboards" && <DashboardHeader />}
-        <Navbar />
+      <div className={`relative md:fixed  bg-indigo-200 z-40  top-0 w-full`}>
+        <div className='relative'>
+          {session?.user ? (
+            <div>
+              <DashboardHeader />
+              <Navbar />
+            </div>
+          ) : (
+            <NavbarOffline />
+          )}
+
+          {session?.user ? (
+            <div
+              className={`fixed w-full transition-all duration-500 ease-linear lg:hidden  ${
+                isSidebarOpen
+                  ? "left-[0vh] z-40 top-[160px] transition-all duration-500 ease-linear"
+                  : " -top-[1000px]"
+              }`}
+            >
+              <Sidebar />
+            </div>
+          ) : (
+            <div
+              className={`fixed w-full transition-all duration-500 ease-linear lg:hidden  ${
+                isSidebarOpen
+                  ? "left-[0vh] z-40 top-[90px] transition-all duration-500 ease-linear"
+                  : " -top-[1000px]"
+              }`}
+            >
+              <Sidebar />
+            </div>
+          )}
+        </div>
       </div>
       <main className=' lg:mt-[90px] relative'>{children}</main>
       <div className=' bottom-0 w-full '>

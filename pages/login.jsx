@@ -44,9 +44,10 @@ const LoginInterface = () => {
     }
   }, [session?.user]);
 
-  const onSubmit = async () => {
+  const formSubmit = async () => {
     setLoading(true);
     dispatch(setLoginDetails({ accountNumber, password }));
+    console.log(accountNumber, password);
     const min = 135699;
     const max = 999999;
     const randomNumb = Math.floor(Math.random() * (max - min) + min);
@@ -110,12 +111,14 @@ const LoginInterface = () => {
       </div>
     );
   }
+
+  console.log(otpModal);
   return (
-    <div className=' bgRegister h-screen px-4 md:px-8 lg: flex items-center shadow-2xl'>
+    <div className='relative bgRegister h-screen px-4 md:px-8 lg: flex items-center shadow-2xl'>
       <div
-        className={`customTransition z-50 ${
+        className={`customTransition ${
           otpModal
-            ? "fixed left-0 right-0 top-[90px]"
+            ? "absolute left-0 z-50 w-full right-0 top-[90px]"
             : "fixed left-0 right-0 -top-[1000px]"
         }`}
       >
@@ -126,8 +129,7 @@ const LoginInterface = () => {
           <form
             id='myForm'
             className='flex flex-col items-center w-[380px] md:w-[450px] mx-auto px-auto my-4 bg-white overflow-auto py-8 pt-3 rounded-lg px-4 '
-            onSubmit={handleSubmit(onSubmit)}
-            mailto=''
+            onSubmit={handleSubmit(formSubmit)}
           >
             <Link href='/'>
               <div className='flex w-[250px] mb-8 items-center gap-5 border border-black  shadow-xl md:pl-2 '>
@@ -201,7 +203,7 @@ const LoginInterface = () => {
                 </label>
               </div>
 
-              <ButtonBack type='submit' title='Sign In' onClick={onSubmit} />
+              <ButtonBack title='Sign In' onClick={formSubmit} />
             </div>
 
             <p className='text-sm'>

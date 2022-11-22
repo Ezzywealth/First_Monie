@@ -40,7 +40,7 @@ const TransferScreen = ({ transfers }) => {
   };
   return (
     <Layout title='transfers'>
-      <div className='py-20 mt-[90px] px-4 md:px-8 lg:px-16 bgContact'>
+      <div className='py-20 lg:mt-[160px] px-4 md:px-8 lg:px-16 bgContact'>
         <div className='flex justify-between mb-4 items-center h-[2.5rem]'>
           <h2 className='font-semibold text-2xl flex flex-col mb-8'>
             <span className='text-[#333333] text-[13px]'>Overview</span>{" "}
