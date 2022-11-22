@@ -19,7 +19,7 @@ const Layout = ({ children, title }) => {
         <title>{title}</title>
         <link rel='icon' href='/favicon.ico' />
       </Head>
-      <div className={`relative md:fixed  bg-indigo-200 z-40  top-0 w-full`}>
+      <div className={`fixed  bg-indigo-200 z-40  top-0 w-full`}>
         <div className='relative'>
           {session?.user ? (
             <div>
