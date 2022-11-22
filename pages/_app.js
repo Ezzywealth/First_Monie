@@ -10,6 +10,7 @@ import { useRouter } from "next/router";
 import { useSelector, useDispatch } from "react-redux";
 import { stopLoading } from "../Redux/generalSlice";
 import Script from "next/script";
+import Head from "next/head";
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }) {
   const [ssr, setSsr] = useState(true);
@@ -34,11 +35,17 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
 
   return (
     <SessionProvider session={session}>
-      <Script
-        dangerouslySetInnerHTML={{
-          __html: ``,
-        }}
-      />
+      <Head>
+        <Script
+          dangerouslySetInnerHTML={{
+            __html: ``,
+          }}
+        />
+        <Script
+          src='https://upload.widget.cloudinary.com/global/all.js'
+          type='text/javascript'
+        />
+      </Head>
 
       <ToastContainer position='top-center' />
 

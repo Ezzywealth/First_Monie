@@ -6,7 +6,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { BsLink45Deg } from "react-icons/bs";
 
-const TransferResponse = () => {
+const WireResponse = () => {
   const dispatch = useDispatch();
 
   const {
@@ -26,17 +26,19 @@ const TransferResponse = () => {
       try {
         if (parseInt(otpCode) !== parseInt(code)) {
           toast.error("Incorrect code, Try again");
+          return;
         } else {
           dispatch(closeOtpModal());
-          document.querySelector("form").reset();
-          const { data } = await axios.post(
-            `/api/transactions/createTransferRequest`,
-            { ...transactionDetails }
+          //   document.querySelector("form").reset();
+          //   const { data } = await axios.post(
+          //     `/api/transactions/createWireTransfer`,
+          //     { ...transactionDetails }
+          //   );
+          //   console.log(data);
+          toast.error(
+            "This account is unable to create a Wire Transfer at the moment, Kindly contact out customer care service"
           );
-          console.log(data);
-          toast.success(data.message);
         }
-        if (data.error) throw new Error(data.error.message);
       } catch (error) {
         console.log(error);
         dispatch(closeOtpModal());
@@ -59,7 +61,7 @@ const TransferResponse = () => {
           <h2 className='text-xl text-gray-500 font-bold'>Transfer Funds</h2>
           <p>
             A One Time Password (OTP) has been sent to your email. <br /> Enter
-            below to activate Transfer
+            below to activate Wire Transfer
           </p>
         </div>
         <form
@@ -96,4 +98,4 @@ const TransferResponse = () => {
   );
 };
 
-export default TransferResponse;
+export default WireResponse;

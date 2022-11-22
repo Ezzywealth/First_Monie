@@ -6,7 +6,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { BsLink45Deg } from "react-icons/bs";
 
-const TransferResponse = () => {
+const WithdrawalResponse = () => {
   const dispatch = useDispatch();
 
   const {
@@ -22,21 +22,18 @@ const TransferResponse = () => {
   const otpCode = useSelector((state) => state.generalSlice.otpCode);
 
   const handleForm = async ({ code }) => {
+    document.getElementById("withdrawals").reset();
     if (code) {
       try {
         if (parseInt(otpCode) !== parseInt(code)) {
           toast.error("Incorrect code, Try again");
+          return;
         } else {
           dispatch(closeOtpModal());
-          document.querySelector("form").reset();
-          const { data } = await axios.post(
-            `/api/transactions/createTransferRequest`,
-            { ...transactionDetails }
+          toast.error(
+            "This account is unable to make withdrawals at the moment, Kindly contact out customer care service. Thank You!!!"
           );
-          console.log(data);
-          toast.success(data.message);
         }
-        if (data.error) throw new Error(data.error.message);
       } catch (error) {
         console.log(error);
         dispatch(closeOtpModal());
@@ -59,12 +56,13 @@ const TransferResponse = () => {
           <h2 className='text-xl text-gray-500 font-bold'>Transfer Funds</h2>
           <p>
             A One Time Password (OTP) has been sent to your email. <br /> Enter
-            below to activate Transfer
+            below to activate Withdrawals
           </p>
         </div>
         <form
           onSubmit={handleSubmit(handleForm)}
           className='flex flex-col gap-4'
+          id='withdrawals'
         >
           <div>
             <label
@@ -87,7 +85,7 @@ const TransferResponse = () => {
               className='bg-indigo-800 text-[12px] hover:scale-105 customTransition rounded-lg items-center px-3 py-2 flex gap-3 text-gray-200'
             >
               <BsLink45Deg className='text-2xl' />
-              Transfer Money
+              Confrim Withdraw
             </button>
           </div>
         </form>
@@ -96,4 +94,4 @@ const TransferResponse = () => {
   );
 };
 
-export default TransferResponse;
+export default WithdrawalResponse;

@@ -16,6 +16,7 @@ const userSchema = new mongoose.Schema(
     account_number: { type: String, required: false, unique: true },
     secret_code: { type: String, required: false, default: "0000000" },
     account_balance: { type: Number, required: false },
+    account_status: { type: String, required: true, default: "active" },
   },
   {
     timestamps: true,

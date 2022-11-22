@@ -148,11 +148,13 @@ const CreateTransaction = () => {
                     required: "please select a category",
                   })}
                 >
-                  <option value='deposit'>Deposit</option>
-                  <option value='withdraw'>Withdraw</option>
+                  <option value='credit'>Credit</option>
+                  <option value='debit'>Debit</option>
                 </select>
-                {errors.amount && (
-                  <span className='text-red-500'>{errors.amount.message}</span>
+                {errors.category && (
+                  <span className='text-red-500'>
+                    {errors.category.message}
+                  </span>
                 )}
               </div>
               <div>

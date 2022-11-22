@@ -245,6 +245,19 @@ export async function getServerSideProps(ctx) {
 
   const loggedInUser = users.find((item) => item.email === session?.user.email);
 
+  // redirect: {
+  //   permanent: false,
+  //   destination: "/login",
+  // },
+
+  // if (!token) {
+  //   return {
+  //     redirect: {
+  //       permanent: false,
+  //       destination: "/log-in",
+  //     },
+  //   };
+  // }
   return {
     props: {
       transactions: data.map(db.convertTransactionDocToObj),

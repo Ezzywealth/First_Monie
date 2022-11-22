@@ -42,7 +42,7 @@ const Transactions = ({ transactions }) => {
                     <td className='p-4'>{item.date}</td>
                     <td>{item.TXNID}</td>
 
-                    <td> {item.type}</td>
+                    <td>{item.type}</td>
 
                     <td>
                       <CurrencyFormat
@@ -55,7 +55,7 @@ const Transactions = ({ transactions }) => {
 
                     <td
                       className={`${
-                        item.category === "deposit"
+                        item.category === "credit"
                           ? "text-green-500"
                           : "text-red-500"
                       }`}

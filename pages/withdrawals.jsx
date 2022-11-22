@@ -41,7 +41,7 @@ const WithdrawalScreen = ({ withdraws }) => {
           <button
             onClick={() => {
               setLoading(true);
-              router.push("/withdrawal/createTransaction");
+              router.push("/withdrawal/createWithdrawal");
             }}
             className='bg-indigo-800 rounded-lg items-center text-sm px-1 md:px-3 py-2 flex gap-3 text-gray-200'
           >

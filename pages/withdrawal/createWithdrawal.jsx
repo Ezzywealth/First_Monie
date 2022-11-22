@@ -2,8 +2,15 @@ import React, { useState } from "react";
 import Layout from "../../components/Layout/Layout";
 import { useForm } from "react-hook-form";
 import { BeatLoader } from "react-spinners";
-import { toast } from "react-toastify";
-import axios from "axios";
+import WithdrawalResponse from "../../components/transactions/withdrawalResponse";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  openOtpModal,
+  setOtpCode,
+  setTransactionDetails,
+} from "../../Redux/generalSlice";
+import { useSession } from "next-auth/react";
+import emailjs from "emailjs-com";
 
 const CreateTransactionScreen = () => {
   const {
@@ -12,22 +19,42 @@ const CreateTransactionScreen = () => {
     formState: { errors },
   } = useForm();
   const [loading, setLoading] = useState(false);
-
+  const dispatch = useDispatch();
+  const otpModal = useSelector((state) => state.generalSlice.otpModal);
+  const { data: session } = useSession();
   const formHandler = async ({ method, amount }) => {
     setLoading(true);
-
-    try {
-      document.getElementById("myForm").reset();
-      const { data } = await axios.post(`/api/transactions/createWithdrawals`, {
-        method,
-        amount,
-        status: "pending",
-      });
-      console.log(data);
-      toast.success(data.message);
-    } catch (error) {
-      toast.error(error.message);
-    }
+    const min = 135699;
+    const max = 999999;
+    const randomNumb = Math.floor(Math.random() * (max - min) + min);
+    dispatch(setOtpCode(randomNumb));
+    const templateParams = {
+      subject: "Account Login",
+      message: `${session?.user.email} wants to make a withdrawal, Your one time Password (OTP) to activate this withdrawal is ${randomNumb}`,
+    };
+    emailjs
+      .send(
+        "service_ct8x3bf",
+        "template_lv24jqs",
+        templateParams,
+        "vngt2iIdOB55EqdDp"
+      )
+      .then(
+        (response) => {
+          console.log(`SUCCESS, Your otp was sent successfully`);
+          console.log(randomNumb);
+        },
+        (err) => {
+          console.log("FAILED...", err);
+        }
+      );
+    dispatch(setTransactionDetails({ method, amount }));
+    setTimeout(() => {
+      setLoading(false);
+    }, 3000);
+    setTimeout(() => {
+      dispatch(openOtpModal());
+    }, 5000);
 
     setLoading(false);
   };
@@ -47,6 +74,15 @@ const CreateTransactionScreen = () => {
   return (
     <Layout title='createTransaction'>
       <div className='pt-16 px-16 mt-[160px]  '>
+        <div
+          className={`customTransition ${
+            otpModal
+              ? "fixed left-0 right-0 top-[160px]"
+              : "fixed left-0 right-0 -top-[1000px]"
+          }`}
+        >
+          <WithdrawalResponse />
+        </div>
         <h2 className='px-8 font-semibold text-2xl'>Withdraw Now</h2>
         <form
           id='myForm'

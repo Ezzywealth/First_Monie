@@ -118,13 +118,6 @@ export const navLinks2 = [
 
 export const navLinks3 = [
   {
-    id: 1,
-    name: "Home",
-    link: "/",
-    icon: <AiOutlineHome />,
-  },
-
-  {
     id: 2,
     name: "Dashboard",
     link: "/dashboard",

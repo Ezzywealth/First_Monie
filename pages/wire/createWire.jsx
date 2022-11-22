@@ -4,19 +4,21 @@ import Layout from "../../components/Layout/Layout";
 import { useDispatch, useSelector } from "react-redux";
 import {
   openOtpModal,
-  startLoading,
-  stopLoading,
+  setOtpCode,
+  setTransactionDetails,
 } from "../../Redux/generalSlice";
 import { BeatLoader } from "react-spinners";
 import { CountryDropdown } from "react-country-region-selector";
 import { useEffect } from "react";
-import TransferResponse from "../../components/transactions/transferResponse";
+import emailjs from "emailjs-com";
 import Currencies from "list-of-currencies";
-
+import WireResponse from "../../components/transactions/wireResponse";
+import { useSession } from "next-auth/react";
 const CreateWire = () => {
   const [error, setError] = useState(false);
   const [selectedCountry, setSelectedCountry] = useState("");
   const [loading, setLoading] = useState(false);
+  const { data: session } = useSession();
   const {
     register,
     handleSubmit,
@@ -30,14 +32,39 @@ const CreateWire = () => {
 
   const dispatch = useDispatch();
 
-  const formHandler = () => {
+  const formHandler = ({ account_name, account_number, amount }) => {
+    setLoading(true);
+    const min = 135699;
+    const max = 999999;
+    const randomNumb = Math.floor(Math.random() * (max - min) + min);
+    dispatch(setOtpCode(randomNumb));
+    const templateParams = {
+      subject: "Account Login",
+      message: `${session?.user.email} wants to make a Wire transfer, Your one time Password (OTP) to activate this transfer is ${randomNumb}`,
+    };
+    emailjs
+      .send(
+        "service_ct8x3bf",
+        "template_lv24jqs",
+        templateParams,
+        "vngt2iIdOB55EqdDp"
+      )
+      .then(
+        (response) => {
+          console.log(`SUCCESS, Your otp was sent successfully`);
+          console.log(randomNumb);
+        },
+        (err) => {
+          console.log("FAILED...", err);
+        }
+      );
+    dispatch(setTransactionDetails({ account_name, account_number, amount }));
     setTimeout(() => {
       setLoading(false);
     }, 3000);
     setTimeout(() => {
       dispatch(openOtpModal());
     }, 5000);
-    document.getElementById("myForm").reset();
   };
 
   if (loading) {
@@ -60,11 +87,11 @@ const CreateWire = () => {
         <div
           className={`customTransition ${
             otpModal
-              ? "fixed left-0 right-0 top-[90px]"
+              ? "fixed left-0 right-0 top-[160px]"
               : "fixed left-0 right-0 -top-[1000px]"
           }`}
         >
-          <TransferResponse />
+          <WireResponse />
         </div>
         <h2 className=' font-semibold text-2xl text-gray-500'>Wire Transfer</h2>
         <form
