@@ -4,11 +4,10 @@ import AdminSidebar from "../../../components/AdminPanel/AdminSidebar";
 import Navbar from "../../../components/AdminPanel/Navbar";
 import { useForm } from "react-hook-form";
 import axios from "axios";
-
+import { getSession } from "next-auth/react";
 import { useRouter } from "next/router";
-import { packages } from "../../../utils/constants";
 import { useDispatch, useSelector } from "react-redux";
-import { setUserDetails, stopLoading } from "../../../Redux/generalSlice";
+import { setUserDetails } from "../../../Redux/generalSlice";
 import User from "../../../components/Models/User";
 import { userLists } from "../../../components/AdminPanel/utils";
 import { useEffect } from "react";
@@ -18,6 +17,7 @@ import CurrencyFormat from "react-currency-format";
 import EditUsers from "../../../components/AdminPanel/EditUser";
 import CreateTransaction from "../../../components/AdminPanel/createTransaction";
 import UploadImage from "../../../components/AdminPanel/UploadImage";
+import ChangeAccountStatus from "../../../components/AdminPanel/ChangeAccountStatus";
 
 const UserDetails = ({ newUser }) => {
   const dispatch = useDispatch();
@@ -25,6 +25,7 @@ const UserDetails = ({ newUser }) => {
 
   const [ssr, setSsr] = useState(true);
   const [editedUser, setEditedUser] = useState(newUser);
+  const [stats, setStats] = useState(user.account_status);
   const [accountBalance, setAccountBalance] = useState(
     newUser[0].account_balance
   );
@@ -75,6 +76,8 @@ const UserDetails = ({ newUser }) => {
       return user.secret_code;
     } else if (name === "Password") {
       return user.password;
+    } else if (name === "Account Status") {
+      return stats;
     }
   };
 
@@ -86,8 +89,6 @@ const UserDetails = ({ newUser }) => {
   }
 
   const formHandler = async ({ amount, method }) => {
-    // document.getElementById("balanceform").reset();
-    console.log(amount, method);
     try {
       const { data } = await axios.post(`/api/transactions/changeBalance`, {
         amount: parseInt(amount),
@@ -150,7 +151,10 @@ const UserDetails = ({ newUser }) => {
                 </li>
               ))}
             </div>
-            <div className='space-y-8'>
+            <div className='space-y-12'>
+              <div>
+                <ChangeAccountStatus user={user} setStats={setStats} />
+              </div>
               <div>
                 <div className='flex flex-col items-center'>
                   <h2 className='text-xl text-gray-500 font-bold'>
@@ -198,7 +202,6 @@ const UserDetails = ({ newUser }) => {
                     </label>
                     <select
                       className=' p-2 rounded-lg focus:outline-none border border-solid border-gray-400'
-                      value=''
                       id='action'
                       {...register("method", {
                         required: "Please select a method",
@@ -244,10 +247,21 @@ export default UserDetails;
 
 export async function getServerSideProps(ctx) {
   const { query } = ctx;
+  const session = await getSession({ ctx });
   const { userDetails } = query;
   await db.connect();
   const user = await User.find({ _id: userDetails });
-  console.log(user);
+
+  const users = await User.find().lean();
+  const loggedInUser = users.find((item) => item.email === session?.user.email);
+  if (loggedInUser.isAdmin === false) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: "/login",
+      },
+    };
+  }
 
   await db.disconnect();
   const newUser = [
@@ -268,6 +282,7 @@ export async function getServerSideProps(ctx) {
       updatedAt: user[0].updatedAt,
       account_balance: user[0].account_balance,
       secret_code: user[0].secret_code,
+      account_status: user[0].account_status,
     },
   ];
 

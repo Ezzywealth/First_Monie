@@ -109,6 +109,10 @@ export const userLists = [
   },
   {
     id: 12,
+    title: "Account Status",
+  },
+  {
+    id: 13,
     title: "Date Joined",
   },
 ];
