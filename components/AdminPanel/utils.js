@@ -119,10 +119,6 @@ export const userLists = [
 
 export const userLists2 = [
   {
-    id: 1,
-    title: "User ID",
-  },
-  {
     id: 2,
     title: "Name",
   },
@@ -134,10 +130,10 @@ export const userLists2 = [
     id: 4,
     title: "Email",
   },
-  {
-    id: 5,
-    title: "Telephone",
-  },
+  // {
+  //   id: 5,
+  //   title: "Telephone",
+  // },
   {
     id: 6,
     title: "Marital Status",

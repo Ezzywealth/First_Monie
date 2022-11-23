@@ -143,11 +143,8 @@ export async function getServerSideProps(ctx) {
   await db.disconnect();
   const newUser = [
     {
-      _id: user[0]?._id,
       name: user[0]?.name,
       email: user[0]?.email,
-      telephone: user[0]?.telephone,
-      password: user[0]?.password,
       userName: user[0]?.userName,
       birthday: user[0]?.birthday,
       sex: user[0]?.sex,
@@ -155,12 +152,8 @@ export async function getServerSideProps(ctx) {
       country: user[0]?.country,
       occupation: user[0]?.occupation,
       account_number: user[0]?.account_number,
-      createdAt: user[0]?.createdAt,
-      updatedAt: user[0]?.updatedAt,
       account_balance: user[0]?.account_balance,
       account_status: user[0]?.account_status,
-      secret_code: user[0]?.secret_code,
-      image: user[0]?.image,
     },
   ];
 

@@ -39,9 +39,7 @@ function convertDocToObj(doc) {
   return doc;
 }
 function convertUsersDocToObj(doc) {
-  doc._id = doc._id.toString();
-  doc.createdAt = doc.createdAt.toString();
-  doc.updatedAt = doc.updatedAt.toString();
+  doc.account_balance = doc.account_balance?.toString();
   return doc;
 }
 function convertTransactionDocToObj(doc) {

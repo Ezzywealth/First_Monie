@@ -26,6 +26,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Layout from "../../components/Layout/Layout";
 
 const Dashboard = ({ transactions, newUser }) => {
+  console.log(newUser);
   const router = useRouter();
   const tableRef = useRef(null);
   const welcomeModal = useSelector((state) => state.generalSlice.welcomeModal);
@@ -405,24 +406,15 @@ export async function getServerSideProps(ctx) {
 
   const newUser = [
     {
-      _id: currentUser[0]?._id,
       name: currentUser[0]?.name,
-      email: currentUser[0]?.email,
       telephone: currentUser[0]?.telephone,
       password: currentUser[0]?.password,
       userName: currentUser[0]?.userName,
-      birthday: currentUser[0]?.birthday,
       country: currentUser[0]?.country,
       sex: currentUser[0]?.sex,
-      marital_status: currentUser[0]?.marital_status,
-      occupation: currentUser[0]?.occupation,
       account_number: currentUser[0]?.account_number,
-      createdAt: currentUser[0]?.createdAt,
-      updatedAt: currentUser[0]?.updatedAt,
       account_balance: currentUser[0]?.account_balance,
       account_status: currentUser[0]?.account_status,
-      secret_code: currentUser[0]?.secret_code,
-      image: currentUser[0]?.image,
     },
   ];
 
