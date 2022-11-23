@@ -2,7 +2,6 @@ import NextAuth from "next-auth";
 import CredentialProvider from "next-auth/providers/credentials";
 import db from "../../../utils/db";
 import User from "../../../components/Models/User";
-import bcryptjs from "bcryptjs";
 import { MongoDBAdapter } from "@next-auth/mongodb-adapter";
 import clientPromise from "../../../utils/mongodb";
 

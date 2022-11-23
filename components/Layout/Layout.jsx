@@ -21,7 +21,7 @@ const Layout = ({ children, title }) => {
       </Head>
       <div className={`fixed  bg-indigo-200 z-40  top-0 w-full`}>
         <div className='relative'>
-          {session?.user ? (
+          {session?.user && title !== "Home" ? (
             <div>
               <DashboardHeader />
               <Navbar />
@@ -53,7 +53,13 @@ const Layout = ({ children, title }) => {
           )}
         </div>
       </div>
-      <main className=' lg:mt-[90px] relative'>{children}</main>
+      <main
+        className={`relative ${
+          session?.user && title !== "Home" ? "mt-[160px] " : "mt-[90px]"
+        }`}
+      >
+        {children}
+      </main>
       <div className=' bottom-0 w-full '>
         <Footer />
       </div>

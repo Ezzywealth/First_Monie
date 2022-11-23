@@ -39,74 +39,6 @@ const FirstmonieAdmin = ({ users, isAdmin }) => {
     );
   }
 
-  // const createTransaction = async () => {
-  //   const max = 1500;
-  //   const min = 50;
-  //   const randNum = Math.ceil(Math.random() * (max - min) + min);
-
-  //   const typesMin = 1;
-  //   const typesMax = 14;
-
-  //   const typesRand = Math.ceil(
-  //     Math.random() * (typesMax - typesMin) + typesMin
-  //   );
-  //   const namesMin = 1;
-  //   const namesMax = 5;
-
-  //   const namesRand = Math.ceil(
-  //     Math.random() * (namesMax - namesMin) + namesMin
-  //   );
-
-  //   const types = [
-  //     "deposit",
-  //     "withdrawals",
-  //     "Dpr",
-  //     "Fdr",
-  //     "deposit",
-  //     "Wire Transfer",
-  //     "Money Request",
-  //     "deposit",
-  //     "Medicine-Transfer Update",
-  //     "Stock Investment-CR",
-  //     "Stock Investment-CR",
-  //     "Motor Repair-CR",
-  //     "Walmart-DR",
-  //     "deposit",
-  //   ];
-
-  //   const names = [
-  //     "Anita",
-  //     "Eunice",
-  //     "Arnold",
-  //     "Mr Johnson",
-  //     "Peter",
-  //     "Stevenson",
-  //     "Monica",
-  //     "Hannity",
-  //     "Justice",
-  //     "Reedston",
-  //   ];
-
-  //   try {
-  //     const { data } = await axios.post(
-  //       `/api/transactions/createTransactions`,
-  //       {
-  //         amount: randNum,
-  //         client: names[namesRand],
-  //         type: types[typesRand],
-  //         TXNID: `FMT886423${randNum}`,
-  //       }
-  //     );
-  //     console.log(data);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
-  // setInterval(() => {
-  //   createTransaction();
-  // }, 86400);
-
   if (loading) {
     return (
       <div className='flex bg-indigo-100 justify-center items-center h-screen w-full'>
@@ -129,8 +61,6 @@ const FirstmonieAdmin = ({ users, isAdmin }) => {
     setNewUsers(filteredUsers);
     setLoading(false);
   };
-
-  console.log(session?.user);
 
   return (
     <div className='relative h-screen overflow-auto bg-indigo-50 w-full  gap-0  grid grid-cols-1 md:grid-cols-4 '>

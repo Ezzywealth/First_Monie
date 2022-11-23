@@ -10,6 +10,7 @@ import { useRouter } from "next/router";
 import { useSelector, useDispatch } from "react-redux";
 import { stopLoading } from "../Redux/generalSlice";
 import Head from "next/head";
+import Script from "next/script";
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }) {
   const [showTopBtn, setShowTopBtn] = useState(false);
@@ -34,16 +35,12 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
   return (
     <SessionProvider session={session}>
       <Head>
-        {/* <Script
+        <Script
           dangerouslySetInnerHTML={{
-            __html: ``,
+            __html: `var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date(); (function(){ var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0]; s1.async=true; s1.src='https://embed.tawk.to/637b7ef5b0d6371309d03f2e/default'; s1.charset='UTF-8'; s1.setAttribute('crossorigin','*'); s0.parentNode.insertBefore(s1,s0); })();`,
           }}
         />
-        <Script
-          src='https://upload-widget.cloudinary.com/global/all.js'
-          strategy='lazyonload'
-          type='text/javascript'
-          /> */}
+
         <script
           src='https://upload-widget.cloudinary.com/global/all.js'
           type='text/javascript'

@@ -59,7 +59,7 @@ const UserDetails = ({ newUser }) => {
     } else if (name === "Occupation") {
       return user.occupation;
     } else if (name === "Date Joined") {
-      return Date.now(user.createdAt);
+      return new Date(user.createdAt).toDateString();
     } else if (name === "Sex") {
       return user.sex;
     } else if (name === "Marital Status") {
@@ -80,6 +80,8 @@ const UserDetails = ({ newUser }) => {
       return stats;
     }
   };
+
+  console.log(new Date("2022-11-23T11:12:32.473+00:00").toDateString());
 
   useEffect(() => {
     setSsr(false);
