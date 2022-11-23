@@ -1,18 +1,14 @@
-import React, { useState } from "react";
-import { useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 
 const ImageUploader = () => {
-  const [ssr, setSsr] = useState(true);
+  const cloudinaryRef = useRef();
   const [isImageUploaded, setIsImageUploaded] = useState(false);
 
   useEffect(() => {
-    setSsr(false);
+    cloudinaryRef.current = window.cloudinary;
   }, []);
-  const uploadToCloudinary = async () => {
-    if (ssr) {
-      return;
-    }
 
+  const uploadToCloudinary = async () => {
     const widget = window.cloudinary.createUploadWidget(
       {
         cloudName: "dk8oefaio",

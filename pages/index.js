@@ -45,7 +45,7 @@ export default Home;
 export async function getServerSideProps(ctx) {
   const session = await getSession({ ctx });
 
-  if (session) {
+  if (session !== null) {
     return {
       redirect: {
         permanent: false,
@@ -57,6 +57,10 @@ export async function getServerSideProps(ctx) {
   return {
     props: {
       user: "user not logged in",
+      redirect: {
+        permanent: false,
+        destination: "/",
+      },
     },
   };
 }

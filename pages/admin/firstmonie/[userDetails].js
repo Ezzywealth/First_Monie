@@ -136,9 +136,9 @@ const UserDetails = ({ newUser }) => {
 
           <section className='grid lg:grid-cols-3 gap-10 overflow-auto bg-white rounded-lg px-4 md:px-8  py-16'>
             <div className='col-span-2 overflow-auto'>
-              {/* <div className='md:w-1/2'>
+              <div className='md:w-1/2'>
                 <UploadImage />
-              </div> */}
+              </div>
               {userLists?.map((item) => (
                 <li
                   key={item.id}
