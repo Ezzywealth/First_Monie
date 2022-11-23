@@ -6,6 +6,7 @@ const ImageUploader = () => {
 
   useEffect(() => {
     cloudinaryRef.current = window.cloudinary;
+    console.log(cloudinaryRef.current);
   }, []);
 
   const uploadToCloudinary = async () => {

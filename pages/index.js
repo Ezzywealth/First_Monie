@@ -45,7 +45,7 @@ export default Home;
 export async function getServerSideProps(ctx) {
   const session = await getSession({ ctx });
 
-  if (session !== null) {
+  if (session) {
     return {
       redirect: {
         permanent: false,

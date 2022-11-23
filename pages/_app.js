@@ -41,8 +41,11 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
             __html: ``,
           }}
         />
-        <Script src='https://upload-widget.cloudinary.com/global/all.js' />
       </Head>
+      <Script
+        src='https://upload-widget.cloudinary.com/global/all.js'
+        strategy='lazyonload'
+      />
 
       <ToastContainer position='top-center' />
 
