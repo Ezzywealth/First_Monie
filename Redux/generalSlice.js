@@ -1,4 +1,5 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import axios from "axios";
 
 const initialState = {
   isSidebarOpen: false,
@@ -16,7 +17,20 @@ const initialState = {
   welcomeModal: false,
   loginDetails: {},
   account_balance: 0,
+  transactions: [],
+  transactions_loading: false,
+  transactions_error: "",
 };
+
+export const fetchTransactions = createAsyncThunk(
+  "transactions/fetchTransactions",
+  async (id) => {
+    const { data } = await axios.post(`/api/transactions/fetchTransactions`, {
+      id,
+    });
+    return data;
+  }
+);
 
 const generalSlice = createSlice({
   name: "generalSlice",
@@ -88,6 +102,22 @@ const generalSlice = createSlice({
     setAccountBalance: (state, action) => {
       state.account_balance = action.payload;
     },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(fetchTransactions.pending, (state) => {
+      state.transactions_loading = true;
+    });
+    builder.addCase(fetchTransactions.fulfilled, (state, action) => {
+      (state.transactions_loading = false),
+        (state.transactions = action.payload),
+        (state.transactions_error = "");
+    });
+    builder.addCase(fetchTransactions.rejected, (state) => {
+      (state.transactions_loading = false),
+        (state.transactions = []),
+        (state.transactions_error =
+          "There was an error fetching the transactions");
+    });
   },
 });
 

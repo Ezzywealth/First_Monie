@@ -4,7 +4,7 @@ import { accountSummary, dashboardData } from "../../utils/constants";
 import { useSession, getSession } from "next-auth/react";
 import { MdContentCopy } from "react-icons/md";
 import { toast } from "react-toastify";
-import Transaction from "../../components/Models/Transactions";
+
 import db from "../../utils/db";
 import User from "../../components/Models/User";
 import CurrencyFormat from "react-currency-format";
@@ -19,16 +19,19 @@ import Welcome from "../../components/Layout/Welcome";
 
 import {
   closeWelcomeModal,
+  fetchTransactions,
   setAccountBalance,
   setUserDetails,
 } from "../../Redux/generalSlice";
 import { useDispatch, useSelector } from "react-redux";
 import Layout from "../../components/Layout/Layout";
+import axios from "axios";
 
-const Dashboard = ({ transactions, newUser }) => {
+const Dashboard = ({ newUser }) => {
   console.log(newUser);
   const router = useRouter();
   const tableRef = useRef(null);
+  const [transactions, setTransactions] = useState([]);
   const welcomeModal = useSelector((state) => state.generalSlice.welcomeModal);
   const dispatch = useDispatch();
   const { data: session } = useSession();
@@ -38,7 +41,21 @@ const Dashboard = ({ transactions, newUser }) => {
   const numOfPage = Math.ceil(transactions.length / itemsPerPage);
   const indexOfLastItem = curPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const user = useSelector((state) => state.generalSlice.user);
+
+  const id = session?.user._id;
+  const fetchTrans = async () => {
+    const { data } = await axios.post(`/api/transactions/fetchTransactions`, {
+      id,
+    });
+    setTransactions(data.data);
+  };
+
+  useEffect(() => {
+    if (id) {
+      fetchTrans();
+    }
+  }, [id]);
+
   useEffect(() => {
     dispatch(setAccountBalance(newUser[0].account_balance));
     dispatch(setUserDetails(newUser[0]));
@@ -392,7 +409,6 @@ export async function getServerSideProps(ctx) {
   await db.connect();
   const session = await getSession({ ctx });
   const { user } = session;
-  const data = await Transaction.find({ user: user._id }).lean();
   await db.disconnect();
   const currentUser = await User.find({ _id: session?.user._id });
   if (!currentUser) {
@@ -420,7 +436,6 @@ export async function getServerSideProps(ctx) {
 
   return {
     props: {
-      transactions: data.map(db.convertTransactionDocToObj).reverse(),
       newUser: newUser.map(db.convertUsersDocToObj),
     },
   };
