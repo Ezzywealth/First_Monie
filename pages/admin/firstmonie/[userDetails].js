@@ -135,7 +135,7 @@ const UserDetails = ({ newUser }) => {
           </section>
 
           <section className='grid lg:grid-cols-3 gap-10 overflow-auto bg-white rounded-lg px-4 md:px-8  py-16'>
-            <div className='col-span-2 overflow-auto'>
+            <div className='col-span-2 overflow-auto border p-3 border-solid border-gray-400'>
               <div className='md:w-1/2'>
                 <UploadImage />
               </div>
@@ -152,10 +152,10 @@ const UserDetails = ({ newUser }) => {
               ))}
             </div>
             <div className='space-y-12'>
-              <div>
+              <div className='border p-3 border-solid border-gray-400'>
                 <ChangeAccountStatus user={user} setStats={setStats} />
               </div>
-              <div>
+              <div className='border p-3 border-solid border-gray-400'>
                 <div className='flex flex-col items-center'>
                   <h2 className='text-xl text-gray-500 font-bold'>
                     Available Balance
@@ -283,6 +283,7 @@ export async function getServerSideProps(ctx) {
       account_balance: user[0].account_balance,
       secret_code: user[0].secret_code,
       account_status: user[0].account_status,
+      image: user[0].image,
     },
   ];
 

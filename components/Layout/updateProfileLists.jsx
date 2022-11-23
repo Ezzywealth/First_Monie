@@ -7,7 +7,7 @@ import { BeatLoader } from "react-spinners";
 import CurrencyFormat from "react-currency-format";
 import { BsPersonPlus } from "react-icons/bs";
 import { AiOutlineLogout } from "react-icons/ai";
-
+import Cookies from "js-cookie";
 const lists = [
   {
     id: 1,
@@ -36,6 +36,7 @@ const UpdateProfile = () => {
   const account_balance = useSelector(
     (state) => state.generalSlice.account_balance
   );
+  const user = useSelector((state) => state.generalSlice.user);
 
   if (loading) {
     return (
@@ -67,7 +68,7 @@ const UpdateProfile = () => {
         <h5 className='flex items-center gap-4 relative text-sm font-semibold italic'>
           <div className=''>
             <Image
-              src='/profile_fmb.jpeg'
+              src={user.image ? user.image : Cookies.get("profileImage")}
               alt='logo'
               className='cursor-pointer rounded-full h-8 w-8 shadow-2xl scale-150  customTransition ml-2'
               width={80}

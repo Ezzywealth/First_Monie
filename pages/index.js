@@ -6,12 +6,24 @@ import Contact from "../components/Homepage/Contact";
 import Expectation from "../components/Homepage/Expectation";
 import Services from "../components/Services";
 import { getSession, useSession } from "next-auth/react";
-import { useEffect, useLayoutEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { BeatLoader } from "react-spinners";
 import { useRouter } from "next/router";
 
 const Home = ({ user }) => {
   const [loading, setLoading] = useState(false);
+  const { data: session } = useSession();
+  const router = useRouter();
+  console.log(session);
+  useEffect(() => {
+    setLoading(true);
+    if (session?.user) {
+      router.push("/dashboard");
+    } else {
+      router.push("/");
+      setLoading(false);
+    }
+  }, []);
 
   if (loading) {
     return (

@@ -154,4 +154,8 @@ export const userLists2 = [
     id: 9,
     title: "Occupation",
   },
+  {
+    id: 10,
+    title: "Account Status",
+  },
 ];

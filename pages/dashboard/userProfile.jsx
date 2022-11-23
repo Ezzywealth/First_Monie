@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { BiArrowBack } from "react-icons/bi";
 import { BsLink45Deg } from "react-icons/bs";
+import { useSelector } from "react-redux";
 import { BeatLoader } from "react-spinners";
 import { userLists2 } from "../../components/AdminPanel/utils";
 import Layout from "../../components/Layout/Layout";
@@ -14,6 +15,7 @@ const UserProfile = ({ user }) => {
   const { data: session } = useSession();
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+
   console.log(user);
   const handleUserList = (name) => {
     if (name === "User ID") {
@@ -38,6 +40,18 @@ const UserProfile = ({ user }) => {
       return user.email;
     } else if (name === "Account Number") {
       return user.account_number;
+    } else if (name === "Account Status") {
+      return (
+        <span
+          className={`${
+            user.account_status === "active"
+              ? "text-green-500"
+              : "text-orange-500"
+          }`}
+        >
+          {user.account_status}
+        </span>
+      );
     }
   };
   const handleTransfer = () => {
@@ -60,7 +74,7 @@ const UserProfile = ({ user }) => {
   }
   return (
     <Layout title={session?.user.name}>
-      <main className='md:mt-[160px] py-16 px-4 bg-gray-50 border border-solid border-gray-300 md:px-8 lg:px-16'>
+      <main className='mt-[160px]  py-16 px-4 bg-gray-50 border border-solid border-gray-300 md:px-8 lg:px-16'>
         <div className='flex justify-end mb-8'>
           <button
             className='bg-green-500 rounded-lg hover:scale-105 customTransition items-center px-3 py-1 flex gap-2 text-white'
@@ -75,7 +89,7 @@ const UserProfile = ({ user }) => {
           <section className='col-span-1 border border-solid border-gray-300 flex flex-col py-8 items-center justify-center'>
             <div className='h-56 w-56 flex  justify-center bg-white p-3 border border-solid border-gray-300 rounded-lg'>
               <Image
-                src='/profile_fmb.jpeg'
+                src={user.image}
                 height={100}
                 width={100}
                 alt='profile pic'
@@ -95,7 +109,7 @@ const UserProfile = ({ user }) => {
                   className='list-none border-y border-solid border-gray-300 p-2 grid grid-cols-2 gap-4  md:gap-10 lg:gap-16'
                 >
                   <span className='text-gray-500 font-bold'>{item.title}</span>
-                  <span className='text-sm tracking-wider'>
+                  <span className={`text-base tracking-wider font-bold `}>
                     {handleUserList(item.title)}
                   </span>
                 </li>
@@ -142,7 +156,9 @@ export async function getServerSideProps(ctx) {
       createdAt: user[0]?.createdAt,
       updatedAt: user[0]?.updatedAt,
       account_balance: user[0]?.account_balance,
+      account_status: user[0]?.account_status,
       secret_code: user[0]?.secret_code,
+      image: user[0]?.image,
     },
   ];
 

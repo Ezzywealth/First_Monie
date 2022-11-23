@@ -16,6 +16,7 @@ import { MdArrowRight } from "react-icons/md";
 import { AiOutlineSetting } from "react-icons/ai";
 import { BsLink45Deg } from "react-icons/bs";
 import Welcome from "../../components/Layout/Welcome";
+import Cookies from "js-cookie";
 import {
   closeWelcomeModal,
   setAccountBalance,
@@ -36,9 +37,10 @@ const Dashboard = ({ transactions, newUser }) => {
   const numOfPage = Math.ceil(transactions.length / itemsPerPage);
   const indexOfLastItem = curPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-
+  const user = useSelector((state) => state.generalSlice.user);
   useEffect(() => {
     dispatch(setAccountBalance(newUser[0].account_balance));
+    Cookies.set("profileImage", newUser[0].image);
     dispatch(setUserDetails(newUser[0]));
     setTimeout(() => {
       dispatch(closeWelcomeModal());
@@ -174,7 +176,7 @@ const Dashboard = ({ transactions, newUser }) => {
               </h2>
               <div className='h-32 md:h-28 w-32 md:w-28 flex justify-center'>
                 <Image
-                  src='/profile_fmb.jpeg'
+                  src={user.image}
                   height={100}
                   width={100}
                   alt='profile pic'
@@ -402,14 +404,6 @@ export async function getServerSideProps(ctx) {
     };
   }
 
-  // if (!data) {
-  //   return {
-  //     redirect: {
-  //       permanent: false,
-  //       destination: "/500",
-  //     },
-  //   };
-  // }
   const newUser = [
     {
       _id: currentUser[0]?._id,
@@ -429,6 +423,7 @@ export async function getServerSideProps(ctx) {
       account_balance: currentUser[0]?.account_balance,
       account_status: currentUser[0]?.account_status,
       secret_code: currentUser[0]?.secret_code,
+      image: currentUser[0]?.image,
     },
   ];
 
