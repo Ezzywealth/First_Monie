@@ -1,26 +1,17 @@
 import React, { useState, useEffect } from "react";
-import { useForm } from "react-hook-form";
 import Image from "next/image";
 import ImageUploader from "../Layout/ImageUploader";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { useSession } from "next-auth/react";
 import { useSelector } from "react-redux";
-const UploadImage = () => {
+const UploadImage = ({ id, newUser }) => {
+  const [imageUrl, setImageUrl] = useState(newUser[0].image);
   const user = useSelector((state) => state.generalSlice.user);
-  console.log(user);
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
-  const { data: session } = useSession();
-  const [imageUrl, setImageUrl] = useState(user.image);
 
   const changeImageUrl = async () => {
     try {
       const { data } = await axios.put(`/api/transactions/changeImage`, {
-        id: session?.user._id,
+        id,
         imageUrl,
       });
     } catch (error) {
@@ -29,7 +20,7 @@ const UploadImage = () => {
   };
   useEffect(() => {
     changeImageUrl();
-  }, [user.image]);
+  }, [imageUrl]);
 
   return (
     <div className='space-y-4'>

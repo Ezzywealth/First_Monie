@@ -15,9 +15,9 @@ const userSchema = new mongoose.Schema(
     occupation: { type: String, required: true },
     account_number: { type: String, required: false, unique: true },
     secret_code: { type: String, required: false, default: "0000000" },
-    account_balance: { type: Number, required: false },
+    account_balance: { type: Number, required: true, default: 0 },
     account_status: { type: String, required: true, default: "active" },
-    image: { type: String, required: false },
+    image: { type: String, required: true, default: "/hero8.jpg" },
   },
   {
     timestamps: true,

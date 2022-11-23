@@ -16,7 +16,6 @@ const ImageUploader = ({ setImageUrl }) => {
       },
       (error, result) => {
         if (!error && result && result.event === "success") {
-          console.log("Uploaded", result.info);
           setImageUrl(result.info.url);
         } else if (error) {
           console.log(error);

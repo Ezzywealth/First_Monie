@@ -25,7 +25,7 @@ const UserDetails = ({ newUser }) => {
 
   const [ssr, setSsr] = useState(true);
   const [editedUser, setEditedUser] = useState(newUser);
-  const [stats, setStats] = useState(user.account_status);
+  const [stats, setStats] = useState(newUser[0].account_status);
   const [accountBalance, setAccountBalance] = useState(
     newUser[0].account_balance
   );
@@ -137,7 +137,7 @@ const UserDetails = ({ newUser }) => {
           <section className='grid lg:grid-cols-3 gap-10 overflow-auto bg-white rounded-lg px-4 md:px-8  py-16'>
             <div className='col-span-2 overflow-auto border p-3 border-solid border-gray-400'>
               <div className='md:w-1/2'>
-                <UploadImage />
+                <UploadImage newUser={newUser} id={newUser[0]._id} />
               </div>
               {userLists?.map((item) => (
                 <li

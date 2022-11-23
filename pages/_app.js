@@ -9,11 +9,9 @@ import { Provider } from "react-redux";
 import { useRouter } from "next/router";
 import { useSelector, useDispatch } from "react-redux";
 import { stopLoading } from "../Redux/generalSlice";
-import Script from "next/script";
 import Head from "next/head";
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }) {
-  const [ssr, setSsr] = useState(true);
   const [showTopBtn, setShowTopBtn] = useState(false);
 
   const handleTop = () => {
