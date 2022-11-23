@@ -42,25 +42,21 @@ const Home = ({ user }) => {
 
 export default Home;
 
-export async function getServerSideProps(ctx) {
-  const session = await getSession({ ctx });
+export async function getServerSideProps() {
+  const session = await getSession();
 
-  if (session) {
-    return {
-      redirect: {
-        permanent: false,
-        destination: "/dashboard",
-      },
-    };
-  }
+  // if (session) {
+  //   return {
+  //     redirect: {
+  //       permanent: false,
+  //       destination: "/",
+  //     },
+  //   };
+  // }
 
   return {
     props: {
       user: "user not logged in",
-      redirect: {
-        permanent: false,
-        destination: "/",
-      },
     },
   };
 }

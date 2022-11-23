@@ -36,16 +36,21 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
   return (
     <SessionProvider session={session}>
       <Head>
-        <Script
+        {/* <Script
           dangerouslySetInnerHTML={{
             __html: ``,
           }}
         />
+        <Script
+          src='https://upload-widget.cloudinary.com/global/all.js'
+          strategy='lazyonload'
+          type='text/javascript'
+          /> */}
+        <script
+          src='https://upload-widget.cloudinary.com/global/all.js'
+          type='text/javascript'
+        ></script>
       </Head>
-      <Script
-        src='https://upload-widget.cloudinary.com/global/all.js'
-        strategy='lazyonload'
-      />
 
       <ToastContainer position='top-center' />
 
