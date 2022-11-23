@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
-import { generateSignature } from "../../utils/generateSignature";
+
 const ImageUploader = () => {
   const [ssr, setSsr] = useState(true);
   const [isImageUploaded, setIsImageUploaded] = useState(false);
@@ -18,8 +18,6 @@ const ImageUploader = () => {
         cloudName: "dk8oefaio",
         uploadPreset: "ml_default",
         resourceType: "image",
-        apikey: process.env.NEXT_CLOUDINARY_API_KEY,
-        uploadSignature: generateSignature,
       },
       (error, result) => {
         if (!error && result && result.event === "success") {
