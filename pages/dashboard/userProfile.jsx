@@ -89,7 +89,7 @@ const UserProfile = ({ user }) => {
           <section className='col-span-1 border border-solid border-gray-300 flex flex-col py-8 items-center justify-center'>
             <div className='h-56 w-56 flex  justify-center bg-white p-3 border border-solid border-gray-300 rounded-lg'>
               <Image
-                src={session?.user.image || ""}
+                src={session?.user.image}
                 height={100}
                 width={100}
                 alt='profile pic'

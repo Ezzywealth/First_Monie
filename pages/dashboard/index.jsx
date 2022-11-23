@@ -196,8 +196,8 @@ const Dashboard = ({ newUser }) => {
                   src={session?.user.image}
                   height={100}
                   width={100}
+                  layout='responsive'
                   alt='profile pic'
-                  // layout='responsive'
                   className='w-full'
                 />
               </div>
@@ -408,17 +408,8 @@ export default Dashboard;
 export async function getServerSideProps(ctx) {
   await db.connect();
   const session = await getSession({ ctx });
-  const { user } = session;
   await db.disconnect();
   const currentUser = await User.find({ _id: session?.user._id });
-  if (!currentUser) {
-    return {
-      redirect: {
-        permanent: false,
-        destination: "/login",
-      },
-    };
-  }
 
   const newUser = [
     {
