@@ -25,6 +25,7 @@
     "nodemailer": "^6.8.0",
     "react": "18.2.0",
     "react-cloudinary-upload-widget": "^1.6.0",
+    "react-countdown-circle-timer": "^3.0.9",
     "react-country-region-selector": "^3.6.1",
     "react-currency-format": "^1.1.0",
     "react-dom": "18.2.0",

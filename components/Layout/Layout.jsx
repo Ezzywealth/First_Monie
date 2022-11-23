@@ -7,12 +7,15 @@ import { useSelector } from "react-redux";
 import Sidebar from "./Sidebar";
 import DashboardHeader from "./DashboardHeader";
 import { useSession } from "next-auth/react";
+import CountdownTimer from "../transactions/CountdownTimer";
 const Layout = ({ children, title }) => {
   const { data: session } = useSession();
   const isSidebarOpen = useSelector(
     (state) => state.generalSlice.isSidebarOpen
   );
-
+  const countdownTimer = useSelector(
+    (state) => state.generalSlice.countdownTimer
+  );
   return (
     <div className='relative h-screen w-full'>
       <Head>
@@ -60,6 +63,11 @@ const Layout = ({ children, title }) => {
       >
         {children}
       </main>
+      {countdownTimer && (
+        <div className='fixed  top-0 h-screen bg-green-50 w-full bottom-0  left-0 right-0 flex justify-center items-center z-50'>
+          <CountdownTimer />
+        </div>
+      )}
       <div className=' bottom-0 w-full '>
         <Footer />
       </div>

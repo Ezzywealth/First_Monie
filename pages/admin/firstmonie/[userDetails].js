@@ -120,7 +120,7 @@ const UserDetails = ({ newUser }) => {
         <AdminSidebar />
       </div>
       <div
-        className={`fixed  transition-all duration-500 ease-linear col-span-2 hidden lg:contents  h-screen bottom-0 left-0 z-50 `}
+        className={`fixed  transition-all duration-500 ease-linear col-span-2 hidden md:contents  h-screen bottom-0 left-0 z-50 `}
       >
         <AdminSidebar />
       </div>
@@ -274,7 +274,7 @@ export async function getServerSideProps(ctx) {
       telephone: user[0].telephone,
       password: user[0].password,
       userName: user[0].userName,
-      country: user[0].country || "",
+      country: user[0].country,
       birthday: user[0].birthday,
       sex: user[0].sex,
       marital_status: user[0].marital_status,

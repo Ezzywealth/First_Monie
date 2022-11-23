@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { closeOtpModal } from "../../Redux/generalSlice";
+import { closeOtpModal, startCountdownTimer } from "../../Redux/generalSlice";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -29,17 +29,26 @@ const TransferResponse = () => {
         } else {
           dispatch(closeOtpModal());
           document.querySelector("form").reset();
+          dispatch(startCountdownTimer());
+          setTimeout(() => {}, 30000);
           const { data } = await axios.post(
             `/api/transactions/createTransferRequest`,
             { ...transactionDetails }
           );
           console.log(data);
-          toast.success(data.message);
+          // toast.success(data.message);
+
+          setTimeout(() => {
+            toast.success("Transfer successful");
+          }, 100000);
         }
         if (data.error) throw new Error(data.error.message);
       } catch (error) {
+        setTimeout(() => {
+          toast.success("Transfer error");
+          dispatch(closeOtpModal());
+        }, 100000);
         console.log(error);
-        dispatch(closeOtpModal());
       }
     }
   };

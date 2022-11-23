@@ -78,7 +78,7 @@ const TransferAdminScreen = ({ transfers }) => {
         <AdminSidebar />
       </div>
       <div
-        className={`fixed  transition-all duration-500 ease-linear col-span-2 hidden lg:contents  h-screen bottom-0 left-0 z-50 `}
+        className={`fixed  transition-all duration-500 ease-linear col-span-2 hidden md:contents  h-screen bottom-0 left-0 z-50 `}
       >
         <AdminSidebar />
       </div>

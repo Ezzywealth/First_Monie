@@ -20,6 +20,7 @@ const initialState = {
   transactions: [],
   transactions_loading: false,
   transactions_error: "",
+  countdownTimer: false,
 };
 
 export const fetchTransactions = createAsyncThunk(
@@ -102,6 +103,12 @@ const generalSlice = createSlice({
     setAccountBalance: (state, action) => {
       state.account_balance = action.payload;
     },
+    startCountdownTimer: (state, action) => {
+      state.countdownTimer = true;
+    },
+    stopCountdownTimer: (state, action) => {
+      state.countdownTimer = false;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchTransactions.pending, (state) => {
@@ -145,4 +152,6 @@ export const {
   closeWelcomeModal,
   openWelcomeModal,
   setOtpCode,
+  startCountdownTimer,
+  stopCountdownTimer,
 } = generalSlice.actions;
