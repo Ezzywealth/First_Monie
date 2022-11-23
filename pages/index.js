@@ -5,23 +5,13 @@ import Bank from "../components/Homepage/Bank";
 import Contact from "../components/Homepage/Contact";
 import Expectation from "../components/Homepage/Expectation";
 import Services from "../components/Services";
-import { useSession } from "next-auth/react";
+import { getSession, useSession } from "next-auth/react";
 import { useEffect, useLayoutEffect, useState } from "react";
 import { BeatLoader } from "react-spinners";
 import { useRouter } from "next/router";
 
-const Home = () => {
-  const { data: session } = useSession();
-  const router = useRouter();
+const Home = ({ user }) => {
   const [loading, setLoading] = useState(false);
-  useEffect(() => {
-    setLoading(true);
-    if (session?.user) {
-      router.push("/dashboard");
-      setLoading(false);
-    }
-  }, []),
-    console.log(session);
 
   if (loading) {
     return (
@@ -51,3 +41,22 @@ const Home = () => {
 };
 
 export default Home;
+
+export async function getServerSideProps(ctx) {
+  const session = await getSession({ ctx });
+
+  if (session && session?.user) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: "/dashboard",
+      },
+    };
+  }
+
+  return {
+    props: {
+      user: session?.user || {},
+    },
+  };
+}
