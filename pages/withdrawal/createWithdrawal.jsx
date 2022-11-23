@@ -81,7 +81,7 @@ const CreateTransactionScreen = () => {
   }
   return (
     <Layout title='createTransaction'>
-      <div className='pt-16 px-16 mt-[160px]  '>
+      <div className='pt-16 px-4 md:px-8 lg:px-16 mt-[160px]  '>
         <div
           className={`customTransition ${
             otpModal

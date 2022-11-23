@@ -155,7 +155,7 @@ const Dashboard = ({ newUser }) => {
   return (
     <div className='w-full'>
       <Layout title='dashboard'>
-        <div className='md:mt-[150px] py-44 md:py-8 bgContact  px-4 md:px-10 lg:px-16'>
+        <div className='md:mt-[150px] py-8 md:py-8 bgContact  px-4 md:px-10 lg:px-16'>
           <div
             className={`transition-all duration-700 ease-in-out ${
               welcomeModal

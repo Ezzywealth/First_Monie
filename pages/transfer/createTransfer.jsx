@@ -164,7 +164,7 @@ const CreateTransfer = () => {
                 )}
               </div>
               <div className='flex flex-col font-semibold space-y-2 mb-2'>
-                <label htmlFor='routing'>Routing Number</label>
+                <label htmlFor='routing'>Routing Number / IBAN</label>
                 <input
                   id='routing'
                   placeholder='routing number'
