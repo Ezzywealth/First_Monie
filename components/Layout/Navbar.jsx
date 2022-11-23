@@ -30,8 +30,7 @@ const Navbar = () => {
   const activeNavLink = useSelector(
     (state) => state.generalSlice.activeNavLink
   );
-  const user = useSelector((state) => state.generalSlice.user);
-  console.log(activeNavLink);
+
   const query = router;
 
   useEffect(() => {
@@ -154,7 +153,7 @@ const Navbar = () => {
           <h5 className='relative flex items-center gap-2 text-sm font-semibold italic'>
             <div className=''>
               <Image
-                src={user.image ? user.image : Cookies.get("profileImage")}
+                src={session?.user.image}
                 alt='logo'
                 className='cursor-pointer rounded-full h-8 w-8 shadow-2xl scale-150  customTransition ml-2'
                 width={80}

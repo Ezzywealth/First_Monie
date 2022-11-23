@@ -8,18 +8,12 @@ import { MdOutlineKeyboardArrowUp } from "react-icons/md";
 import Button2 from "./Button2";
 import { useSession } from "next-auth/react";
 
-import Cookies from "js-cookie";
 const DashboardHeader = () => {
-  const account_balance = useSelector(
-    (state) => state.generalSlice.account_balance
-  );
-  const user = useSelector((state) => state.generalSlice.user);
   const dispatch = useDispatch();
   const isSidebarOpen = useSelector(
     (state) => state.generalSlice.isSidebarOpen
   );
   const { data: session } = useSession();
-  console.log(isSidebarOpen);
   return (
     <div className='text-white  flex items-center h-[100px] px-3 md:px-6 border-b border-solid  border-gray-400'>
       <div className='flex justify-between items-center relative w-full'>
@@ -67,7 +61,7 @@ const DashboardHeader = () => {
             <div className='flex gap-3 items-center'>
               <div className=' flex justify-center flex-col items-center gap-2'>
                 <Image
-                  src={user.image ? user.image : Cookies.get("profileImage")}
+                  src={session?.user.image}
                   alt='logo'
                   className='cursor-pointer rounded-full h-8 w-8 shadow-2xl scale-150  customTransition ml-2'
                   width={80}

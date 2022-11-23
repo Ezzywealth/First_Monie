@@ -29,7 +29,6 @@ const NavbarOffline = () => {
   const activeNavLink = useSelector(
     (state) => state.generalSlice.activeNavLink
   );
-  console.log(activeNavLink);
   const query = router;
 
   useEffect(() => {
@@ -167,7 +166,7 @@ const NavbarOffline = () => {
               <h5 className='flex items-center gap-2 relative text-sm font-semibold italic'>
                 <div className=''>
                   <Image
-                    src='/profile_fmb.jpeg'
+                    src={session?.user.image}
                     alt='logo'
                     className='cursor-pointer rounded-full h-8 w-8 shadow-2xl scale-150  customTransition ml-2'
                     width={80}

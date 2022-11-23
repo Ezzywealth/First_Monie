@@ -39,6 +39,7 @@ export default NextAuth({
             name: user.userName,
             email: user.email,
             isAdmin: user.isAdmin,
+            image: user.image,
           };
         }
         throw new Error("Invalid account number or password");

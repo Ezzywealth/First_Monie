@@ -38,6 +38,7 @@ const Home = ({ user }) => {
       </div>
     );
   }
+
   return (
     <Layout title='Home'>
       <main className='flex flex-col '>
@@ -56,15 +57,6 @@ export default Home;
 
 export async function getServerSideProps() {
   const session = await getSession();
-
-  // if (session) {
-  //   return {
-  //     redirect: {
-  //       permanent: false,
-  //       destination: "/",
-  //     },
-  //   };
-  // }
 
   return {
     props: {

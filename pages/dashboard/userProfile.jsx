@@ -89,7 +89,7 @@ const UserProfile = ({ user }) => {
           <section className='col-span-1 border border-solid border-gray-300 flex flex-col py-8 items-center justify-center'>
             <div className='h-56 w-56 flex  justify-center bg-white p-3 border border-solid border-gray-300 rounded-lg'>
               <Image
-                src={user.image}
+                src={session?.user.image || ""}
                 height={100}
                 width={100}
                 alt='profile pic'
@@ -109,7 +109,9 @@ const UserProfile = ({ user }) => {
                   className='list-none border-y border-solid border-gray-300 p-2 grid grid-cols-2 gap-4  md:gap-10 lg:gap-16'
                 >
                   <span className='text-gray-500 font-bold'>{item.title}</span>
-                  <span className={`text-base tracking-wider font-bold `}>
+                  <span
+                    className={`text-base text-gray-700 capitalize tracking-wider font-bold `}
+                  >
                     {handleUserList(item.title)}
                   </span>
                 </li>
@@ -137,7 +139,7 @@ export default UserProfile;
 export async function getServerSideProps(ctx) {
   await db.connect();
   const session = await getSession({ ctx });
-  const user = await User.find({ email: session.user.email });
+  const user = await User.find({ _id: session?.user._id });
   await db.disconnect();
   const newUser = [
     {
