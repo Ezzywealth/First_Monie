@@ -7,6 +7,7 @@ const initialState = {
   otpCode: 0,
   otpModal: false,
   transactionDetails: {},
+  transactionStatement: {},
   activeNavLink: "",
   isAdminSidebarOpen: false,
   loanResponse: false,
@@ -60,6 +61,9 @@ const generalSlice = createSlice({
     },
     setTransactionDetails: (state, action) => {
       state.transactionDetails = action.payload;
+    },
+    setTransactionStatement: (state, action) => {
+      state.transactionStatement = action.payload;
     },
     setActiveNavLink: (state, action) => {
       state.activeNavLink = action.payload;
@@ -130,6 +134,7 @@ const generalSlice = createSlice({
 
 export default generalSlice.reducer;
 export const {
+  setTransactionStatement,
   setAccountBalance,
   openSidebar,
   closeSidebar,

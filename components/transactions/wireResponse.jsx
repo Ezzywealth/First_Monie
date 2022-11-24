@@ -24,6 +24,13 @@ const WireResponse = () => {
   const otpCode = useSelector((state) => state.generalSlice.otpCode);
 
   const handleForm = async ({ code }) => {
+    const options = {
+      month: "short",
+      day: "numeric",
+      year: "numeric",
+    };
+
+    const createdDate = new Date().toLocaleString("en-US", options);
     if (code) {
       try {
         if (parseInt(otpCode) !== parseInt(code)) {
@@ -37,12 +44,13 @@ const WireResponse = () => {
             ...transactionDetails,
             id: session?.user._id,
             email: session?.user.email,
+            createdDate,
           });
           console.log(data);
 
           setTimeout(() => {
             toast.success("Wire Transfer successful");
-            router.push("/dashboard");
+            router.push("/transactionDetails");
           }, 100000);
         }
       } catch (error) {

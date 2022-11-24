@@ -32,7 +32,7 @@ const links = [
   {
     id: 3,
     title: "Users",
-    link: "/admin/firstmonie#users",
+    link: "/admin/firstmonie",
     icon: <BsPeopleFill />,
   },
   {
@@ -99,7 +99,7 @@ const AdminSidebar = () => {
   }
 
   return (
-    <div className='relative z-50 h-screen w-full relative bg-amber-900 z-50 p-5 pt-4 pb-8 pr-2'>
+    <div className='relative z-50 h-screen w-full bg-amber-900 p-5 pt-4 pb-8 pr-2'>
       <span className='visible flex justify-end cursor-pointer md:invisible'>
         <BsArrowLeftCircle
           className='text-indigo-500 w-8 h-8 mb-8 pr-2'

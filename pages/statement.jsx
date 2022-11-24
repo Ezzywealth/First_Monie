@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Layout from "../components/Layout/Layout";
-import { useSession, getSession } from "next-auth/react";
+import { getSession } from "next-auth/react";
 import Transaction from "../components/Models/Transactions";
 import db from "../utils/db";
 import User from "../components/Models/User";
@@ -14,16 +14,12 @@ const Dashboard = ({ transactions, newUser }) => {
   const [loading, setLoading] = useState();
   const tableRef = useRef(null);
   const router = useRouter();
-  const { data: session } = useSession();
-  console.log(newUser);
 
   const handlePrint = useReactToPrint({
     content: () => tableRef.current,
     documentTitle: "Account Statement",
-    onafterprint: () => router.push("/dashboard"),
+    onAfterPrint: () => router.push("/dashboard"),
   });
-
-  // handlePrint();
 
   if (loading) {
     return (

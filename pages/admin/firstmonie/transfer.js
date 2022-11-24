@@ -195,7 +195,7 @@ export async function getServerSideProps() {
 
   return {
     props: {
-      transfers: data.map(db.convertDocToObj).reverse(),
+      transfers: data.map(db.convertTransactionDocToObj).reverse(),
     },
   };
 }

@@ -8,6 +8,7 @@ import {
   openOtpModal,
   setOtpCode,
   setTransactionDetails,
+  setTransactionStatement,
 } from "../../Redux/generalSlice";
 import { BeatLoader } from "react-spinners";
 import { useState } from "react";
@@ -20,6 +21,10 @@ const CreateTransfer = () => {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
   const [selectedCountry, setSelectedCountry] = useState("");
+  const transactionStatement = useSelector(
+    (state) => state.generalSlice.transactionStatement
+  );
+  console.log(transactionStatement);
   const {
     register,
     handleSubmit,
@@ -31,7 +36,13 @@ const CreateTransfer = () => {
   const account_balance = useSelector(
     (state) => state.generalSlice.account_balance
   );
-  const formHandler = ({ account_name, amount, account_number }) => {
+  const formHandler = ({
+    account_name,
+    amount,
+    account_number,
+    description,
+    bank,
+  }) => {
     if (user.account_status === "hold") {
       toast.error(
         "Your account is on hold temporarily, kindly contact our customer service to resolve this issue"
@@ -50,6 +61,8 @@ const CreateTransfer = () => {
       );
       return;
     }
+
+    const createdDate = new Date().toUTCString();
     setLoading(true);
     const min = 135699;
     const max = 999999;
@@ -76,6 +89,19 @@ const CreateTransfer = () => {
         }
       );
     dispatch(setTransactionDetails({ account_name, account_number, amount }));
+    dispatch(
+      setTransactionStatement({
+        account_name,
+        account_number,
+        amount,
+        bank,
+        type: "Transfer",
+        source_account_number: user.account_number,
+        Source_account_name: user.name,
+        description,
+        date: createdDate,
+      })
+    );
     setTimeout(() => {
       setLoading(false);
     }, 3000);
@@ -121,20 +147,18 @@ const CreateTransfer = () => {
         >
           <div>
             <div className='flex flex-col font-semibold space-y-2 mb-2'>
-              <label htmlFor='account_name'>Bank</label>
+              <label htmlFor='bank'>Bank</label>
               <input
                 placeholder='bank name'
                 type='text'
                 className='p-2 focus:outline-none border-solid font-normal border text-sm rounded-lg'
                 id='bank_name'
-                {...register("bank_name", {
+                {...register("bank", {
                   required: "Please enter receiver's bank name",
                 })}
               />
-              {errors.account_number && (
-                <span className='text-red-500'>
-                  {errors.account_number.message}
-                </span>
+              {errors.bank && (
+                <span className='text-red-500'>{errors.bank.message}</span>
               )}
             </div>
             <div className='grid grid-cols-1 gap-4 md:grid-cols-2'>

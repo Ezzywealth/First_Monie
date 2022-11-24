@@ -6,8 +6,7 @@ import { useRouter } from "next/router";
 import Wire from "../../components/Models/Wire";
 import CurrencyFormat from "react-currency-format";
 import { BeatLoader } from "react-spinners";
-import MyDocument from "../../components/Layout/Document";
-import { PDFDownloadLink } from "@react-pdf/renderer";
+import { getSession } from "next-auth/react";
 
 const WireScreen = ({ wires }) => {
   const [loading, setLoading] = useState(false);
@@ -134,14 +133,15 @@ const WireScreen = ({ wires }) => {
 WireScreen.auth = true;
 export default WireScreen;
 
-export async function getServerSideProps() {
+export async function getServerSideProps(ctx) {
+  const session = await getSession({ ctx });
   await db.connect();
-  const data = await Wire.find().lean();
+  const data = await Wire.find({ user: session?.user._id }).lean();
   await db.disconnect();
 
   return {
     props: {
-      wires: data.map(db.convertDocToObj).reverse(),
+      wires: data.map(db.convertTransactionDocToObj).reverse(),
     },
   };
 }

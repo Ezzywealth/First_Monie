@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const transferSchema = new mongoose.Schema(
   {
-    // user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+    user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
     amount: { type: String, required: true },
     account_number: { type: String, required: true },
     account_name: { type: String },

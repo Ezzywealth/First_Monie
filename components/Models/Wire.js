@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const wireSchema = new mongoose.Schema(
   {
-    // user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+    user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
     amount: { type: String, required: true },
     bank_name: { type: String, required: true },
     account_name: { type: String, required: true },

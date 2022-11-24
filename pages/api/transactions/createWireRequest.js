@@ -2,26 +2,31 @@ import Transaction from "../../../components/Models/Transactions";
 import User from "../../../components/Models/User";
 import Wire from "../../../components/Models/Wire";
 import db from "../../../utils/db";
+import { getSession } from "next-auth/react";
 
 const handler = async (req, res) => {
   if (req.method !== "POST") {
     return res.status(401).send({ message: "Unauthorized request" });
   }
 
-  const { amount, account_name, account_number, id, email, bank_name } =
-    req.body;
-  const options = {
-    month: "short",
-    day: "numeric",
-    year: "numeric",
-  };
+  const session = await getSession({ req });
+  const { user } = session;
+  const {
+    amount,
+    account_name,
+    account_number,
+    id,
+    email,
+    bank_name,
+    createdDate,
+  } = req.body;
 
-  const createdDate = new Date().toLocaleString("en-US", options);
   const max = 9999;
   const min = 1000;
   const randNum = Math.ceil(Math.random() * (max - min) + min);
 
   const newWire = {
+    user: user._id,
     amount,
     account_name,
     bank_name,

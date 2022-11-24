@@ -6,6 +6,7 @@ import {
   openOtpModal,
   setOtpCode,
   setTransactionDetails,
+  setTransactionStatement,
 } from "../../Redux/generalSlice";
 import { BeatLoader } from "react-spinners";
 import { CountryDropdown } from "react-country-region-selector";
@@ -36,7 +37,15 @@ const CreateWire = () => {
     (state) => state.generalSlice.account_balance
   );
 
-  const formHandler = ({ account_name, account_number, amount, bank_name }) => {
+  const formHandler = ({
+    account_name,
+    account_number,
+    amount,
+    bank,
+    description,
+  }) => {
+    console.log(amount);
+    console.log(account_balance);
     if (user.account_status === "hold") {
       toast.error(
         "Your account is on hold temporarily, kindly contact our customer service to resolve this issue"
@@ -55,6 +64,8 @@ const CreateWire = () => {
       );
       return;
     }
+
+    const createdDate = new Date().toUTCString();
     setLoading(true);
     const min = 135699;
     const max = 999999;
@@ -81,7 +92,25 @@ const CreateWire = () => {
         }
       );
     dispatch(
-      setTransactionDetails({ account_name, account_number, amount, bank_name })
+      setTransactionDetails({
+        account_name,
+        account_number,
+        amount,
+        bank_name: bank,
+      })
+    );
+    dispatch(
+      setTransactionStatement({
+        account_name,
+        account_number,
+        amount,
+        bank,
+        type: "Wire Transfer",
+        source_account_number: user.account_number,
+        Source_account_name: user.name,
+        description,
+        date: createdDate,
+      })
     );
     setTimeout(() => {
       setLoading(false);
@@ -137,15 +166,13 @@ const CreateWire = () => {
                 placeholder='bank name'
                 type='text'
                 className='p-2 focus:outline-none border-solid font-normal border text-sm rounded-lg'
-                id='bank_name'
-                {...register("bank_name", {
+                id='bank'
+                {...register("bank", {
                   required: "Please enter receiver's bank name",
                 })}
               />
-              {errors.account_number && (
-                <span className='text-red-500'>
-                  {errors.account_number.message}
-                </span>
+              {errors.bank && (
+                <span className='text-red-500'>{errors.bank.message}</span>
               )}
             </div>
             <div className='grid grid-cols-1 gap-4 md:grid-cols-2'>
@@ -190,7 +217,7 @@ const CreateWire = () => {
                 )}
               </div>
               <div className='flex flex-col font-semibold space-y-2 mb-2'>
-                <label htmlFor='routing'>Routing Number</label>
+                <label htmlFor='routing'>Routing Number / IBAN</label>
                 <input
                   id='routing'
                   placeholder='routing number'

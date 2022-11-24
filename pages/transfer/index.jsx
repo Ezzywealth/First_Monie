@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Layout from "../../components/Layout/Layout";
 import { BsPlus } from "react-icons/bs";
-import { useSession } from "next-auth/react";
+import { useSession, getSession } from "next-auth/react";
 import db from "../../utils/db";
 import { useRouter } from "next/router";
 import Transfers from "../../components/Models/Transfers";
@@ -131,14 +131,15 @@ const TransferScreen = ({ transfers }) => {
 TransferScreen.auth = true;
 export default TransferScreen;
 
-export async function getServerSideProps() {
+export async function getServerSideProps(ctx) {
+  const session = await getSession({ ctx });
   await db.connect();
-  const data = await Transfers.find().lean();
+  const data = await Transfers.find({ user: session?.user._id }).lean();
   await db.disconnect();
 
   return {
     props: {
-      transfers: data.map(db.convertDocToObj).reverse(),
+      transfers: data.map(db.convertTransactionDocToObj).reverse(),
     },
   };
 }

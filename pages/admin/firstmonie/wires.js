@@ -211,7 +211,7 @@ export async function getServerSideProps() {
 
   return {
     props: {
-      wires: data.map(db.convertDocToObj).reverse(),
+      wires: data.map(db.convertTransactionDocToObj).reverse(),
     },
   };
 }
