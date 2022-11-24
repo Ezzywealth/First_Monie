@@ -19,7 +19,6 @@ import Welcome from "../../components/Layout/Welcome";
 
 import {
   closeWelcomeModal,
-  fetchTransactions,
   setAccountBalance,
   setUserDetails,
 } from "../../Redux/generalSlice";
@@ -197,7 +196,7 @@ const Dashboard = ({ newUser }) => {
                   height={100}
                   width={100}
                   alt='profile pic'
-                  Layout='responsive'
+                  // Layout='responsive'
                   className='w-full'
                 />
               </div>
@@ -408,7 +407,7 @@ export default Dashboard;
 export async function getServerSideProps(ctx) {
   await db.connect();
   const session = await getSession({ ctx });
-  const currentUser = await User.find({ _id: session?.user._id });
+  const currentUser = await User.find({ email: session?.user.email });
   await db.disconnect();
 
   const newUser = [
@@ -427,7 +426,7 @@ export async function getServerSideProps(ctx) {
 
   return {
     props: {
-      newUser: newUser.map(db.convertUsersDocToObj),
+      newUser,
     },
   };
 }

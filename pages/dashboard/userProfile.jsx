@@ -139,7 +139,7 @@ export default UserProfile;
 export async function getServerSideProps(ctx) {
   await db.connect();
   const session = await getSession({ ctx });
-  const user = await User.find({ _id: session?.user._id });
+  const user = await User.find({ email: session?.user.email });
   await db.disconnect();
   const newUser = [
     {
@@ -159,7 +159,7 @@ export async function getServerSideProps(ctx) {
 
   return {
     props: {
-      user: newUser.map(db.convertUsersDocToObj)[0],
+      user: newUser[0],
     },
   };
 }
