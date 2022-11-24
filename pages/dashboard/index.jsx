@@ -153,6 +153,7 @@ const Dashboard = ({ newUser }) => {
     setLoading(true);
     router.push("/transfer");
   };
+
   return (
     <div className='w-full'>
       <Layout title='dashboard'>
@@ -383,7 +384,8 @@ const Dashboard = ({ newUser }) => {
                         </td>
                         <td
                           className={`${
-                            data.category === "credit"
+                            data.category === "credit" ||
+                            data.category === "deposit"
                               ? "text-green-500"
                               : "text-red-500"
                           } `}

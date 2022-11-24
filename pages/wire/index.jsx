@@ -38,6 +38,8 @@ const WireScreen = ({ wires }) => {
       </div>
     );
   }
+
+  console.log(wires);
   return (
     <Layout title='wire transfer'>
       <div className='py-16 md:mt-[160px] px-4 md:px-8 lg:px-16 bgContact'>
@@ -66,6 +68,7 @@ const WireScreen = ({ wires }) => {
                 <td>Account Name</td>
                 <td>Account Number</td>
                 <td>Amount</td>
+                <td>Category</td>
                 <td>Status</td>
               </tr>
             </thead>
@@ -79,7 +82,7 @@ const WireScreen = ({ wires }) => {
                   <td>{item.bank_name}</td>
                   <td>{item.account_name}</td>
                   <td>{item.account_number}</td>
-                  <td>
+                  <td className='text-red-500'>
                     <CurrencyFormat
                       value={parseInt(item.amount)}
                       displayType={"text"}
@@ -87,6 +90,7 @@ const WireScreen = ({ wires }) => {
                       prefix={"$"}
                     />
                   </td>
+                  <td className='text-red-500'>debit</td>
 
                   <td className='text-white'>
                     <span

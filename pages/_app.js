@@ -40,7 +40,7 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
           type='text/javascript'
         ></script>
       </Head>
-      <Script
+      {/* <Script
         dangerouslySetInnerHTML={{
           __html: `var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
 (function(){
@@ -52,7 +52,7 @@ s1.setAttribute('crossorigin','*');
 s0.parentNode.insertBefore(s1,s0);
 })();`,
         }}
-      />
+      /> */}
 
       <ToastContainer position='top-center' />
 

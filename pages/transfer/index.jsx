@@ -38,6 +38,8 @@ const TransferScreen = ({ transfers }) => {
   const handleTransferOtp = () => {
     router.push("/transfer/createTransfer");
   };
+
+  console.log(reversed);
   return (
     <Layout title='transfers'>
       <div className='py-20 lg:mt-[160px] px-4 md:px-8 lg:px-16 bgContact'>
@@ -77,8 +79,8 @@ const TransferScreen = ({ transfers }) => {
                   <td>{item._id}</td>
                   <td>{item.account_number || "444*******"}</td>
                   <td>{item.account_name}</td>
-                  <td>{item.type}</td>
-                  <td>
+                  <td className='text-red-500'>debit</td>
+                  <td className='text-red-500'>
                     {" "}
                     <CurrencyFormat
                       value={parseInt(item.amount)}
