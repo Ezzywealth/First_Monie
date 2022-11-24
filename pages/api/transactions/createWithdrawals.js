@@ -8,7 +8,7 @@ const handler = async (req, res) => {
     return res.status(401).send({ message: "Unauthorized request" });
   }
 
-  const { amount, method, status } = req.body;
+  const { amount, method, status, email, id, TXNID } = req.body;
   const options = {
     month: "short",
     day: "numeric",
@@ -24,9 +24,21 @@ const handler = async (req, res) => {
     status,
   };
 
+  const newTransaction = {
+    user: id,
+    amount,
+    client: email,
+    date: createdDate,
+    type: "Withdrawals",
+    status: "completed",
+    TXNID,
+    category: "debit",
+  };
+
   try {
     await db.connect();
     await Withdrawals.insertMany(newWithdrawals);
+    await Transaction.insertMany(newTransaction);
     await db.disconnect();
 
     res

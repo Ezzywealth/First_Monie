@@ -5,9 +5,12 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { BsLink45Deg } from "react-icons/bs";
-
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
 const TransferResponse = () => {
   const dispatch = useDispatch();
+  const router = useRouter();
+  const { data: session } = useSession();
 
   const {
     register,
@@ -30,22 +33,25 @@ const TransferResponse = () => {
           dispatch(closeOtpModal());
           document.querySelector("form").reset();
           dispatch(startCountdownTimer());
-          setTimeout(() => {}, 30000);
-          const { data } = await axios.post(
+
+          const data = await axios.post(
             `/api/transactions/createTransferRequest`,
-            { ...transactionDetails }
+            {
+              ...transactionDetails,
+              id: session?.user._id,
+              email: session?.user.email,
+            }
           );
           console.log(data);
-          // toast.success(data.message);
 
           setTimeout(() => {
             toast.success("Transfer successful");
+            router.push("/dashboard");
           }, 100000);
         }
-        if (data.error) throw new Error(data.error.message);
       } catch (error) {
         setTimeout(() => {
-          toast.success("Transfer error");
+          toast.error("Transfer error, try again later!!!");
           dispatch(closeOtpModal());
         }, 100000);
         console.log(error);

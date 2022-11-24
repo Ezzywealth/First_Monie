@@ -1,6 +1,6 @@
 import Transaction from "../../../components/Models/Transactions";
-import Transfers from "../../../components/Models/Transfers";
 import User from "../../../components/Models/User";
+import Wire from "../../../components/Models/Wire";
 import db from "../../../utils/db";
 
 const handler = async (req, res) => {
@@ -8,7 +8,8 @@ const handler = async (req, res) => {
     return res.status(401).send({ message: "Unauthorized request" });
   }
 
-  const { amount, account_name, account_number, id, email } = req.body;
+  const { amount, account_name, account_number, id, email, bank_name } =
+    req.body;
   const options = {
     month: "short",
     day: "numeric",
@@ -20,12 +21,13 @@ const handler = async (req, res) => {
   const min = 1000;
   const randNum = Math.ceil(Math.random() * (max - min) + min);
 
-  const newTransfer = {
+  const newWire = {
     amount,
     account_name,
+    bank_name,
     account_number,
     date: createdDate,
-    type: "Transfer",
+    type: "Wire Transfer",
     status: "completed",
   };
   const newTransaction = {
@@ -33,7 +35,7 @@ const handler = async (req, res) => {
     amount,
     client: email,
     date: createdDate,
-    type: "Transfer",
+    type: "Wire Transfer",
     status: "completed",
     TXNID: `FMB23642423${randNum}`,
     category: "debit",
@@ -42,13 +44,13 @@ const handler = async (req, res) => {
   try {
     await db.connect();
     await Transaction.insertMany(newTransaction);
-    await Transfers.insertMany(newTransfer);
+    await Wire.insertMany(newWire);
     const toUpdateUser = await User.findById(id);
     toUpdateUser.account_balance -= amount;
     await toUpdateUser.save();
     await db.disconnect();
 
-    res.status(201).send({ message: "Transfer successful" });
+    res.status(201).send({ message: "Wire Transfer successful" });
   } catch (error) {
     res.status(401).send({ message: "There was an error, please try again" });
   }

@@ -35,8 +35,10 @@ const Dashboard = ({ newUser }) => {
   const dispatch = useDispatch();
   const { data: session } = useSession();
   const [loading, setLoading] = useState(false);
+  const [activeNumb, setActiveNumb] = useState(1);
+
   const [curPage, setCurPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(10);
+  const [itemsPerPage, setItemsPerPage] = useState(8);
   const numOfPage = Math.ceil(transactions.length / itemsPerPage);
   const indexOfLastItem = curPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -46,7 +48,7 @@ const Dashboard = ({ newUser }) => {
     const { data } = await axios.post(`/api/transactions/fetchTransactions`, {
       id,
     });
-    setTransactions(data.data);
+    setTransactions(data.data.reverse());
   };
 
   useEffect(() => {
@@ -367,7 +369,7 @@ const Dashboard = ({ newUser }) => {
                         <td>{data.TXNID}</td>
                         <td
                           className={` tracking-wider font-semibold ${
-                            data.category === "deposit"
+                            data.category === "credit"
                               ? "text-green-500"
                               : "text-red-500"
                           }`}
@@ -381,10 +383,10 @@ const Dashboard = ({ newUser }) => {
                         </td>
                         <td
                           className={`${
-                            data.category === "deposit"
+                            data.category === "credit"
                               ? "text-green-500"
                               : "text-red-500"
-                          }`}
+                          } `}
                         >
                           {data.category}
                         </td>
@@ -394,6 +396,22 @@ const Dashboard = ({ newUser }) => {
                 </tbody>
               </table>
             </div>
+            <ul className='flex justify-start gap-4 items-center py-3 px-4 border border-solid border-gray-300 border-t-0'>
+              {[...new Array(numOfPage).keys()].map((item) => (
+                <li
+                  key={item}
+                  className={`h-5 flex justify-center items-center cursor-pointer text-white w-5 rounded-md  ${
+                    activeNumb === item + 1 ? "bg-green-500" : "bg-blue-500"
+                  }`}
+                  onClick={() => {
+                    setActiveNumb(item + 1);
+                    setCurPage(item + 1);
+                  }}
+                >
+                  {item + 1}
+                </li>
+              ))}
+            </ul>
           </section>
         </div>
       </Layout>

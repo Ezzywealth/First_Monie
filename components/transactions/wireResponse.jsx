@@ -1,14 +1,16 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { closeOtpModal } from "../../Redux/generalSlice";
+import { closeOtpModal, startCountdownTimer } from "../../Redux/generalSlice";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { BsLink45Deg } from "react-icons/bs";
-
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
 const WireResponse = () => {
   const dispatch = useDispatch();
-
+  const { data: session } = useSession();
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -26,22 +28,29 @@ const WireResponse = () => {
       try {
         if (parseInt(otpCode) !== parseInt(code)) {
           toast.error("Incorrect code, Try again");
-          return;
         } else {
           dispatch(closeOtpModal());
-          //   document.querySelector("form").reset();
-          //   const { data } = await axios.post(
-          //     `/api/transactions/createWireTransfer`,
-          //     { ...transactionDetails }
-          //   );
-          //   console.log(data);
-          toast.error(
-            "This account is unable to create a Wire Transfer at the moment, Kindly contact out customer care service"
-          );
+          console.log(transactionDetails, session);
+          dispatch(startCountdownTimer());
+
+          const data = await axios.post(`/api/transactions/createWireRequest`, {
+            ...transactionDetails,
+            id: session?.user._id,
+            email: session?.user.email,
+          });
+          console.log(data);
+
+          setTimeout(() => {
+            toast.success("Wire Transfer successful");
+            router.push("/dashboard");
+          }, 100000);
         }
       } catch (error) {
+        setTimeout(() => {
+          toast.error("Wire Transfer error, try again later!!!");
+          dispatch(closeOtpModal());
+        }, 100000);
         console.log(error);
-        dispatch(closeOtpModal());
       }
     }
   };

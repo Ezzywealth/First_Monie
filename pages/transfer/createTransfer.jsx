@@ -28,10 +28,25 @@ const CreateTransfer = () => {
   const { data: session } = useSession();
   const otpModal = useSelector((state) => state.generalSlice.otpModal);
   const user = useSelector((state) => state.generalSlice.user);
+  const account_balance = useSelector(
+    (state) => state.generalSlice.account_balance
+  );
   const formHandler = ({ account_name, amount, account_number }) => {
     if (user.account_status === "hold") {
       toast.error(
         "Your account is on hold temporarily, kindly contact our customer service to resolve this issue"
+      );
+      return;
+    }
+
+    if (parseInt(amount) < 0) {
+      toast.error("Invalid Amount ");
+      return;
+    }
+
+    if (amount >= account_balance) {
+      toast.error(
+        "You have exceeded your account balance, try a lesser amount"
       );
       return;
     }
@@ -111,9 +126,9 @@ const CreateTransfer = () => {
                 placeholder='bank name'
                 type='text'
                 className='p-2 focus:outline-none border-solid font-normal border text-sm rounded-lg'
-                id='account_name'
+                id='bank_name'
                 {...register("bank_name", {
-                  required: "Please enter receiver's account number",
+                  required: "Please enter receiver's bank name",
                 })}
               />
               {errors.account_number && (
@@ -198,7 +213,7 @@ const CreateTransfer = () => {
                 <input
                   placeholder='Account Number'
                   className='font-normal text-sm'
-                  {...register("account", {
+                  {...register("account_number", {
                     required: "please enter account details",
                   })}
                 />

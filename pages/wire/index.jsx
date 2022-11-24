@@ -94,6 +94,12 @@ const WireScreen = ({ wires }) => {
                       className={`${
                         item.status === "pending" &&
                         "bg-orange-500 px-4 py-2 rounded-lg"
+                      } ${
+                        item.status === "completed" &&
+                        "bg-green-500 px-4 py-2 rounded-lg"
+                      } ${
+                        item.status === "cancelled" &&
+                        "bg-orange-500 px-4 py-2 rounded-lg"
                       }`}
                     >
                       {item.status}
