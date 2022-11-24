@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import Layout from "../components/Layout/Layout";
-
 import { useSession, getSession } from "next-auth/react";
 import Transaction from "../components/Models/Transactions";
 import db from "../utils/db";
@@ -118,7 +117,9 @@ const Dashboard = ({ transactions, newUser }) => {
                   <span className='text-sm font-semibold text-gray-500 mr-4'>
                     Acc Status:
                   </span>
-                  <span className='t font-bold text-green-600'>Active</span>
+                  <span className='capitalize font-bold text-green-600'>
+                    {newUser[0].account_status}
+                  </span>
                 </h2>
                 <span></span>
               </div>
@@ -133,6 +134,7 @@ const Dashboard = ({ transactions, newUser }) => {
                     <td className='p-2'>No</td>
                     <td>TYPE</td>
                     <td>TXNID</td>
+                    <td>Category</td>
                     <td>AMOUNT</td>
                     <td> DATE</td>
                   </tr>
@@ -146,9 +148,20 @@ const Dashboard = ({ transactions, newUser }) => {
                       <td className='p-2'>{index + 1}</td>
                       <td>{data.type}</td>
                       <td>{data._id}</td>
+                      <td>
+                        <span
+                          className={`px-3 py-1 rounded-lg text-center text-white ${
+                            data.category === "credit"
+                              ? "bg-green-500"
+                              : "bg-red-500"
+                          }`}
+                        >
+                          {data.category}
+                        </span>
+                      </td>
                       <td
                         className={` tracking-wider font-semibold ${
-                          data.type === "Deposit" || data.type === "deposit"
+                          data.category === "credit"
                             ? "text-green-500"
                             : "text-red-500"
                         }`}
@@ -214,7 +227,6 @@ export async function getServerSideProps(ctx) {
       telephone: user[0]?.telephone,
       password: user[0]?.password,
       userName: user[0]?.userName,
-
       birthday: user[0]?.birthday,
       sex: user[0]?.sex,
       marital_status: user[0]?.marital_status,
@@ -223,13 +235,14 @@ export async function getServerSideProps(ctx) {
       createdAt: user[0]?.createdAt,
       updatedAt: user[0]?.updatedAt,
       account_balance: user[0]?.account_balance,
+      account_status: user[0]?.account_status,
       secret_code: user[0]?.secret_code,
     },
   ];
 
   return {
     props: {
-      transactions: data.map(db.convertDocToObj),
+      transactions: data.map(db.convertTransactionDocToObj),
       newUser: newUser.map(db.convertUsersDocToObj),
     },
   };
