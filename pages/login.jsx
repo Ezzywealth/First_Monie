@@ -40,7 +40,6 @@ const LoginInterface = () => {
       toast.success(`${session?.user.name} welcome to First Monie`);
       router.push("/dashboard");
       setLoading(false);
-      dispatch(openWelcomeModal());
     }
   }, [session?.user]);
 

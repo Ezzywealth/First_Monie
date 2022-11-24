@@ -19,6 +19,7 @@ import Welcome from "../../components/Layout/Welcome";
 
 import {
   closeWelcomeModal,
+  openWelcomeModal,
   setAccountBalance,
   setUserDetails,
 } from "../../Redux/generalSlice";
@@ -42,7 +43,7 @@ const Dashboard = ({ newUser }) => {
   const numOfPage = Math.ceil(transactions.length / itemsPerPage);
   const indexOfLastItem = curPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-
+  console.log(newUser);
   const id = session?.user._id;
   const fetchTrans = async () => {
     const { data } = await axios.post(`/api/transactions/fetchTransactions`, {
@@ -58,6 +59,7 @@ const Dashboard = ({ newUser }) => {
   }, [id]);
 
   useEffect(() => {
+    dispatch(openWelcomeModal());
     dispatch(setAccountBalance(newUser[0].account_balance));
     dispatch(setUserDetails(newUser[0]));
     setTimeout(() => {
@@ -127,7 +129,7 @@ const Dashboard = ({ newUser }) => {
     } else if (title === "Account Type") {
       return "Checking";
     } else if (title === "Account Status") {
-      return "Account Active";
+      return newUser[0].account_status;
     } else if (title === "Account Balance") {
       return (
         <CurrencyFormat
@@ -227,7 +229,7 @@ const Dashboard = ({ newUser }) => {
                       {item.title} :
                     </span>
                     <span
-                      className={`font-bold ${
+                      className={`font-bold capitalize ${
                         item.title === "Account Number" && "text-blue-900"
                       }  ${
                         item.title === "Account Number" && "text-blue-900"
