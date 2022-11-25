@@ -14,13 +14,16 @@ import { useEffect } from "react";
 import emailjs from "emailjs-com";
 import Currencies from "list-of-currencies";
 import WireResponse from "../../components/transactions/wireResponse";
-import { useSession } from "next-auth/react";
+import { useSession, getSession } from "next-auth/react";
 import { toast } from "react-toastify";
-const CreateWire = () => {
+import db from "../../utils/db";
+import User from "../../components/Models/User";
+const CreateWire = ({ accountBalance }) => {
   const [error, setError] = useState(false);
   const [selectedCountry, setSelectedCountry] = useState("");
   const [loading, setLoading] = useState(false);
   const { data: session } = useSession();
+  console.log(accountBalance);
   const {
     register,
     handleSubmit,
@@ -58,7 +61,7 @@ const CreateWire = () => {
       return;
     }
 
-    if (amount >= account_balance) {
+    if (amount >= accountBalance) {
       toast.error(
         "You have exceeded your account balance, try a lesser amount"
       );
@@ -324,3 +327,16 @@ const CreateWire = () => {
 
 CreateWire.auth = true;
 export default CreateWire;
+export async function getServerSideProps(ctx) {
+  await db.connect();
+  const session = await getSession({ ctx });
+  const currentUser = await User.find({ email: session?.user.email });
+  await db.disconnect();
+  const accountBalance = currentUser[0].account_balance;
+
+  return {
+    props: {
+      accountBalance,
+    },
+  };
+}

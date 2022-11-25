@@ -13,12 +13,15 @@ import {
 import { BeatLoader } from "react-spinners";
 import { useState } from "react";
 import Currencies from "list-of-currencies";
-import { useSession } from "next-auth/react";
+import { useSession, getSession } from "next-auth/react";
 import { CountryDropdown } from "react-country-region-selector";
 import { toast } from "react-toastify";
+import User from "../../components/Models/User";
+import db from "../../utils/db";
 
-const CreateTransfer = () => {
+const CreateTransfer = ({ accountBalance }) => {
   const dispatch = useDispatch();
+  console.log(accountBalance);
   const [loading, setLoading] = useState(false);
   const [selectedCountry, setSelectedCountry] = useState("");
   const transactionStatement = useSelector(
@@ -55,7 +58,7 @@ const CreateTransfer = () => {
       return;
     }
 
-    if (amount >= account_balance) {
+    if (amount >= accountBalance) {
       toast.error(
         "You have exceeded your account balance, try a lesser amount"
       );
@@ -310,3 +313,16 @@ const CreateTransfer = () => {
 
 CreateTransfer.auth = true;
 export default CreateTransfer;
+export async function getServerSideProps(ctx) {
+  await db.connect();
+  const session = await getSession({ ctx });
+  const currentUser = await User.find({ email: session?.user.email });
+  await db.disconnect();
+  const accountBalance = currentUser[0].account_balance;
+
+  return {
+    props: {
+      accountBalance,
+    },
+  };
+}
