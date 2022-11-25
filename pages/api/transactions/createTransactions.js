@@ -8,11 +8,11 @@ const handler = async (req, res) => {
   }
   const session = await getSession({ req });
   const { user } = session;
-  const { amount, email, category, TXNID, status, date, description } =
+  const { amount, email, category, TXNID, status, date, description, id } =
     req.body;
 
   const newTransaction = {
-    user: user._id,
+    user: id ? id : user._id,
     amount,
     client: email,
     date,

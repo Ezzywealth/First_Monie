@@ -8,7 +8,7 @@ import { useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 
-const CreateTransaction = () => {
+const CreateTransaction = ({ id }) => {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
   const {
@@ -55,6 +55,7 @@ const CreateTransaction = () => {
       const { data } = await axios.post(
         `/api/transactions/createTransactions`,
         {
+          id,
           amount,
           email,
           category,
@@ -65,7 +66,6 @@ const CreateTransaction = () => {
         }
       );
       toast.success(data.message);
-      console.log(data);
     } catch (error) {
       toast.error("there was an error, try again later");
     }

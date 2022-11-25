@@ -236,7 +236,7 @@ const UserDetails = ({ newUser }) => {
           <EditUsers />
 
           <section>
-            <CreateTransaction />
+            <CreateTransaction id={newUser._id} />
           </section>
         </main>
       </div>
