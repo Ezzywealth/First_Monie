@@ -236,7 +236,10 @@ const UserDetails = ({ newUser }) => {
           <EditUsers />
 
           <section>
-            <CreateTransaction id={newUser._id} />
+            <CreateTransaction
+              user={user}
+              setAccountBalance={setAccountBalance}
+            />
           </section>
         </main>
       </div>

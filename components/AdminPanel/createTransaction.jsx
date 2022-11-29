@@ -1,6 +1,5 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import TransferResponse from "../../components/transactions/transferResponse";
 import { useDispatch, useSelector } from "react-redux";
 import { setTransactionDetails } from "../../Redux/generalSlice";
 import { BeatLoader } from "react-spinners";
@@ -8,7 +7,7 @@ import { useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 
-const CreateTransaction = ({ id }) => {
+const CreateTransaction = ({ user, setAccountBalance }) => {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
   const {
@@ -18,12 +17,6 @@ const CreateTransaction = ({ id }) => {
   } = useForm();
 
   const otpModal = useSelector((state) => state.generalSlice.otpModal);
-
-  const formHandler = ({ account_name, amount, account_number }) => {
-    setLoading(true);
-    dispatch(setTransactionDetails({ account_name, account_number, amount }));
-    document.getElementById("myForm").reset();
-  };
 
   if (loading) {
     return (
@@ -56,13 +49,12 @@ const CreateTransaction = ({ id }) => {
       day: "numeric",
       year: "numeric",
     };
-    console.log(new Date(date).toLocaleString("en-us", options));
 
     try {
       const { data } = await axios.post(
         `/api/transactions/createTransactions`,
         {
-          id,
+          id: user._id,
           amount,
           email,
           category,
@@ -72,6 +64,8 @@ const CreateTransaction = ({ id }) => {
           date: new Date(date).toLocaleString("en-us", options),
         }
       );
+      setAccountBalance(data.data.account_balance);
+      console.log(data);
       toast.success(data.message);
     } catch (error) {
       toast.error("there was an error, try again later");
