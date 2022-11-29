@@ -155,7 +155,7 @@ const TransactionAdminScreen = ({ transactions }) => {
 
                     <td
                       className={`${
-                        item.category === "deposit"
+                        item.category === "credit"
                           ? "text-green-500"
                           : "text-red-500"
                       }`}

@@ -47,7 +47,7 @@ const CreateWire = ({ accountBalance }) => {
     bank,
     description,
   }) => {
-    console.log(amount);
+ 
     console.log(account_balance);
     if (user.account_status === "hold") {
       toast.error(

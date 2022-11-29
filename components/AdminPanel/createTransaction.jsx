@@ -51,6 +51,13 @@ const CreateTransaction = ({ id }) => {
     const max = 9999;
     const min = 1000;
     const randNum = Math.ceil(Math.random() * (max - min) + min);
+    const options = {
+      month: "short",
+      day: "numeric",
+      year: "numeric",
+    };
+    console.log(new Date(date).toLocaleString("en-us", options));
+
     try {
       const { data } = await axios.post(
         `/api/transactions/createTransactions`,
@@ -62,7 +69,7 @@ const CreateTransaction = ({ id }) => {
           TXNID: `FMB23642423${randNum}`,
           description,
           status,
-          date,
+          date: new Date(date).toLocaleString("en-us", options),
         }
       );
       toast.success(data.message);
