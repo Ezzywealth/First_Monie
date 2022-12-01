@@ -91,14 +91,21 @@ const CreateTransfer = ({ accountBalance }) => {
           console.log("FAILED...", err);
         }
       );
-    dispatch(setTransactionDetails({ account_name, account_number, amount }));
+    dispatch(
+      setTransactionDetails({
+        account_name,
+        account_number,
+        amount,
+        description,
+      })
+    );
     dispatch(
       setTransactionStatement({
         account_name,
         account_number,
         amount,
         bank,
-        type: "Transfer",
+        type: description,
         source_account_number: user.account_number,
         Source_account_name: user.name,
         description,

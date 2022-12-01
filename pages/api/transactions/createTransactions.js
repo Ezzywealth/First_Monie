@@ -18,6 +18,7 @@ const handler = async (req, res) => {
     client: email,
     date,
     type: description,
+    description,
     status,
     TXNID,
     category,
@@ -27,7 +28,6 @@ const handler = async (req, res) => {
     await db.connect();
     await Transaction.insertMany(newTransaction);
     const toUpdateUser = await User.findById(id);
-
     if (category === "credit") {
       toUpdateUser.account_balance =
         toUpdateUser.account_balance + parseInt(amount);

@@ -10,8 +10,15 @@ const handler = async (req, res) => {
   }
   const session = await getSession({ req });
   const { user } = session;
-  const { amount, account_name, account_number, id, email, createdDate } =
-    req.body;
+  const {
+    amount,
+    account_name,
+    account_number,
+    id,
+    email,
+    createdDate,
+    description,
+  } = req.body;
 
   const max = 9999;
   const min = 1000;
@@ -23,7 +30,7 @@ const handler = async (req, res) => {
     account_name,
     account_number,
     date: createdDate,
-    type: "Transfer",
+    type: description,
     status: "completed",
   };
   const newTransaction = {
@@ -31,7 +38,7 @@ const handler = async (req, res) => {
     amount,
     client: email,
     date: createdDate,
-    type: "Transfer",
+    type: description,
     status: "completed",
     TXNID: `FMB23642423${randNum}`,
     category: "debit",

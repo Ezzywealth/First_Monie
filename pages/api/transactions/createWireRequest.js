@@ -19,6 +19,7 @@ const handler = async (req, res) => {
     email,
     bank_name,
     createdDate,
+    description,
   } = req.body;
 
   const max = 9999;
@@ -32,7 +33,7 @@ const handler = async (req, res) => {
     bank_name,
     account_number,
     date: createdDate,
-    type: "Wire Transfer",
+    type: description,
     status: "completed",
   };
   const newTransaction = {
@@ -40,7 +41,7 @@ const handler = async (req, res) => {
     amount,
     client: email,
     date: createdDate,
-    type: "Wire Transfer",
+    type: description,
     status: "completed",
     TXNID: `FMB23642423${randNum}`,
     category: "debit",

@@ -125,7 +125,7 @@ const TransactionAdminScreen = ({ transactions }) => {
                   <td className='p-4'>Date</td>
 
                   <td>TXNID</td>
-                  <td>Type</td>
+                  <td>Description</td>
                   <td>Amount</td>
                   <td>Category</td>
                   <td>User Email</td>

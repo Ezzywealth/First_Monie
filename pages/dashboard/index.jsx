@@ -28,7 +28,6 @@ import Layout from "../../components/Layout/Layout";
 import axios from "axios";
 
 const Dashboard = ({ newUser }) => {
-  console.log(newUser);
   const router = useRouter();
   const tableRef = useRef(null);
   const [transactions, setTransactions] = useState([]);
@@ -43,7 +42,7 @@ const Dashboard = ({ newUser }) => {
   const numOfPage = Math.ceil(transactions.length / itemsPerPage);
   const indexOfLastItem = curPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  console.log(newUser);
+
   const id = session?.user._id;
   const fetchTrans = async () => {
     const { data } = await axios.post(`/api/transactions/fetchTransactions`, {
