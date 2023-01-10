@@ -25,7 +25,8 @@ const EditUser = () => {
     marital_status,
     occupation,
   }) => {
-    document.getElementById("myForm").reset();
+    // document.getElementById("myForm").reset();
+
     try {
       const { data } = await axios.put(`/api/auth/update`, {
         selectedCountry,
