@@ -1,16 +1,16 @@
-import React, { useState } from "react";
-import { getSession, useSession } from "next-auth/react";
-import axios from "axios";
-import db from "../../../utils/db";
-import AdminSidebar from "../../../components/AdminPanel/AdminSidebar";
-import Navbar from "../../../components/AdminPanel/Navbar";
-import { BeatLoader } from "react-spinners";
-import { useSelector } from "react-redux";
-import { adminDashboardLists } from "../../../components/AdminPanel/utils";
-import User from "../../../components/Models/User";
-import Transaction from "../../../components/Models/Transactions";
-import { useRouter } from "next/router";
-import { useLayoutEffect } from "react";
+import React, { useState } from 'react';
+import { getSession, useSession } from 'next-auth/react';
+import axios from 'axios';
+import db from '../../../utils/db';
+import AdminSidebar from '../../../components/AdminPanel/AdminSidebar';
+import Navbar from '../../../components/AdminPanel/Navbar';
+import { BeatLoader } from 'react-spinners';
+import { useSelector } from 'react-redux';
+import { adminDashboardLists } from '../../../components/AdminPanel/utils';
+import User from '../../../components/Models/User';
+import Transaction from '../../../components/Models/Transactions';
+import { useRouter } from 'next/router';
+import { useLayoutEffect } from 'react';
 
 const FirstmonieAdmin = ({ users, isAdmin }) => {
   const router = useRouter();
@@ -23,7 +23,7 @@ const FirstmonieAdmin = ({ users, isAdmin }) => {
   useLayoutEffect(() => {
     setLoading(true);
     if (session?.user.isAdmin === false) {
-      router.push("/");
+      router.push('/');
     } else {
       setLoading(false);
     }
@@ -31,7 +31,7 @@ const FirstmonieAdmin = ({ users, isAdmin }) => {
 
   const [loading, setLoading] = useState(false);
 
-  if (status === "loading") {
+  if (status === 'loading') {
     return (
       <div className='h-screen w-full flex justify-center items-center'>
         <h3 className='font-bold text-2xl'>Loading.....</h3>
@@ -62,11 +62,13 @@ const FirstmonieAdmin = ({ users, isAdmin }) => {
     setLoading(false);
   };
 
+  console.log(newUsers);
+
   return (
     <div className='relative h-screen overflow-auto bg-indigo-50 w-full  gap-0  grid grid-cols-1 md:grid-cols-4 '>
       <div
         className={`fixed z-50 customTransition col-span-1 ${
-          isAdminSidebarOpen ? "h-screen" : "hidden -left-[1000px]"
+          isAdminSidebarOpen ? 'h-screen' : 'hidden -left-[1000px]'
         }`}
       >
         <AdminSidebar />
@@ -105,7 +107,7 @@ const FirstmonieAdmin = ({ users, isAdmin }) => {
               <h2 className='px-4 text-gray-500 font-bold '>Lists of Users</h2>
               <button
                 className='bg-green-500 px-3 py-1 rounded-lg text-white hover:scale-105 customTransition'
-                onClick={() => router.push("/admin/firstmonie/createNewUser")}
+                onClick={() => router.push('/admin/firstmonie/createNewUser')}
               >
                 Add User
               </button>
@@ -179,14 +181,16 @@ export async function getServerSideProps(ctx) {
     return {
       redirect: {
         permanent: false,
-        destination: "/login",
+        destination: '/login',
       },
     };
   }
   return {
     props: {
       transactions: data.map(db.convertTransactionDocToObj),
-      users: users.map(db.convertUsersDocToObj),
+      users: users
+        .map(db.convertUsersDocToObj)
+        .filter((user) => user.isAdmin !== true),
     },
   };
 }
