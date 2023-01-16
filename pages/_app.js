@@ -1,16 +1,16 @@
-import { useState, useEffect } from "react";
-import "../styles/globals.css";
-import { SessionProvider, useSession } from "next-auth/react";
-import store from "../Redux/store";
-import { BsArrowUpShort } from "react-icons/bs";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import { Provider } from "react-redux";
-import { useRouter } from "next/router";
-import { useSelector, useDispatch } from "react-redux";
-import { stopLoading } from "../Redux/generalSlice";
-import Head from "next/head";
-import Script from "next/script";
+import { useState, useEffect } from 'react';
+import '../styles/globals.css';
+import { SessionProvider, useSession } from 'next-auth/react';
+import store from '../Redux/store';
+import { BsArrowUpShort } from 'react-icons/bs';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { Provider } from 'react-redux';
+import { useRouter } from 'next/router';
+import { useSelector, useDispatch } from 'react-redux';
+import { stopLoading } from '../Redux/generalSlice';
+import Head from 'next/head';
+import Script from 'next/script';
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }) {
   const [showTopBtn, setShowTopBtn] = useState(false);
@@ -18,12 +18,12 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
   const handleTop = () => {
     window.scrollTo({
       top: 0,
-      behavior: "smooth",
+      behavior: 'smooth',
     });
   };
 
   useEffect(() => {
-    window.addEventListener("scroll", () => {
+    window.addEventListener('scroll', () => {
       if (window.scrollY > 400) {
         setShowTopBtn(true);
       } else {
@@ -40,19 +40,11 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
           type='text/javascript'
         ></script>
       </Head>
-      {/* <Script
+      <Script
         dangerouslySetInnerHTML={{
-          __html: `var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-(function(){
-var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-s1.async=true;
-s1.src='https://embed.tawk.to/637e0df7b0d6371309d0ac2b/default';
-s1.charset='UTF-8';
-s1.setAttribute('crossorigin','*');
-s0.parentNode.insertBefore(s1,s0);
-})();`,
+          __html: `var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date(); (function(){ var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0]; s1.async=true; s1.src='https://embed.tawk.to/63c4f74ac2f1ac1e202dc9ee/default'; s1.charset='UTF-8'; s1.setAttribute('crossorigin','*'); s0.parentNode.insertBefore(s1,s0); })();`,
         }}
-      /> */}
+      />
 
       <ToastContainer position='top-center' />
 
@@ -87,7 +79,7 @@ function Auth({ children, adminOnly }) {
     required: true,
     onUnauthenticated() {
       setLoading(true);
-      router.push("/login?message=login required");
+      router.push('/login?message=login required');
     },
   });
   dispatch(stopLoading());
@@ -109,7 +101,7 @@ function Auth({ children, adminOnly }) {
 
   useEffect(() => {
     if (adminOnly && session?.user.isAdmin === false) {
-      router.push("/");
+      router.push('/');
     }
   }, []);
 
