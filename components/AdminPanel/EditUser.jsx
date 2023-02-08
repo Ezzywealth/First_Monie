@@ -1,14 +1,14 @@
-import axios from "axios";
-import React, { useState } from "react";
-import { CountryDropdown } from "react-country-region-selector";
-import { useForm } from "react-hook-form";
-import { toast } from "react-toastify";
-import { setUserDetails } from "../../Redux/generalSlice";
-import Button2 from "../Layout/Button2";
-import { useDispatch } from "react-redux";
-const EditUser = () => {
+import axios from 'axios';
+import React, { useState } from 'react';
+import { CountryDropdown } from 'react-country-region-selector';
+import { useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
+import { setUserDetails } from '../../Redux/generalSlice';
+import Button2 from '../Layout/Button2';
+import { useDispatch } from 'react-redux';
+const EditUser = ({ id }) => {
   const dispatch = useDispatch();
-  const [selectedCountry, setSelectedCountry] = useState("");
+  const [selectedCountry, setSelectedCountry] = useState('');
   const {
     register,
     handleSubmit,
@@ -38,6 +38,7 @@ const EditUser = () => {
         occupation,
         sex,
         marital_status,
+        id,
       });
       console.log(data);
       dispatch(setUserDetails(data.toUpdateUser));
@@ -65,8 +66,8 @@ const EditUser = () => {
                 type='text'
                 id='fullName'
                 className='w-full p-2 focus:outline-none border '
-                {...register("fullName", {
-                  required: "Please enter your First Name",
+                {...register('fullName', {
+                  required: 'Please enter your First Name',
                 })}
               />
               {errors.fullName && (
@@ -82,8 +83,8 @@ const EditUser = () => {
                 type='text'
                 id='userName'
                 className='w-full p-2 focus:outline-none border '
-                {...register("userName", {
-                  required: "Please enter your username",
+                {...register('userName', {
+                  required: 'Please enter your username',
                 })}
               />
               {errors.userName && (
@@ -99,11 +100,11 @@ const EditUser = () => {
                 type='text'
                 id='email'
                 className='w-full p-2 focus:outline-none border mb-2'
-                {...register("email", {
-                  required: "please enter email address",
+                {...register('email', {
+                  required: 'please enter email address',
                   pattern: {
                     value: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$/i,
-                    message: "please enter a valid email address",
+                    message: 'please enter a valid email address',
                   },
                 })}
               />
@@ -120,8 +121,8 @@ const EditUser = () => {
                 type='tel'
                 id='telephone'
                 className='w-full p-2 focus:outline-none border '
-                {...register("telephone", {
-                  required: "Please enter your phone number",
+                {...register('telephone', {
+                  required: 'Please enter your phone number',
                 })}
               />
               {errors.telephone && (
@@ -150,8 +151,8 @@ const EditUser = () => {
               </label>
               <select
                 className='w-full p-2 focus:outline-none border rounded-lg'
-                {...register("marital_status", {
-                  required: "Please select your status",
+                {...register('marital_status', {
+                  required: 'Please select your status',
                 })}
               >
                 <option value='married'>Married</option>
@@ -172,8 +173,8 @@ const EditUser = () => {
               </label>
               <select
                 className='w-full p-2 focus:outline-none border rounded-lg'
-                {...register("sex", {
-                  required: "Please select your gender",
+                {...register('sex', {
+                  required: 'Please select your gender',
                 })}
               >
                 <option value='male'>Male</option>
@@ -192,8 +193,8 @@ const EditUser = () => {
                 type='text'
                 id='occupation'
                 className='w-full p-2 focus:outline-none border '
-                {...register("occupation", {
-                  required: "Please enter your occupation",
+                {...register('occupation', {
+                  required: 'Please enter your occupation',
                 })}
               />
               {errors.occupation && (
@@ -211,11 +212,11 @@ const EditUser = () => {
                 type='text'
                 id='password'
                 className='w-full p-2 focus:outline-none border '
-                {...register("password", {
-                  required: "Please enter your password",
+                {...register('password', {
+                  required: 'Please enter your password',
                   minLength: {
                     value: 6,
-                    message: "password chars shoukd be greater than 5",
+                    message: 'password chars shoukd be greater than 5',
                   },
                 })}
               />

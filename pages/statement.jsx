@@ -1,15 +1,15 @@
-import React, { useState } from "react";
-import Layout from "../components/Layout/Layout";
-import { getSession } from "next-auth/react";
-import Transaction from "../components/Models/Transactions";
-import db from "../utils/db";
-import User from "../components/Models/User";
-import CurrencyFormat from "react-currency-format";
-import { useReactToPrint } from "react-to-print";
-import { useRef } from "react";
-import Image from "next/image";
-import { useRouter } from "next/router";
-import { BeatLoader } from "react-spinners";
+import React, { useState } from 'react';
+import Layout from '../components/Layout/Layout';
+import { getSession } from 'next-auth/react';
+import Transaction from '../components/Models/Transactions';
+import db from '../utils/db';
+import User from '../components/Models/User';
+import CurrencyFormat from 'react-currency-format';
+import { useReactToPrint } from 'react-to-print';
+import { useRef } from 'react';
+import Image from 'next/image';
+import { useRouter } from 'next/router';
+import { BeatLoader } from 'react-spinners';
 const Dashboard = ({ transactions, newUser }) => {
   const [loading, setLoading] = useState();
   const tableRef = useRef(null);
@@ -17,8 +17,8 @@ const Dashboard = ({ transactions, newUser }) => {
 
   const handlePrint = useReactToPrint({
     content: () => tableRef.current,
-    documentTitle: "Account Statement",
-    onAfterPrint: () => router.push("/dashboard"),
+    documentTitle: 'Account Statement',
+    onAfterPrint: () => router.push('/dashboard'),
   });
 
   if (loading) {
@@ -76,7 +76,7 @@ const Dashboard = ({ transactions, newUser }) => {
               <div className='flex px-4 flex-col text-sm '>
                 <h2 className='gap-4'>
                   <span className='text-sm font-semibold text-gray-500 mr-4'>
-                    Acc Name:{" "}
+                    Acc Name:{' '}
                   </span>
                   <span className='text-indigo-900 font-bold'>
                     {newUser[0].name}
@@ -89,9 +89,9 @@ const Dashboard = ({ transactions, newUser }) => {
                   <span className='text-green-600 font-bold'>
                     <CurrencyFormat
                       value={newUser[0].account_balance}
-                      displayType={"text"}
+                      displayType={'text'}
                       thousandSeparator={true}
-                      prefix={"$"}
+                      prefix={'$'}
                     />
                   </span>
                 </h2>
@@ -147,9 +147,9 @@ const Dashboard = ({ transactions, newUser }) => {
                       <td>
                         <span
                           className={`px-3 py-1 rounded-lg text-center text-white ${
-                            data.category === "credit"
-                              ? "bg-green-500"
-                              : "bg-red-500"
+                            data.category === 'credit'
+                              ? 'bg-green-500'
+                              : 'bg-red-500'
                           }`}
                         >
                           {data.category}
@@ -157,16 +157,16 @@ const Dashboard = ({ transactions, newUser }) => {
                       </td>
                       <td
                         className={` tracking-wider font-semibold ${
-                          data.category === "credit"
-                            ? "text-green-500"
-                            : "text-red-500"
+                          data.category === 'credit'
+                            ? 'text-green-500'
+                            : 'text-red-500'
                         }`}
                       >
                         <CurrencyFormat
                           value={parseInt(data.amount)}
-                          displayType={"text"}
+                          displayType={'text'}
                           thousandSeparator={true}
-                          prefix={"$"}
+                          prefix={'$'}
                         />
                       </td>
                       <td>{data.date}</td>
@@ -211,10 +211,12 @@ export async function getServerSideProps(ctx) {
   await db.connect();
   const session = await getSession({ ctx });
 
-  const data = await (await Transaction.find().lean()).reverse();
+  const data = await (
+    await Transaction.find({ user: session?.user._id }).lean()
+  ).reverse();
   const user = await User.find({ email: session?.user.email });
   await db.disconnect();
-  console.log(user);
+
   const newUser = [
     {
       _id: user[0]?._id,

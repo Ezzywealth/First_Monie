@@ -1,28 +1,26 @@
-import React, { useState } from "react";
-import db from "../../../utils/db";
-import AdminSidebar from "../../../components/AdminPanel/AdminSidebar";
-import Navbar from "../../../components/AdminPanel/Navbar";
-import { useForm } from "react-hook-form";
-import axios from "axios";
-import { getSession } from "next-auth/react";
-import { useRouter } from "next/router";
-import { useDispatch, useSelector } from "react-redux";
-import { setUserDetails } from "../../../Redux/generalSlice";
-import User from "../../../components/Models/User";
-import { userLists } from "../../../components/AdminPanel/utils";
-import { useEffect } from "react";
-import { toast } from "react-toastify";
-import CurrencyFormat from "react-currency-format";
-
-import EditUsers from "../../../components/AdminPanel/EditUser";
-import CreateTransaction from "../../../components/AdminPanel/createTransaction";
-import UploadImage from "../../../components/AdminPanel/UploadImage";
-import ChangeAccountStatus from "../../../components/AdminPanel/ChangeAccountStatus";
+import React, { useState } from 'react';
+import db from '../../../utils/db';
+import AdminSidebar from '../../../components/AdminPanel/AdminSidebar';
+import Navbar from '../../../components/AdminPanel/Navbar';
+import { useForm } from 'react-hook-form';
+import axios from 'axios';
+import { getSession } from 'next-auth/react';
+import { useRouter } from 'next/router';
+import { useDispatch, useSelector } from 'react-redux';
+import { setUserDetails } from '../../../Redux/generalSlice';
+import User from '../../../components/Models/User';
+import { userLists } from '../../../components/AdminPanel/utils';
+import { useEffect } from 'react';
+import { toast } from 'react-toastify';
+import CurrencyFormat from 'react-currency-format';
+import EditUsers from '../../../components/AdminPanel/EditUser';
+import CreateTransaction from '../../../components/AdminPanel/createTransaction';
+import UploadImage from '../../../components/AdminPanel/UploadImage';
+import ChangeAccountStatus from '../../../components/AdminPanel/ChangeAccountStatus';
 
 const UserDetails = ({ newUser }) => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.generalSlice.user);
-
   const [ssr, setSsr] = useState(true);
   const [editedUser, setEditedUser] = useState(newUser);
   const [stats, setStats] = useState(newUser[0].account_status);
@@ -36,7 +34,6 @@ const UserDetails = ({ newUser }) => {
   }, []);
 
   const router = useRouter();
-  const client = router.query;
   const isAdminSidebarOpen = useSelector(
     (state) => state.generalSlice.isAdminSidebarOpen
   );
@@ -50,38 +47,36 @@ const UserDetails = ({ newUser }) => {
   // function to create a new transaction for the backend
 
   const handleUserList = (name) => {
-    if (name === "User ID") {
+    if (name === 'User ID') {
       return user._id;
-    } else if (name === "Name") {
+    } else if (name === 'Name') {
       return user.name;
-    } else if (name === "userName") {
+    } else if (name === 'userName') {
       return user.userName;
-    } else if (name === "Occupation") {
+    } else if (name === 'Occupation') {
       return user.occupation;
-    } else if (name === "Date Joined") {
+    } else if (name === 'Date Joined') {
       return new Date(user.createdAt).toDateString();
-    } else if (name === "Sex") {
+    } else if (name === 'Sex') {
       return user.sex;
-    } else if (name === "Marital Status") {
+    } else if (name === 'Marital Status') {
       return user.marital_status;
-    } else if (name === "Country") {
+    } else if (name === 'Country') {
       return user.country;
-    } else if (name === "Telephone") {
+    } else if (name === 'Telephone') {
       return user.telephone;
-    } else if (name === "Email") {
+    } else if (name === 'Email') {
       return user.email;
-    } else if (name === "Account Number") {
+    } else if (name === 'Account Number') {
       return user.account_number;
-    } else if (name === "Otp Code") {
+    } else if (name === 'Otp Code') {
       return user.secret_code;
-    } else if (name === "Password") {
+    } else if (name === 'Password') {
       return user.password;
-    } else if (name === "Account Status") {
+    } else if (name === 'Account Status') {
       return stats;
     }
   };
-
-  console.log(new Date("2022-11-23T11:12:32.473+00:00").toDateString());
 
   useEffect(() => {
     setSsr(false);
@@ -98,14 +93,12 @@ const UserDetails = ({ newUser }) => {
         id: newUser[0]._id,
         currentBalance: accountBalance,
       });
-      console.log(data.data);
       toast.success(data.message);
       setAccountBalance(data.data);
       if (data.error) {
         throw new Error(data.error);
       }
     } catch (error) {
-      console.log(error);
       toast.error(error.message);
     }
   };
@@ -114,7 +107,7 @@ const UserDetails = ({ newUser }) => {
     <div className='relative bg-indigo-50 w-full h-screen gap-4 md:grid grid-cols-1 md:grid-cols-4 mb-8 '>
       <div
         className={`z-50  customTransition col-span-1 ${
-          isAdminSidebarOpen ? "h-screen fixed " : "hidden"
+          isAdminSidebarOpen ? 'h-screen fixed ' : 'hidden'
         }`}
       >
         <AdminSidebar />
@@ -165,9 +158,9 @@ const UserDetails = ({ newUser }) => {
                   <h3 className='text-2xl text-gray-500 font-bold'>
                     <CurrencyFormat
                       value={accountBalance}
-                      displayType={"text"}
+                      displayType={'text'}
                       thousandSeparator={true}
-                      prefix={"$"}
+                      prefix={'$'}
                     />
                   </h3>
                 </div>
@@ -190,8 +183,8 @@ const UserDetails = ({ newUser }) => {
                       name=''
                       id='amount'
                       className='action_edit p-2 rounded-lg focus:outline-none border border-solid border-gray-400'
-                      {...register("amount", {
-                        required: "Please enter an amount",
+                      {...register('amount', {
+                        required: 'Please enter an amount',
                       })}
                     />
                   </div>
@@ -205,8 +198,8 @@ const UserDetails = ({ newUser }) => {
                     <select
                       className=' p-2 rounded-lg focus:outline-none border border-solid border-gray-400'
                       id='action'
-                      {...register("method", {
-                        required: "Please select a method",
+                      {...register('method', {
+                        required: 'Please select a method',
                       })}
                     >
                       <option
@@ -233,7 +226,7 @@ const UserDetails = ({ newUser }) => {
             </div>
           </section>
 
-          <EditUsers />
+          <EditUsers id={user._id} />
 
           <section>
             <CreateTransaction
@@ -263,7 +256,7 @@ export async function getServerSideProps(ctx) {
     return {
       redirect: {
         permanent: false,
-        destination: "/login",
+        destination: '/login',
       },
     };
   }
