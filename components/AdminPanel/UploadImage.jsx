@@ -4,6 +4,7 @@ import ImageUploader from "../Layout/ImageUploader";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
+
 const UploadImage = ({ id, newUser }) => {
   const [imageUrl, setImageUrl] = useState(newUser[0].image);
   const user = useSelector((state) => state.generalSlice.user);
