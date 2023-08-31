@@ -16,12 +16,13 @@ const Layout = ({ children, title }) => {
 
 	useEffect(() => {
 		router.push('/maintenance');
+		setLoading(false);
 	}, []);
 
 	const isSidebarOpen = useSelector((state) => state.generalSlice.isSidebarOpen);
 	const countdownTimer = useSelector((state) => state.generalSlice.countdownTimer);
 
-	if (loading) return;
+	if (loading) return null;
 	return (
 		<div className='relative h-screen w-full'>
 			<Head>

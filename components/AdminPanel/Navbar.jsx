@@ -17,9 +17,10 @@ const Navbar = () => {
 
 	useLayoutEffect(() => {
 		router.push('/admin/maintenance');
+		setLoading(false);
 	}, []);
 
-	if (loading) return;
+	if (loading) return null;
 
 	return (
 		<nav className='p-5 h-[70px] z-40  right-0 mb-16 bg-indigo-50 w-full'>
