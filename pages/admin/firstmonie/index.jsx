@@ -26,8 +26,6 @@ const FirstmonieAdmin = ({ users, isAdmin }) => {
 		}
 	}, []);
 
-	console.log('yes');
-
 	const [loading, setLoading] = useState(false);
 
 	if (status === 'loading') {
