@@ -19,10 +19,10 @@ const Home = ({ user }) => {
 		if (session?.user) {
 			router.push('/dashboard');
 		} else {
-			router.push('/');
 			setLoading(false);
 		}
 	}, []);
+	console.log('here');
 
 	if (loading) {
 		return (

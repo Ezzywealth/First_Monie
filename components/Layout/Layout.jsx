@@ -10,14 +10,12 @@ import { useSession } from 'next-auth/react';
 import CountdownTimer from '../transactions/CountdownTimer';
 import { useRouter } from 'next/router';
 const Layout = ({ children, title }) => {
-	const [loading, setLoading] = useState(true);
 	const { data: session } = useSession();
 	const router = useRouter();
 
 	const isSidebarOpen = useSelector((state) => state.generalSlice.isSidebarOpen);
 	const countdownTimer = useSelector((state) => state.generalSlice.countdownTimer);
 
-	if (loading) return null;
 	return (
 		<div className='relative h-screen w-full'>
 			<Head>
