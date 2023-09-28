@@ -26,11 +26,7 @@ const FirstmonieAdmin = ({ users, isAdmin }) => {
 		}
 	}, []);
 
-	useEffect(() => {
-		if (session?.user.isAdmin) {
-			router.push('/admin/maintenance');
-		}
-	}, []);
+	console.log('yes');
 
 	const [loading, setLoading] = useState(false);
 
