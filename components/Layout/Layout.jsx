@@ -14,11 +14,6 @@ const Layout = ({ children, title }) => {
 	const { data: session } = useSession();
 	const router = useRouter();
 
-	useEffect(() => {
-		router.push('/maintenance');
-		setLoading(false);
-	}, []);
-
 	const isSidebarOpen = useSelector((state) => state.generalSlice.isSidebarOpen);
 	const countdownTimer = useSelector((state) => state.generalSlice.countdownTimer);
 
